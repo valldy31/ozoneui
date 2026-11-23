@@ -1,0 +1,1830 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark" data-oz-sound="on" data-oz-privacy="false">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OzoneUI — The Ultimate AI-Native Quad-Domain UI Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="./dist/ozone.css" />
+  <style>
+    .studio-topbar {
+      position: sticky;
+      top: 12px;
+      z-index: 800;
+      margin: 14px auto 34px;
+      padding: 10px 16px;
+      border-radius: var(--oz-radius-lg);
+      border: 1px solid var(--oz-border-strong);
+      box-shadow: var(--oz-shadow-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .studio-topbar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--oz-surface);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .studio-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.08rem;
+      letter-spacing: -0.025em;
+    }
+    .studio-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--oz-primary), var(--oz-accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.05rem;
+      box-shadow: 0 0 20px var(--oz-primary-glow);
+    }
+    .domain-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 4px;
+      border-radius: var(--oz-radius-sm);
+      background: var(--oz-surface-inset);
+      border: 1px solid var(--oz-border);
+    }
+    .studio-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .studio-cc-wrap {
+      position: relative;
+      display: inline-flex;
+    }
+    .studio-cc-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--oz-emerald);
+      box-shadow: 0 0 8px var(--oz-emerald);
+      flex-shrink: 0;
+    }
+    .studio-cc-dot[data-veil="true"] {
+      background: var(--oz-amber);
+      box-shadow: 0 0 8px var(--oz-amber);
+    }
+    .studio-cc-popover {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      z-index: 980;
+      width: min(320px, calc(100vw - 32px));
+      padding: 14px;
+      border-radius: var(--oz-radius-md);
+      background: var(--oz-bg-elevated);
+      border: 1px solid var(--oz-border-strong);
+      box-shadow: var(--oz-shadow-lg);
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .studio-cc-popover[data-open="true"] {
+      display: flex;
+      animation: oz-fade-in 180ms ease;
+    }
+    .studio-cc-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--oz-border);
+    }
+    .studio-cc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .studio-cc-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 9px;
+      padding: 10px;
+      text-align: left;
+      height: auto;
+      width: 100%;
+    }
+    .studio-cc-item__text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      line-height: 1.2;
+      min-width: 0;
+    }
+    .studio-cc-item__text strong {
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+    .studio-cc-item__text small {
+      font-size: 0.68rem;
+      font-weight: 400;
+    }
+    .studio-mobile-toggle {
+      display: none;
+    }
+    .studio-mobile-backdrop,
+    .domain-nav__head,
+    .domain-nav__foot {
+      display: none;
+    }
+    @media (max-width: 920px) {
+      .studio-topbar {
+        padding: 10px 14px;
+        gap: 10px;
+      }
+      .studio-brand {
+        order: 1;
+      }
+      .studio-actions {
+        order: 2;
+        margin-left: auto;
+        gap: 6px;
+      }
+      .studio-cc-wrap {
+        position: static;
+      }
+      .studio-cc-label {
+        display: none;
+      }
+      .studio-cc-btn {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        justify-content: center;
+        position: relative;
+      }
+      .studio-cc-dot {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 6px;
+        height: 6px;
+      }
+      .studio-cc-popover {
+        top: calc(100% + 8px);
+        right: 0;
+        width: min(350px, 100%);
+      }
+      .studio-mobile-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        padding: 0;
+      }
+      #btn-cmd-k {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        justify-content: center;
+      }
+      #btn-cmd-k span {
+        display: none;
+      }
+      .studio-mobile-backdrop[data-open="true"] {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 790;
+        background: oklch(0.05 0.02 var(--oz-hue) / 0.68);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        animation: oz-fade-in 180ms ease;
+      }
+      .domain-nav {
+        display: none;
+      }
+      .studio-topbar[data-mobile-open="true"][data-mobile-style="slide"] .domain-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: min(310px, 84vw);
+        max-height: 100vh;
+        overflow-y: auto;
+        z-index: 950;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 18px 16px;
+        background: var(--oz-bg-elevated);
+        border: 1px solid var(--oz-border-strong);
+        border-right: none;
+        border-radius: var(--oz-radius-lg) 0 0 var(--oz-radius-lg);
+        box-shadow: var(--oz-shadow-lg);
+        animation: oz-sheet-slide-right 280ms var(--oz-ease-spring);
+      }
+      .studio-topbar[data-mobile-open="true"][data-mobile-style="modal"] .domain-nav {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(350px, calc(100vw - 32px));
+        max-height: 84vh;
+        overflow-y: auto;
+        z-index: 950;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 18px;
+        background: var(--oz-bg-elevated);
+        border: 1px solid var(--oz-border-strong);
+        border-radius: var(--oz-radius-lg);
+        box-shadow: var(--oz-shadow-lg);
+        animation: oz-fade-in 200ms ease;
+      }
+      .studio-topbar[data-mobile-open="true"][data-mobile-style="dropdown"] .domain-nav {
+        order: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        gap: 6px;
+        padding: 10px;
+      }
+      .domain-nav__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 2px;
+        border-bottom: 1px solid var(--oz-border);
+      }
+      .domain-nav__close {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .domain-nav > [data-domain-btn] {
+        justify-content: flex-start;
+        width: 100%;
+        padding: 9px 12px;
+      }
+      .domain-nav__foot {
+        margin-top: auto;
+        padding-top: 12px;
+        border-top: 1px solid var(--oz-border);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .domain-nav__quick-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
+      [data-drawer-action] {
+        justify-content: flex-start;
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 0.74rem;
+      }
+      .domain-nav__style-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+      }
+      [data-mobile-style-set] {
+        justify-content: center;
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 0.74rem;
+      }
+    }
+    .domain-panel {
+      display: none;
+      animation: oz-panel-in 260ms var(--oz-ease-out);
+    }
+    .domain-panel[data-active="true"] {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    @keyframes oz-panel-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .code-editor {
+      width: 100%;
+      min-height: 300px;
+      font-family: var(--oz-font-mono);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      padding: 14px;
+      border-radius: var(--oz-radius-sm);
+      background: var(--oz-surface-inset);
+      border: 1px solid var(--oz-border);
+      color: var(--oz-text);
+      outline: none;
+      resize: vertical;
+    }
+    .code-editor:focus {
+      border-color: var(--oz-primary);
+      box-shadow: 0 0 0 3px var(--oz-primary-soft);
+    }
+    .marquee-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--oz-radius-pill);
+      background: var(--oz-surface);
+      border: 1px solid var(--oz-border-strong);
+      font-weight: 500;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+    .story-ring {
+      padding: 3px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--oz-cyan), var(--oz-violet));
+      display: inline-flex;
+    }
+    .social-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .social-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================================== -->
+  <!-- STICKY SPATIAL TOPBAR                                                  -->
+  <!-- ====================================================================== -->
+  <header class="oz-container studio-topbar" data-mobile-open="false" data-mobile-style="slide">
+    <div class="studio-brand">
+      <div class="studio-logo"><oz-icon name="diamond" size="18"></oz-icon></div>
+      <span class="studio-brand-title" data-oz-brand-text>OzoneUI</span>
+      <oz-badge variant="cyan" pulse>v1.0</oz-badge>
+    </div>
+
+    <nav class="domain-nav" aria-label="OzoneUI Domains">
+      <div class="domain-nav__head">
+        <span style="font-weight:600;font-size:0.9rem;">OzoneUI Navigation</span>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost domain-nav__close" id="btn-mobile-drawer-close" aria-label="Close navigation menu">
+          <oz-icon name="x" size="16"></oz-icon>
+        </button>
+      </div>
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--glow" data-domain-btn="landing" data-oz-cmd="Switch to Landing & Bento Showcase"><oz-icon name="rocket" size="14"></oz-icon> Landing</button>
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" data-domain-btn="admin" data-oz-cmd="Switch to Admin Backend & Charts"><oz-icon name="chart-bar" size="14"></oz-icon> Admin BI</button>
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" data-domain-btn="marketplace" data-oz-cmd="Switch to Digital Marketplace"><oz-icon name="shopping-bag" size="14"></oz-icon> Marketplace</button>
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" data-domain-btn="social" data-oz-cmd="Switch to Social Network Feed"><oz-icon name="message-circle" size="14"></oz-icon> Social</button>
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" data-domain-btn="ai" data-oz-cmd="Switch to AI-Native JSON Lab"><oz-icon name="bot" size="14"></oz-icon> AI Lab</button>
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" data-domain-btn="showcase" data-oz-cmd="Open All 31 Components Showcase"><oz-icon name="layers" size="14"></oz-icon> Showcase (31)</button>
+      <div class="domain-nav__foot">
+        <span class="oz-text-xs oz-muted">Quick Controls</span>
+        <div class="domain-nav__quick-grid" role="group" aria-label="Quick Controls">
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-drawer-action="copilot"><oz-icon name="bot" size="13"></oz-icon> <span>Co-Pilot</span></button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-drawer-action="dna"><oz-icon name="wand" size="13"></oz-icon> <span>Theme DNA</span></button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-drawer-action="veil"><oz-icon name="shield" size="13"></oz-icon> <span>Veil: Off</span></button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-drawer-action="sound"><oz-icon name="volume-2" size="13"></oz-icon> <span>FX: On</span></button>
+        </div>
+        <span class="oz-text-xs oz-muted">Mobile Menu Style</span>
+        <div class="domain-nav__style-row" role="group" aria-label="Mobile Menu Style">
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-mobile-style-set="slide">Side Slide</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-mobile-style-set="modal">Modal</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-mobile-style-set="dropdown">Dropdown</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="studio-actions">
+      <div class="studio-cc-wrap">
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass studio-cc-btn" id="btn-control-center" aria-label="Open Workspace Controls" aria-expanded="false" aria-controls="studio-cc-popover">
+          <oz-icon name="sliders" size="14"></oz-icon>
+          <span class="studio-cc-label">Controls</span>
+          <span class="studio-cc-dot" id="cc-active-dot" data-veil="false" aria-hidden="true"></span>
+        </button>
+
+        <div class="studio-cc-popover" id="studio-cc-popover" data-open="false" role="region" aria-label="Workspace Controls">
+          <div class="studio-cc-head">
+            <span style="font-weight:600;font-size:0.84rem;">OzoneOS Controls</span>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" id="btn-cc-close" aria-label="Close controls" style="width:28px;height:28px;padding:0;justify-content:center;">
+              <oz-icon name="x" size="14"></oz-icon>
+            </button>
+          </div>
+          <div class="studio-cc-grid">
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass studio-cc-item" id="btn-ai-copilot" title="Watch the AI Ghost Cursor drive the UI">
+              <oz-icon name="bot" size="15" style="margin-top:2px;color:var(--oz-primary);"></oz-icon>
+              <span class="studio-cc-item__text"><strong>Co-Pilot</strong><small class="oz-muted">Ghost Cursor</small></span>
+            </button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass studio-cc-item" id="btn-dna-studio" title="Open Live Theme DNA Studio (Alt+O)">
+              <oz-icon name="wand" size="15" style="margin-top:2px;color:var(--oz-violet);"></oz-icon>
+              <span class="studio-cc-item__text"><strong>Theme DNA</strong><small class="oz-muted">Alt+O Studio</small></span>
+            </button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass studio-cc-item" id="btn-privacy-veil" title="Toggle Streamer PII Privacy Veil">
+              <oz-icon name="shield" size="15" style="margin-top:2px;"></oz-icon>
+              <span class="studio-cc-item__text"><strong class="studio-cc-state">Veil: Off</strong><small class="oz-muted">Mask PII Data</small></span>
+            </button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass studio-cc-item" id="btn-sound-fx" title="Toggle Procedural Web Audio FX">
+              <oz-icon name="volume-2" size="15" style="margin-top:2px;"></oz-icon>
+              <span class="studio-cc-item__text"><strong class="studio-cc-state">FX: On</strong><small class="oz-muted">Audio Chimes</small></span>
+            </button>
+          </div>
+          <div style="padding-top:10px;border-top:1px solid var(--oz-border);">
+            <div class="oz-between" style="margin-bottom:8px;">
+              <span class="oz-text-xs oz-muted">Quick Brand Palettes</span>
+              <span class="oz-text-xs oz-subtle" id="cc-preset-label">Ozone Cyber</span>
+            </div>
+            <div class="oz-swatch-row">
+              <button type="button" class="oz-swatch-btn" data-cc-preset="ozone" data-active="true" title="Ozone Cyber" aria-label="Apply Ozone Cyber palette" style="background:#00d2ff;"></button>
+              <button type="button" class="oz-swatch-btn" data-cc-preset="emerald" title="Emerald Fintech" aria-label="Apply Emerald Fintech palette" style="background:#10b981;"></button>
+              <button type="button" class="oz-swatch-btn" data-cc-preset="amethyst" title="Amethyst AI" aria-label="Apply Amethyst AI palette" style="background:#a855f7;"></button>
+              <button type="button" class="oz-swatch-btn" data-cc-preset="crimson" title="Crimson Pulse" aria-label="Apply Crimson Pulse palette" style="background:#f43f5e;"></button>
+              <button type="button" class="oz-swatch-btn" data-cc-preset="amber" title="Solar Luxury" aria-label="Apply Solar Luxury palette" style="background:#f59e0b;"></button>
+              <button type="button" class="oz-swatch-btn" data-cc-preset="ocean" title="Ocean SaaS" aria-label="Apply Ocean SaaS palette" style="background:#3b82f6;"></button>
+              <button type="button" class="oz-swatch-btn" data-cc-preset="nordic" title="Nordic Precision" aria-label="Apply Nordic Precision palette" style="background:#64748b;"></button>
+              <button type="button" class="oz-swatch-btn" data-cc-preset="daylight" title="Daylight Quartz" aria-label="Apply Daylight Quartz palette" style="background:#e2e8f0;"></button>
+              <input type="color" class="oz-color-input" id="cc-hex-picker" value="#00b4d8" title="Auto-brand from any HEX color" aria-label="Pick custom brand HEX color" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" id="btn-cmd-k" title="Open OS Command Palette"><oz-icon name="command" size="14"></oz-icon> <span>K</span></button>
+
+      <button type="button" class="oz-btn oz-btn--sm oz-btn--glass studio-mobile-toggle" id="btn-mobile-menu" aria-label="Toggle navigation menu" aria-expanded="false">
+        <oz-icon name="menu" size="16" id="mobile-menu-icon"></oz-icon>
+      </button>
+    </div>
+  </header>
+  <div class="studio-mobile-backdrop" id="studio-mobile-backdrop" data-open="false"></div>
+
+  <main class="oz-container oz-stack" style="padding-bottom:84px;">
+
+    <!-- ==================================================================== -->
+    <!-- DOMAIN 1: HIGH-END LANDING PAGE & BENTO SHOWCASE                     -->
+    <!-- ==================================================================== -->
+    <section class="domain-panel oz-stack" id="domain-landing" data-active="true">
+      <oz-hero
+        badge="OKLCH Atmospheric Engine • Zero Dependencies • AI-Native"
+        title="The UI Framework Built for Humans & AI Agents"
+        subtitle="Build mission-critical Admin Backends with Charts, Apple-tier Landing Pages, 3D Marketplaces, and Live Social Networks from 31 Web Standards custom tags—zero build required.">
+        <oz-button variant="glow" size="lg" pill icon="chart-bar" icon-right="arrow-right" id="hero-go-admin">Explore Admin &amp; Charts</oz-button>
+        <oz-button variant="glass" size="lg" pill icon="layers" id="hero-go-showcase">Browse All 31 Components</oz-button>
+        <oz-button variant="glass" size="lg" pill icon="zap" id="hero-go-ai">Stream AI JSON UI</oz-button>
+        <oz-button variant="glass" size="lg" pill icon="copy" id="hero-copy-prompt">Copy AI System Prompt</oz-button>
+      </oz-hero>
+
+      <oz-marquee speed="28s">
+        <div class="marquee-chip"><oz-icon name="sparkles" size="15" glow></oz-icon> OKLCH Perceptual Color</div>
+        <div class="marquee-chip"><oz-icon name="chart-bar" size="15"></oz-icon> Zero-Dep SVG Charts</div>
+        <div class="marquee-chip"><oz-icon name="bot" size="15"></oz-icon> Streaming JSON Renderer</div>
+        <div class="marquee-chip"><oz-icon name="volume-2" size="15"></oz-icon> Procedural Web Audio</div>
+        <div class="marquee-chip"><oz-icon name="wand" size="15"></oz-icon> Live Theme DNA Barcode</div>
+        <div class="marquee-chip"><oz-icon name="magnet" size="15"></oz-icon> Sortable Persistent Bento</div>
+        <div class="marquee-chip"><oz-icon name="shield" size="15"></oz-icon> Global Streamer Privacy Veil</div>
+        <div class="marquee-chip"><oz-icon name="zap" size="15"></oz-icon> 120fps Auto-FPS Governor</div>
+      </oz-marquee>
+
+      <div class="oz-between">
+        <div>
+          <h2 style="font-size:1.35rem;font-weight:600;letter-spacing:-0.02em;margin-bottom:4px;">Interactive Sortable Bento Grid</h2>
+          <p class="oz-text-sm oz-muted">Drag and drop any card to rearrange—your custom layout persists automatically. Hover for 120fps specular light & 3D tilt.</p>
+        </div>
+        <oz-badge variant="violet" pulse>Drag & Reorder Enabled</oz-badge>
+      </div>
+
+      <oz-bento cols="3" sortable persist-key="ozone-landing-bento-v1">
+        <oz-card id="bento-telemetry" span="2" tilt glow="cyan" title="Zero-JS Live Telemetry" subtitle="Declarative &lt;oz-chart&gt; + specular glass physics" badge="Live" exportable>
+          <oz-chart type="area" title="Weekly Inference Throughput" labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun" data="180,245,220,340,420,490,610" glow="cyan" exportable></oz-chart>
+        </oz-card>
+
+        <oz-card id="bento-primitives" tilt glow="violet" title="Core Primitives" subtitle="Hallucination-proof attributes & slots">
+          <div class="oz-stack" style="gap:12px;">
+            <div class="oz-row" style="gap:8px;">
+              <oz-button variant="glow" size="sm" toast="Glow pulse activated!">Glow</oz-button>
+              <oz-button variant="primary" size="sm" toast="Primary action executed!">Primary</oz-button>
+              <oz-button variant="success" size="sm" toast="Deployed cleanly!">Success</oz-button>
+              <oz-button variant="danger" size="sm" toast="Rollback triggered!">Danger</oz-button>
+            </div>
+            <oz-input label="Secret API Key (Privacy Masked)" mask="secret" value="oz_live_98a7f6c5e4d3b2a1" icon="key"></oz-input>
+            <div class="oz-between">
+              <oz-switch label="120fps Specular Glass" checked id="demo-mode-switch"></oz-switch>
+              <oz-badge variant="emerald" pulse>Ready</oz-badge>
+            </div>
+          </div>
+        </oz-card>
+
+        <oz-card id="bento-dualcopy" tilt glow="emerald" title="1-Tag Semantic Density" subtitle="80% fewer tokens for LLMs">
+          <p class="oz-text-sm oz-muted">Instead of 40 Tailwind classes, write one semantic tag. Copy either raw HTML or an AI generation prompt:</p>
+          <pre style="margin:0;padding:16px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);font-size:0.74rem;overflow:auto;">&lt;oz-stat title="MRR" value="$128,400"
+  delta="+32.4%" trend="up"
+  sparkline="40,55,48,72,95,128"&gt;
+&lt;/oz-stat&gt;</pre>
+          <div class="oz-row" style="gap:8px;">
+            <oz-button variant="primary" size="sm" id="copy-snippet-html">Copy HTML</oz-button>
+            <oz-button variant="glass" size="sm" id="copy-snippet-ai">Copy AI Prompt</oz-button>
+          </div>
+        </oz-card>
+
+        <oz-card id="bento-tabs" span="2" tilt glow="amber" title="Fluid Morphing Tabs & Dialog" subtitle="Resize-aware sliding glass pill + View Transitions">
+          <oz-tabs active="0">
+            <button slot="tab">Atmospheric Glass</button>
+            <button slot="tab">Precision Enterprise</button>
+            <button slot="tab">Modal & Audio</button>
+            <div slot="panel">
+              <p class="oz-text-sm oz-muted">Atmospheric mode layers OKLCH frosted glass, radial cursor-tracked specular borders, and spring physics—ideal for consumer launches, marketplaces, and spatial dashboards.</p>
+            </div>
+            <div slot="panel">
+              <p class="oz-text-sm oz-muted">Precision mode switches instantly to 1px crisp architectural hairlines, high-density tabular spacing, and zero backdrop distraction for heavy operational work.</p>
+            </div>
+            <div slot="panel">
+              <div class="oz-row">
+                <oz-button variant="glow" size="sm" id="open-sample-dialog">Open Spring Modal Dialog</oz-button>
+                <oz-button variant="glass" size="sm" id="play-toast-btn">Trigger Glass Toast</oz-button>
+              </div>
+            </div>
+          </oz-tabs>
+        </oz-card>
+      </oz-bento>
+
+      <oz-card title="Universal 4-Mode &lt;oz-icon&gt; Vector Engine" subtitle="Zero emojis—switch globally across Built-in Lucide, Phosphor, Tabler, Solar, Heroicons, or register custom SVGs" glow="cyan">
+        <div class="oz-between">
+          <div class="oz-row" style="gap:8px;" id="icon-pack-switcher">
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-icon-pack="builtin">Built-in (0ms Offline)</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-icon-pack="ph">Phosphor (ph)</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-icon-pack="tabler">Tabler</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-icon-pack="solar">Solar</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-icon-pack="heroicons">Heroicons</button>
+          </div>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="btn-register-custom-icon"><oz-icon name="plus" size="14"></oz-icon> Register Custom SVG</button>
+        </div>
+        <div class="oz-row" style="gap:18px;padding:14px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);border:1px solid var(--oz-border);">
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="rocket" size="20" glow></oz-icon> rocket</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="chart-bar" size="20"></oz-icon> chart-bar</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="bot" size="20"></oz-icon> bot</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="shield" size="20"></oz-icon> shield</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="sparkles" size="20"></oz-icon> sparkles</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="layers" size="20"></oz-icon> layers</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="zap" size="20"></oz-icon> zap</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;"><oz-icon name="heart" size="20"></oz-icon> heart</span>
+          <span class="oz-row oz-text-xs oz-muted" style="gap:6px;" id="custom-icon-slot"><oz-icon name="ozone-custom" size="20" style="color:var(--oz-cyan);"></oz-icon> custom-svg</span>
+        </div>
+      </oz-card>
+
+      <!-- Zero-Config Client & AI White-Label Branding Studio -->
+      <oz-card id="branding-studio-card" title="Zero-Config Client &amp; AI White-Label Branding Studio" subtitle="Deploy an entire client brand in 1 attribute, 1 logo HEX, section-scoped sub-themes, or a shareable pitch URL" badge="Client-Ready" glow="cyan">
+        <div class="oz-stack" style="gap:14px;">
+          <div>
+            <div class="oz-between" style="margin-bottom:8px;">
+              <span class="oz-text-xs oz-muted">1-Click Industry Brand Archetypes (<code>data-oz-preset="..."</code>)</span>
+              <oz-badge variant="emerald" id="demo-contrast-badge">AAA Verified</oz-badge>
+            </div>
+            <div class="oz-row" style="gap:8px;" id="demo-preset-list">
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-demo-preset="ozone"><span style="width:10px;height:10px;border-radius:50%;background:#00d2ff;"></span> Ozone Cyber</button>
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-preset="emerald"><span style="width:10px;height:10px;border-radius:50%;background:#10b981;"></span> Emerald Fintech</button>
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-preset="amethyst"><span style="width:10px;height:10px;border-radius:50%;background:#a855f7;"></span> Amethyst AI</button>
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-preset="crimson"><span style="width:10px;height:10px;border-radius:50%;background:#f43f5e;"></span> Crimson Pulse</button>
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-preset="amber"><span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;"></span> Solar Luxury</button>
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-preset="ocean"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;"></span> Ocean SaaS</button>
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-preset="nordic"><span style="width:10px;height:10px;border-radius:50%;background:#64748b;"></span> Nordic Precision</button>
+              <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-preset="daylight"><span style="width:10px;height:10px;border-radius:50%;background:#cbd5e1;"></span> Daylight Quartz</button>
+            </div>
+          </div>
+
+          <div class="oz-grid-2" style="gap:14px;align-items:stretch;">
+            <div class="oz-stack" style="gap:10px;padding:16px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);border:1px solid var(--oz-border);">
+              <div class="oz-between">
+                <span class="oz-text-xs oz-muted">1-HEX Logo Auto-Generator &amp; Harmony</span>
+                <code class="oz-text-xs" id="demo-hex-value" style="color:var(--oz-primary);font-weight:600;">#00b4d8 · 205°</code>
+              </div>
+              <div class="oz-row" style="gap:8px;">
+                <input type="color" class="oz-color-input" id="demo-brand-hex" value="#00b4d8" aria-label="Pick client brand color" style="width:38px;height:30px;" />
+                <input type="file" accept="image/*" id="demo-logo-file" style="display:none;" />
+                <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="demo-logo-upload"><oz-icon name="sparkles" size="14"></oz-icon> Extract From Logo</button>
+                <div class="oz-row" style="gap:4px;">
+                  <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-demo-harmony="analogous" style="padding:4px 8px;font-size:0.72rem;">Analogous</button>
+                  <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-harmony="complementary" style="padding:4px 8px;font-size:0.72rem;">Complement</button>
+                  <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-harmony="triadic" style="padding:4px 8px;font-size:0.72rem;">Triadic</button>
+                  <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-harmony="monochrome" style="padding:4px 8px;font-size:0.72rem;">Mono</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="oz-stack" style="gap:10px;padding:16px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);border:1px solid var(--oz-border);">
+              <div class="oz-between">
+                <span class="oz-text-xs oz-muted">White-Label Identity &amp; UI Density</span>
+                <span class="oz-text-xs oz-subtle">Renames header live</span>
+              </div>
+              <div class="oz-row" style="gap:8px;">
+                <input type="text" id="demo-brand-name" placeholder="Client brand name (e.g. Solaris AI)" style="flex:1;min-width:160px;padding:6px 10px;border-radius:var(--oz-radius-sm);border:1px solid var(--oz-border);background:var(--oz-bg);color:var(--oz-text);font-size:0.8rem;" />
+                <div class="oz-row" style="gap:4px;">
+                  <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-density="compact" style="padding:4px 8px;font-size:0.72rem;">Compact</button>
+                  <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-demo-density="default" style="padding:4px 8px;font-size:0.72rem;">Default</button>
+                  <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-demo-density="spacious" style="padding:4px 8px;font-size:0.72rem;">Spacious</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="oz-text-xs oz-muted" style="margin-bottom:8px;">Section-Scoped Sub-Theming (mix multiple <code>data-oz-preset</code> blocks on one page without JS)</div>
+            <div class="oz-grid-3" style="gap:12px;" id="demo-scoped-preview">
+              <oz-card data-oz-preset="emerald" title="Emerald Fintech" subtitle="&lt;oz-card data-oz-preset=&quot;emerald&quot;&gt;">
+                <div class="oz-between" style="gap:8px;">
+                  <oz-button variant="primary" size="sm" toast="Scoped Emerald action executed!">Approve</oz-button>
+                  <oz-badge variant="emerald">155° OKLCH</oz-badge>
+                </div>
+              </oz-card>
+              <oz-card data-oz-preset="amethyst" title="Amethyst AI" subtitle="&lt;oz-card data-oz-preset=&quot;amethyst&quot;&gt;">
+                <div class="oz-between" style="gap:8px;">
+                  <oz-button variant="primary" size="sm" toast="Scoped Amethyst inference launched!">Generate</oz-button>
+                  <oz-badge variant="violet">285° OKLCH</oz-badge>
+                </div>
+              </oz-card>
+              <oz-card data-oz-preset="crimson" title="Crimson Pulse" subtitle="&lt;oz-card data-oz-preset=&quot;crimson&quot;&gt;">
+                <div class="oz-between" style="gap:8px;">
+                  <oz-button variant="primary" size="sm" toast="Scoped Crimson stream started!">Go Live</oz-button>
+                  <oz-badge variant="rose">12° OKLCH</oz-badge>
+                </div>
+              </oz-card>
+            </div>
+          </div>
+
+          <div style="padding:16px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);border:1px solid var(--oz-border);">
+            <div class="oz-between" style="gap:8px;margin-bottom:8px;">
+              <span class="oz-text-xs oz-muted">Live 1-Line Production Deploy &amp; Client Pitch Kit</span>
+              <div class="oz-row" style="gap:10px;">
+                <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" id="btn-copy-deploy-html"><oz-icon name="copy" size="13"></oz-icon> Copy &lt;html&gt; Tag</button>
+                <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="btn-copy-share-url"><oz-icon name="globe" size="13"></oz-icon> Copy Client Share Link</button>
+                <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="btn-copy-w3c-tokens"><oz-icon name="code" size="13"></oz-icon> W3C Tokens JSON</button>
+                <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" id="btn-demo-brand-reset">Reset</button>
+              </div>
+            </div>
+            <pre id="demo-deploy-snippet" style="margin:0;padding:10px;border-radius:6px;background:var(--oz-bg);border:1px solid var(--oz-border);font-family:var(--oz-font-mono);font-size:0.75rem;overflow-x:auto;color:var(--oz-primary);">&lt;html lang="en" data-oz-preset="ozone" data-oz-brand="#00b4d8" data-oz-harmony="analogous" data-oz-mode="atmospheric" data-oz-theme="dark" data-oz-density="default"&gt;</pre>
+          </div>
+        </div>
+      </oz-card>
+
+      <div>
+        <h2 style="font-size:1.35rem;font-weight:600;letter-spacing:-0.02em;margin-bottom:16px;">Interactive Pricing Tiers</h2>
+        <div class="oz-grid-3">
+          <oz-pricing title="Open Core" subtitle="For solo makers & static sites" price="$0" period="/forever" features="All 31 Web Components,OKLCH Dual Mode Engine,Zero-Dependency SVG Charts,MIT Open Source" cta="Start Free"></oz-pricing>
+          <oz-pricing title="Ozone Studio Pro" subtitle="For high-growth SaaS & AI teams" price="$49" period="/mo" popular features="AI Streaming <oz-renderer>,Bi-Directional Ghost Co-Pilot,Theme DNA Barcode Presets,Priority Enterprise Support" cta="Deploy Studio Pro"></oz-pricing>
+          <oz-pricing title="Quantum Enterprise" subtitle="Custom design systems at scale" price="$199" period="/mo" features="Multi-Brand DNA Governance,Custom WebMCP Action Schemas,Dedicated SLA & Audits,Unlimited Seats" cta="Contact Architects"></oz-pricing>
+        </div>
+      </div>
+
+      <!-- Header Architecture Variants Block -->
+      <oz-card title="Header Navigation Blocks (&lt;oz-header&gt;)" subtitle="Drop-in Floating, Priority+ Enterprise Search, and Minimal headers with modal, slide, and dropdown mobile drawers" badge="3 Variants" glow="violet">
+        <oz-header variant="floating" brand="Aether Cloud" badge="Beta" links="Platform,Pricing,Changelog,Docs" cta="Launch App" icon="sparkles" mobile-menu="modal"></oz-header>
+        <oz-header variant="enterprise" brand="Nexus Ops" links="Overview,Clusters,Incidents,Security,Billing" max-links="3" search cta="New Deploy" icon="cpu" mobile-menu="slide"></oz-header>
+        <oz-header variant="minimal" brand="Studio Journal" links="Essays,Manifesto,Press" cta="Subscribe" icon="globe" mobile-menu="dropdown"></oz-header>
+      </oz-card>
+
+      <!-- Functional Blocks Section -->
+      <div class="oz-grid-2" style="align-items:start;">
+        <oz-card title="Interactive FAQ &amp; System Callouts" subtitle="Expandable &lt;oz-accordion&gt; + dismissible &lt;oz-alert&gt; blocks" glow="cyan">
+          <oz-alert variant="cyan" title="Zero-Build Architecture" message="Include dist/ozone.css and dist/ozone.js in HTML, PHP, React, or Vue—all 31 tags hydrate automatically." cta="Open Docs" dismissible></oz-alert>
+          <oz-accordion items='[
+            {"title":"Does OzoneUI require Tailwind, React, or a bundler?","content":"No. OzoneUI runs on native Web Components and layered OKLCH CSS with zero runtime dependencies. You can still import it inside Vite, React, Vue, or Svelte anytime.","open":true},
+            {"title":"How does the Hallucination-Proof Prop Resolver help AI models?","content":"Attributes like variant, type, color, or kind resolve identically, and <oz-renderer> auto-repairs truncated or trailing-comma streaming JSON without crashing."},
+            {"title":"Can developers bring their own icon library or CSS framework?","content":"Yes. <oz-icon> supports Built-in Lucide vectors, Phosphor, Tabler, Solar, Heroicons, custom SVG registration via Ozone.icons.register(), external URLs, and CSS font classes."}
+          ]'></oz-accordion>
+        </oz-card>
+
+        <oz-card title="Live Progress Meters &amp; Release Roadmap" subtitle="&lt;oz-progress&gt; telemetry bars + &lt;oz-timeline&gt; milestones" glow="emerald">
+          <oz-progress label="Edge Bundle Optimization (44 KB gzipped target)" value="92" variant="emerald" show-value></oz-progress>
+          <oz-progress label="OKLCH Multi-Brand DNA Sync" value="78" variant="cyan" show-value></oz-progress>
+          <oz-progress label="Streaming AI Schema Hydration" value="60" variant="violet" indeterminate></oz-progress>
+          <oz-timeline items='[
+            {"time":"v1.0 Live","title":"Quad-Domain Component Suite","desc":"Admin BI, Landing, Marketplace, and Social primitives shipped.","status":"emerald"},
+            {"time":"v1.1 Live","title":"Universal 4-Mode <oz-icon> Engine","desc":"Offline Lucide vectors + Phosphor, Tabler, Solar, and custom SVG hooks.","status":"cyan"},
+            {"time":"v1.2 Live","title":"31-Component Showcase & Layout Blocks","desc":"Headers, multi-column footers, accordions, alerts, progress, and timelines.","status":"violet"}
+          ]'></oz-timeline>
+        </oz-card>
+      </div>
+
+      <!-- Compact Footer Variants Block -->
+      <oz-card title="Compact Footer Variants (&lt;oz-footer&gt;)" subtitle="Minimal bar &amp; live status strip variants (full multi-column footer is below)">
+        <oz-footer variant="minimal" brand="Aether Studio" status="99.99% Uptime" columns='[{"title":"Nav","links":["Privacy","Terms","Security","Status"]}]'></oz-footer>
+        <oz-footer variant="status" brand="Ozone Edge" status="All 18 Global Regions Healthy" tagline="Telemetry Latency: 14ms avg" copyright="Edge Network SLA v4.2"></oz-footer>
+      </oz-card>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- DOMAIN 2: ENTERPRISE ADMIN BACKEND & BI                              -->
+    <!-- ==================================================================== -->
+    <section class="domain-panel oz-stack" id="domain-admin">
+      <div class="oz-between">
+        <div>
+          <oz-breadcrumbs items="Workspace,Control Plane,Global Telemetry,Live Node" style="margin-bottom:8px;"></oz-breadcrumbs>
+          <h1 style="font-size:1.55rem;font-weight:700;letter-spacing:-0.025em;margin-bottom:6px;">Admin Control Plane &amp; BI Telemetry</h1>
+          <p class="oz-text-sm oz-muted">Toggle <strong>Privacy Veil</strong> in the topbar to mask sensitive revenue &amp; emails live. Click any chart mode or export CSV/SVG in 1 click.</p>
+        </div>
+        <div class="oz-row" style="gap:8px;">
+          <oz-badge variant="emerald" pulse>Live Polling Active (8s)</oz-badge>
+          <oz-button variant="glass" size="sm" id="admin-precision-btn">Toggle Precision Mode</oz-button>
+        </div>
+      </div>
+
+      <div class="oz-grid-4">
+        <oz-stat title="Monthly Recurring Rev" value="$128,400" delta="+32.4%" trend="up" sparkline="42,58,52,79,94,112,128" mask="blur" tilt glow="cyan"></oz-stat>
+        <oz-stat title="Live Polled Metric" src="mock://metrics" poll="8s" tilt glow="violet"></oz-stat>
+        <oz-stat title="Net Retention (NRR)" value="138.6%" delta="+6.2%" trend="up" sparkline="118,121,126,129,134,138" tilt glow="emerald"></oz-stat>
+        <oz-stat title="P99 Edge Latency" value="18ms" delta="-24.0%" trend="down" sparkline="41,38,32,29,24,20,18" tilt glow="amber"></oz-stat>
+      </div>
+
+      <div class="oz-grid-2">
+        <oz-chart type="area" title="Global Compute & Revenue Velocity" subtitle="Switch between Area, Bar, Line, or Donut + Export SVG" src="mock://revenue" poll="10s" glow="cyan" exportable></oz-chart>
+        <oz-chart type="donut" title="Revenue Mix by Domain" subtitle="Interactive hover slice breakdown" labels="Admin SaaS,Marketplace Fees,AI Inference,Enterprise" data="54000,32000,28500,13900" glow="violet" exportable></oz-chart>
+      </div>
+
+      <oz-table title="Enterprise Account Directory (Email & MRR Respect Privacy Veil)" src="mock://users" searchable exportable mask-cols="email,mrr"></oz-table>
+
+      <oz-smart-view id="admin-smart-morpher" title="Zero-Config 4-Way Data Morpher" src="mock://products" view="table"></oz-smart-view>
+
+      <div class="oz-grid-2" style="align-items:start;">
+        <oz-card title="Cluster Capacity &amp; Alerting" subtitle="Real-time operational thresholds">
+          <oz-alert variant="amber" title="Inference Burst Detected" message="EU-Central GPU pool scaled automatically to handle +42% throughput." cta="Inspect Nodes" dismissible></oz-alert>
+          <oz-progress label="GPU Cluster Memory (eu-central-1)" value="81" variant="amber" show-value></oz-progress>
+          <oz-progress label="PostgreSQL Read Replicas" value="54" variant="cyan" show-value></oz-progress>
+          <oz-progress label="Edge Cache Hit Ratio" value="97" variant="emerald" show-value></oz-progress>
+        </oz-card>
+        <oz-card title="Deployment &amp; Security Audit Log" subtitle="Recent control-plane events">
+          <oz-timeline items='[
+            {"time":"2m ago","title":"Auto-Scaled 12 Inference Workers","desc":"Triggered by latency policy < 25ms","status":"emerald"},
+            {"time":"18m ago","title":"Rotated Workspace API Keys","desc":"Masked automatically under Streamer Privacy Veil","status":"cyan"},
+            {"time":"1h ago","title":"Published Schema Manifest v1.0","desc":"Synchronized 31 <oz-*> component contracts to AI agents","status":"violet"}
+          ]'></oz-timeline>
+        </oz-card>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- DOMAIN 3: LUXURY DIGITAL MARKETPLACE                                 -->
+    <!-- ==================================================================== -->
+    <section class="domain-panel oz-stack" id="domain-marketplace">
+      <div class="oz-between">
+        <div>
+          <h1 style="font-size:1.55rem;font-weight:700;letter-spacing:-0.025em;margin-bottom:6px;">Aether Digital Asset Marketplace</h1>
+          <p class="oz-text-sm oz-muted">3D perspective tilt cards, wishlist persistence, faceted filtering, and Shared-Element Morph quick inspection.</p>
+        </div>
+        <div class="oz-row" style="gap:10px;">
+          <oz-badge variant="cyan" icon="shopping-cart" id="cart-counter-badge">Cart: 0 items</oz-badge>
+          <oz-button variant="glow" size="sm" id="view-cart-btn">Checkout</oz-button>
+        </div>
+      </div>
+
+      <oz-card>
+        <div class="oz-between">
+          <div class="oz-row" style="gap:10px;" id="market-filters">
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-cat="All">All Assets</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="AI Agents">AI Agents</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="Shaders">Shaders</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="Templates">Templates</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="Audio">Audio</button>
+          </div>
+          <div style="width:min(260px, 100%);">
+            <oz-input placeholder="Search marketplace..." id="market-search" icon="search"></oz-input>
+          </div>
+        </div>
+      </oz-card>
+
+      <div class="oz-grid-3" id="marketplace-grid">
+        <oz-product-card title="Neural Spatial UI Kit" category="Templates" price="$89" old-price="$149" rating="4.9" reviews="412" badge="Bestseller" seller="Elena Vance" gradient="cyan"></oz-product-card>
+        <oz-product-card title="Raymarched Glass Shaders" category="Shaders" price="$64" old-price="$99" rating="5.0" reviews="289" badge="4K Ready" seller="Kuro Labs" gradient="violet"></oz-product-card>
+        <oz-product-card title="Autonomous Co-Pilot SDK" category="AI Agents" price="$149" old-price="$220" rating="4.8" reviews="176" badge="Trending" seller="Hyperion AI" gradient="emerald"></oz-product-card>
+        <oz-product-card title="Procedural Synth Soundpack" category="Audio" price="$39" old-price="$59" rating="4.9" reviews="510" badge="Zero-Asset" seller="SonicForge" gradient="amber"></oz-product-card>
+        <oz-product-card title="Obsidian BI Dashboard Pro" category="Templates" price="$119" old-price="$179" rating="4.9" reviews="308" badge="Enterprise" seller="Nexus Cloud" gradient="rose"></oz-product-card>
+        <oz-product-card title="WebGPU Particle Engine" category="Shaders" price="$79" old-price="$119" rating="4.7" reviews="142" badge="120fps" seller="Aether Lab" gradient="cyan"></oz-product-card>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- DOMAIN 4: NEXT-GEN SOCIAL NETWORK & CREATOR HUB                      -->
+    <!-- ==================================================================== -->
+    <section class="domain-panel oz-stack" id="domain-social">
+      <div class="oz-between">
+        <div>
+          <h1 style="font-size:1.55rem;font-weight:700;letter-spacing:-0.025em;margin-bottom:6px;">Ozone Pulse — Creator &amp; AI Network</h1>
+          <p class="oz-text-sm oz-muted">Publish directly from the composer below into the live feed with animated View Transitions and tactile reactions.</p>
+        </div>
+        <oz-badge variant="violet" pulse>1,420 Creators Online</oz-badge>
+      </div>
+
+      <oz-card>
+        <div class="oz-row" style="gap:18px;overflow-x:auto;padding-bottom:4px;">
+          <div style="text-align:center;"><div class="story-ring"><oz-avatar name="Elena Vance" status="streaming" size="50"></oz-avatar></div><div class="oz-text-xs" style="margin-top:4px;">Elena</div></div>
+          <div style="text-align:center;"><div class="story-ring"><oz-avatar name="Marcus Chen" status="online" size="50"></oz-avatar></div><div class="oz-text-xs" style="margin-top:4px;">Marcus</div></div>
+          <div style="text-align:center;"><div class="story-ring"><oz-avatar name="Aria Solis" status="online" size="50"></oz-avatar></div><div class="oz-text-xs" style="margin-top:4px;">Aria</div></div>
+          <div style="text-align:center;"><div class="story-ring"><oz-avatar name="Sora K" status="busy" size="50"></oz-avatar></div><div class="oz-text-xs" style="margin-top:4px;">Sora</div></div>
+          <div style="text-align:center;"><div class="story-ring"><oz-avatar name="Devon B" status="away" size="50"></oz-avatar></div><div class="oz-text-xs" style="margin-top:4px;">Devon</div></div>
+          <div style="text-align:center;"><div class="story-ring"><oz-avatar name="Nova AI" status="streaming" size="50"></oz-avatar></div><div class="oz-text-xs" style="margin-top:4px;">Nova AI</div></div>
+        </div>
+      </oz-card>
+
+      <div class="social-layout">
+        <div class="oz-stack" style="gap:22px;">
+          <oz-composer target="#social-feed" author="Alex Mercer" handle="@alex_architect" placeholder="Write a post and click Publish to see it morph live into the feed..."></oz-composer>
+
+          <div id="social-feed" class="oz-stack" style="gap:22px;">
+            <oz-post author="Elena Vance" handle="@elena_ai" verified status="streaming" time="4m ago" likes="1248" comments="94" shares="215" tags="OzoneUI,SpatialWeb,OKLCH" content="Just replaced 3 separate UI libraries and 40KB of chart dependencies with OzoneUI. One semantic &lt;oz-smart-view&gt; gave our ops team Table, Bar Chart, Bento Cards, and JSON views automatically."></oz-post>
+            <oz-post author="Marcus Chen" handle="@marcus_dev" verified status="online" time="22m ago" likes="842" comments="41" shares="112" tags="GenerativeUI,LLM" content="Feeding llms.txt into our coding agent made it build a complete multi-tab SaaS billing backend using &lt;oz-renderer&gt; on the very first prompt—zero broken imports, zero Tailwind bloat."></oz-post>
+            <oz-post author="Aria Solis" handle="@aria_solis" status="online" time="1h ago" likes="519" comments="28" shares="64" tags="WebAudio,ThemeDNA" content="The Theme DNA Barcode feature is unreal. Tweaked OKLCH hue + specular blur in Alt+O Studio and pasted one oz:// string to sync our entire company brand theme across 6 apps."></oz-post>
+          </div>
+        </div>
+
+        <div class="oz-stack" style="gap:22px;">
+          <oz-stat title="Community Pulse" value="48.2K" delta="+18.9%" trend="up" sparkline="22,28,26,34,39,44,48" glow="violet"></oz-stat>
+          <oz-card title="Trending Topics" subtitle="Live network velocity">
+            <div class="oz-stack" style="gap:16px;">
+              <div class="oz-between oz-text-sm"><strong>#OzoneUI</strong><oz-badge variant="cyan">14.2k posts</oz-badge></div>
+              <div class="oz-between oz-text-sm"><strong>#GenerativeUI</strong><oz-badge variant="violet">9.8k posts</oz-badge></div>
+              <div class="oz-between oz-text-sm"><strong>#ThemeDNA</strong><oz-badge variant="emerald">6.1k posts</oz-badge></div>
+              <div class="oz-between oz-text-sm"><strong>#ZeroBuildWeb</strong><oz-badge variant="amber">4.5k posts</oz-badge></div>
+            </div>
+          </oz-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- DOMAIN 5: AI-NATIVE LAB & <oz-renderer> SANDBOX                      -->
+    <!-- ==================================================================== -->
+    <section class="domain-panel oz-stack" id="domain-ai">
+      <div class="oz-between">
+        <div>
+          <h1 style="font-size:1.55rem;font-weight:700;letter-spacing:-0.025em;margin-bottom:6px;">AI-Native Generative UI Lab</h1>
+          <p class="oz-text-sm oz-muted">Edit JSON on the left or simulate a token-by-token LLM stream—watch <code>&lt;oz-renderer&gt;</code> self-heal partial JSON into live UI on the right.</p>
+        </div>
+        <div class="oz-row" style="gap:8px;">
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glow" id="btn-stream-sim"><oz-icon name="zap" size="14"></oz-icon> Simulate LLM Token Stream</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="btn-copy-llms"><oz-icon name="copy" size="14"></oz-icon> Copy AI Prompt (llms.txt)</button>
+        </div>
+      </div>
+
+      <div class="oz-grid-2" style="align-items:start;">
+        <oz-card title="Declarative JSON Schema Input" subtitle="Load a preset or type live JSON">
+          <div class="oz-row" style="gap:10px;margin-bottom:16px;">
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-ai-preset="kpi">Admin KPI Grid</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-ai-preset="market">Marketplace Drop</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-ai-preset="broken">Malformed Streaming JSON</button>
+          </div>
+          <textarea id="ai-schema-editor" class="code-editor"></textarea>
+        </oz-card>
+
+        <oz-card title="Live &lt;oz-renderer&gt; Output" subtitle="Safe declarative component hydration + oz-action events" glow="violet">
+          <oz-renderer id="ai-live-renderer"></oz-renderer>
+        </oz-card>
+      </div>
+
+      <div class="oz-grid-2">
+        <oz-card title="Agent UI Introspection (Ozone.inspectUI)" subtitle="Semantic action tree visible to AI browser agents">
+          <div class="oz-between" style="margin-bottom:16px;">
+            <span class="oz-text-xs oz-muted">Scans active &lt;oz-*&gt; components cleanly without fragile CSS scraping</span>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" id="btn-scan-ui">Scan Live DOM Tree</button>
+          </div>
+          <pre id="ui-tree-output" style="margin:0;padding:16px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);font-size:0.75rem;max-height:220px;overflow:auto;"></pre>
+        </oz-card>
+
+        <oz-card title="1-Click AI System Prompt (llms.txt)" subtitle="Paste into ChatGPT, Claude, Gemini, or Cursor">
+          <pre id="ai-prompt-preview" style="margin:0 0 12px;padding:16px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);font-size:0.74rem;max-height:190px;overflow:auto;"></pre>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glow" id="btn-copy-prompt-2">Copy Full AI Prompt</button>
+        </oz-card>
+      </div>
+    </section>
+
+    <!-- ==================================================================== -->
+    <!-- DOMAIN 6: ALL 31 COMPONENTS SHOWCASE (ROW BY ROW)                    -->
+    <!-- ==================================================================== -->
+    <section class="domain-panel oz-stack" id="domain-showcase">
+      <div class="oz-between">
+        <div>
+          <h1 style="font-size:1.55rem;font-weight:700;letter-spacing:-0.025em;margin-bottom:6px;">All 31 OzoneUI Components — Row-by-Row Showcase</h1>
+          <p class="oz-text-sm oz-muted">Every component explained on its own dedicated row with props, copyable HTML, AI prompt, and a live interactive sandbox.</p>
+        </div>
+        <oz-badge variant="cyan" icon="layers" pulse id="showcase-count-badge">31 Components</oz-badge>
+      </div>
+
+      <oz-card>
+        <div class="oz-between">
+          <div class="oz-row" style="gap:10px;" id="showcase-filters">
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-sc-cat="all">All (31)</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="layout">Layout &amp; Headers</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="core">Core Primitives</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="admin">Admin &amp; BI</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="landing">Landing &amp; Motion</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="social">Marketplace &amp; Social</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="ai">AI &amp; Spatial OS</button>
+          </div>
+          <div style="width:min(280px, 100%);">
+            <oz-input placeholder="Search 31 components..." id="showcase-search" icon="search"></oz-input>
+          </div>
+        </div>
+      </oz-card>
+
+      <div id="showcase-rows" class="oz-stack"></div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================== -->
+  <!-- GLOBAL MULTI-COLUMN FOOTER                                             -->
+  <!-- ====================================================================== -->
+  <div class="oz-container" style="padding-bottom:48px;">
+    <oz-footer
+      variant="multi-col"
+      brand="OzoneUI"
+      tagline="Web-Standards, AI-Native Quad-Domain UI Framework for Admin Backends, Landing Pages, Marketplaces &amp; Social Networks."
+      status="All 31 Components Operational"
+      newsletter
+      columns='[
+        {"title":"Domains","links":[{"label":"Landing & Bento","target":"landing"},{"label":"Admin BI & Charts","target":"admin"},{"label":"Digital Marketplace","target":"marketplace"},{"label":"Social Network","target":"social"}]},
+        {"title":"AI & Catalog","links":[{"label":"AI Generative Lab","target":"ai"},{"label":"All 31 Components","target":"showcase"},{"label":"llms.txt Prompt Spec","target":"ai"},{"label":"Theme DNA Studio"}]},
+        {"title":"Capabilities","links":[{"label":"OKLCH Dual Engine"},{"label":"4-Mode Vector Icons"},{"label":"Streaming JSON Repair"},{"label":"Streamer Privacy Veil"}]}
+      ]'>
+    </oz-footer>
+  </div>
+
+  <!-- ====================================================================== -->
+  <!-- SHARED MODALS + SPATIAL OS LAYER                                       -->
+  <!-- ====================================================================== -->
+  <oz-dialog id="sample-dialog" title="OzoneUI Spatial Spring Dialog">
+    <p class="oz-text-sm oz-muted" style="margin-bottom:14px;">
+      This dialog uses CSS spring physics, backdrop glass blur, and View Transitions morphing—working seamlessly across HTML, PHP, React, Vue, or AI-generated schemas.
+    </p>
+    <oz-input label="Workspace Identifier" value="ozone-quantum-prod" icon="diamond"></oz-input>
+    <div class="oz-row" style="justify-content:flex-end;margin-top:16px;">
+      <oz-button variant="ghost" id="close-sample-dialog">Cancel</oz-button>
+      <oz-button variant="glow" id="confirm-sample-dialog">Confirm Action</oz-button>
+    </div>
+  </oz-dialog>
+
+  <oz-dialog id="product-quickview-dialog" title="Asset Quick Inspection">
+    <div id="product-quickview-body" class="oz-stack" style="gap:12px;"></div>
+  </oz-dialog>
+
+  <oz-command auto-discover></oz-command>
+  <oz-inspector></oz-inspector>
+
+  <script type="module">
+    import Ozone from './dist/ozone.js';
+
+    // --- Domain Switcher, Control Center & Mobile Drawer --------------------
+    const topbar = document.querySelector('.studio-topbar');
+    const mobileMenuBtn = document.getElementById('btn-mobile-menu');
+    const mobileDrawerClose = document.getElementById('btn-mobile-drawer-close');
+    const mobileBackdrop = document.getElementById('studio-mobile-backdrop');
+    const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+    const mobileStyleBtns = document.querySelectorAll('[data-mobile-style-set]');
+    const domainBtns = document.querySelectorAll('[data-domain-btn]');
+    const domainPanels = document.querySelectorAll('.domain-panel');
+    const ccWrap = document.querySelector('.studio-cc-wrap');
+    const ccBtn = document.getElementById('btn-control-center');
+    const ccCloseBtn = document.getElementById('btn-cc-close');
+    const ccPopover = document.getElementById('studio-cc-popover');
+    const ccDot = document.getElementById('cc-active-dot');
+
+    function setControlCenterOpen(open) {
+      ccPopover?.setAttribute('data-open', open ? 'true' : 'false');
+      ccBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    function syncBackdrop() {
+      const open = topbar?.getAttribute('data-mobile-open') === 'true';
+      const style = topbar?.getAttribute('data-mobile-style') || 'slide';
+      mobileBackdrop?.setAttribute('data-open', open && style !== 'dropdown' ? 'true' : 'false');
+    }
+
+    function setMobileMenuOpen(open) {
+      if (open) setControlCenterOpen(false);
+      topbar?.setAttribute('data-mobile-open', open ? 'true' : 'false');
+      mobileMenuBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+      mobileMenuIcon?.setAttribute('name', open ? 'x' : 'menu');
+      syncBackdrop();
+    }
+
+    ccBtn?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      Ozone.sound.click();
+      setControlCenterOpen(ccPopover?.getAttribute('data-open') !== 'true');
+    });
+    ccCloseBtn?.addEventListener('click', () => {
+      Ozone.sound.click();
+      setControlCenterOpen(false);
+    });
+    document.addEventListener('click', (e) => {
+      if (ccPopover?.getAttribute('data-open') === 'true' && ccWrap && !ccWrap.contains(e.target)) {
+        setControlCenterOpen(false);
+      }
+    });
+
+    mobileMenuBtn?.addEventListener('click', () => {
+      Ozone.sound.click();
+      setMobileMenuOpen(topbar?.getAttribute('data-mobile-open') !== 'true');
+    });
+    mobileDrawerClose?.addEventListener('click', () => {
+      Ozone.sound.click();
+      setMobileMenuOpen(false);
+    });
+    mobileBackdrop?.addEventListener('click', () => {
+      Ozone.sound.click();
+      setMobileMenuOpen(false);
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (ccPopover?.getAttribute('data-open') === 'true') setControlCenterOpen(false);
+        if (topbar?.getAttribute('data-mobile-open') === 'true') setMobileMenuOpen(false);
+      }
+    });
+
+    mobileStyleBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const nextStyle = btn.dataset.mobileStyleSet || 'slide';
+        topbar?.setAttribute('data-mobile-style', nextStyle);
+        mobileStyleBtns.forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+        syncBackdrop();
+        Ozone.sound.click();
+      });
+    });
+
+    function switchDomain(target) {
+      Ozone.morph(() => {
+        domainPanels.forEach((p) => {
+          p.dataset.active = p.id === `domain-${target}` ? 'true' : 'false';
+        });
+        domainBtns.forEach((b) => {
+          const active = b.dataset.domainBtn === target;
+          b.className = `oz-btn oz-btn--sm ${active ? 'oz-btn--glow' : 'oz-btn--ghost'}`;
+        });
+      });
+      Ozone.sound.click();
+    }
+
+    domainBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        switchDomain(btn.dataset.domainBtn);
+        setMobileMenuOpen(false);
+      });
+    });
+
+    document.getElementById('hero-go-admin')?.addEventListener('click', () => switchDomain('admin'));
+    document.getElementById('hero-go-showcase')?.addEventListener('click', () => switchDomain('showcase'));
+    document.getElementById('hero-go-ai')?.addEventListener('click', () => switchDomain('ai'));
+    document.getElementById('hero-copy-prompt')?.addEventListener('click', () => {
+      navigator.clipboard?.writeText(Ozone.getAIPrompt()).catch(() => {});
+      Ozone.toast({ title: 'AI Prompt Copied', message: 'Paste into any LLM to build with OzoneUI!', variant: 'emerald' });
+    });
+
+    // --- Topbar Superpower Controls -----------------------------------------
+    const privacyBtn = document.getElementById('btn-privacy-veil');
+    const soundBtn = document.getElementById('btn-sound-fx');
+    const drawerVeilBtn = document.querySelector('[data-drawer-action="veil"]');
+    const drawerSoundBtn = document.querySelector('[data-drawer-action="sound"]');
+
+    function runCoPilot() {
+      setControlCenterOpen(false);
+      setMobileMenuOpen(false);
+      Ozone.agent.runDemoWorkflow();
+    }
+
+    function toggleDnaStudio() {
+      setControlCenterOpen(false);
+      setMobileMenuOpen(false);
+      document.querySelector('oz-inspector')?.toggle();
+    }
+
+    function togglePrivacyVeil() {
+      const next = document.documentElement.dataset.ozPrivacy !== 'true';
+      Ozone.setPrivacyMode(next);
+      ccDot?.setAttribute('data-veil', next ? 'true' : 'false');
+      if (privacyBtn) {
+        privacyBtn.querySelector('oz-icon')?.setAttribute('name', next ? 'shield-off' : 'shield');
+        const stateEl = privacyBtn.querySelector('.studio-cc-state');
+        if (stateEl) stateEl.textContent = `Veil: ${next ? 'On' : 'Off'}`;
+        privacyBtn.className = `oz-btn oz-btn--sm ${next ? 'oz-btn--primary' : 'oz-btn--glass'} studio-cc-item`;
+      }
+      if (drawerVeilBtn) {
+        drawerVeilBtn.querySelector('oz-icon')?.setAttribute('name', next ? 'shield-off' : 'shield');
+        const lbl = drawerVeilBtn.querySelector('span');
+        if (lbl) lbl.textContent = `Veil: ${next ? 'On' : 'Off'}`;
+        drawerVeilBtn.className = `oz-btn oz-btn--sm ${next ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+      }
+      Ozone.toast({ title: 'Privacy Veil', message: next ? 'Sensitive financial & PII values masked.' : 'Privacy mask lifted.', variant: 'amber' });
+    }
+
+    function toggleSoundFx() {
+      const next = document.documentElement.dataset.ozSound === 'off';
+      Ozone.setSound(next);
+      if (soundBtn) {
+        soundBtn.querySelector('oz-icon')?.setAttribute('name', next ? 'volume-2' : 'volume-x');
+        const stateEl = soundBtn.querySelector('.studio-cc-state');
+        if (stateEl) stateEl.textContent = `FX: ${next ? 'On' : 'Off'}`;
+      }
+      if (drawerSoundBtn) {
+        drawerSoundBtn.querySelector('oz-icon')?.setAttribute('name', next ? 'volume-2' : 'volume-x');
+        const lbl = drawerSoundBtn.querySelector('span');
+        if (lbl) lbl.textContent = `FX: ${next ? 'On' : 'Off'}`;
+      }
+    }
+
+    document.getElementById('btn-ai-copilot')?.addEventListener('click', runCoPilot);
+    document.getElementById('btn-dna-studio')?.addEventListener('click', toggleDnaStudio);
+    document.getElementById('btn-cmd-k')?.addEventListener('click', () => {
+      setControlCenterOpen(false);
+      document.querySelector('oz-command')?.toggle();
+    });
+    privacyBtn?.addEventListener('click', togglePrivacyVeil);
+    soundBtn?.addEventListener('click', toggleSoundFx);
+
+    document.querySelector('[data-drawer-action="copilot"]')?.addEventListener('click', runCoPilot);
+    document.querySelector('[data-drawer-action="dna"]')?.addEventListener('click', toggleDnaStudio);
+    drawerVeilBtn?.addEventListener('click', togglePrivacyVeil);
+    drawerSoundBtn?.addEventListener('click', toggleSoundFx);
+
+    // --- Icon Pack Switcher & Custom SVG Registration -----------------------
+    Ozone.icons.register('ozone-custom', '<polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><circle cx="12" cy="12" r="3"/>');
+
+    document.querySelectorAll('[data-icon-pack]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pack = btn.dataset.iconPack;
+        Ozone.icons.setDefaultSet(pack);
+        document.querySelectorAll('[data-icon-pack]').forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+        Ozone.sound.click();
+        Ozone.toast({ title: 'Icon Pack Switched', message: `All <oz-icon> nodes switched to "${pack}".`, variant: 'cyan' });
+      });
+    });
+
+    document.getElementById('btn-register-custom-icon')?.addEventListener('click', () => {
+      Ozone.icons.register('ozone-custom', '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>');
+      Ozone.sound.success();
+      Ozone.toast({ title: 'Custom SVG Registered', message: 'Updated "ozone-custom" vector paths live via Ozone.icons.register().', variant: 'emerald' });
+    });
+
+    // --- Client & AI White-Label Branding Controls + Header Swatches -------
+    const ccPresetLabel = document.getElementById('cc-preset-label');
+    const ccHexPicker = document.getElementById('cc-hex-picker');
+    const demoHexPicker = document.getElementById('demo-brand-hex');
+    const demoHexValue = document.getElementById('demo-hex-value');
+    const demoBrandNameInput = document.getElementById('demo-brand-name');
+    const demoDeploySnippet = document.getElementById('demo-deploy-snippet');
+    const demoContrastBadge = document.getElementById('demo-contrast-badge');
+
+    function syncBrandingUI() {
+      const s = Ozone.dna.read();
+      const presetObj = Ozone.dna.presets[s.preset];
+      if (ccPresetLabel) ccPresetLabel.textContent = presetObj ? presetObj.label : `Custom (${s.hue}°)`;
+      if (ccHexPicker) ccHexPicker.value = s.brand;
+      if (demoHexPicker) demoHexPicker.value = s.brand;
+      if (demoHexValue) demoHexValue.textContent = `${s.brand} · ${s.hue}°`;
+      if (demoDeploySnippet) demoDeploySnippet.textContent = Ozone.dna.getDeployHTML();
+      if (demoContrastBadge) demoContrastBadge.setAttribute('label', document.documentElement.dataset.ozContrast || 'AAA Verified');
+      if (demoBrandNameInput && document.activeElement !== demoBrandNameInput) {
+        demoBrandNameInput.value = s.brandName === 'OzoneUI' ? '' : s.brandName;
+      }
+
+      document.querySelectorAll('[data-cc-preset]').forEach((b) => {
+        b.dataset.active = b.dataset.ccPreset === s.preset ? 'true' : 'false';
+      });
+      document.querySelectorAll('[data-demo-preset]').forEach((b) => {
+        b.className = `oz-btn oz-btn--sm ${b.dataset.demoPreset === s.preset ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+      });
+      document.querySelectorAll('[data-demo-harmony]').forEach((b) => {
+        b.className = `oz-btn oz-btn--sm ${b.dataset.demoHarmony === s.harmony ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+      });
+      document.querySelectorAll('[data-demo-density]').forEach((b) => {
+        b.className = `oz-btn oz-btn--sm ${b.dataset.demoDensity === s.density ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+      });
+    }
+
+    document.querySelectorAll('[data-cc-preset], [data-demo-preset]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.ccPreset || btn.dataset.demoPreset || 'ozone';
+        const p = Ozone.dna.applyPreset(id);
+        Ozone.sound.click();
+        if (p) Ozone.toast({ title: 'Brand Palette Applied', message: `${p.label} (${p.hue}° / ${p.hex})`, variant: 'cyan', duration: 2000 });
+      });
+    });
+
+    [ccHexPicker, demoHexPicker].forEach((picker) => {
+      picker?.addEventListener('input', (e) => {
+        Ozone.dna.fromHex(e.target.value, Ozone.dna.read().harmony);
+      });
+    });
+
+    document.querySelectorAll('[data-demo-harmony]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        Ozone.sound.click();
+        Ozone.dna.fromHex(Ozone.dna.read().brand, btn.dataset.demoHarmony);
+      });
+    });
+
+    document.querySelectorAll('[data-demo-density]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        Ozone.sound.click();
+        Ozone.dna.setDensity(btn.dataset.demoDensity);
+      });
+    });
+
+    demoBrandNameInput?.addEventListener('input', (e) => {
+      Ozone.dna.setBrandName(e.target.value);
+    });
+
+    const demoLogoFile = document.getElementById('demo-logo-file');
+    document.getElementById('demo-logo-upload')?.addEventListener('click', () => demoLogoFile?.click());
+    demoLogoFile?.addEventListener('change', async () => {
+      const file = demoLogoFile.files?.[0];
+      if (!file) return;
+      try {
+        const hex = await Ozone.dna.fromLogoFile(file);
+        Ozone.sound.success();
+        Ozone.toast({ title: 'Logo Brand Extracted', message: `Applied dominant OKLCH color ${hex}.`, variant: 'emerald' });
+      } catch {
+        Ozone.toast({ title: 'Logo Read Failed', message: 'Please pick a valid PNG, JPG, or SVG image.', variant: 'rose' });
+      }
+    });
+
+    document.getElementById('btn-copy-deploy-html')?.addEventListener('click', () => {
+      const tag = Ozone.dna.getDeployHTML();
+      navigator.clipboard?.writeText(tag).catch(() => {});
+      Ozone.sound.success();
+      Ozone.toast({ title: '<html> Tag Copied', message: tag, variant: 'emerald' });
+    });
+    document.getElementById('btn-copy-share-url')?.addEventListener('click', () => {
+      const url = Ozone.dna.getShareURL();
+      navigator.clipboard?.writeText(url).catch(() => {});
+      Ozone.sound.success();
+      Ozone.toast({ title: 'Client Pitch URL Copied', message: 'Share this URL to demo the exact client brand live.', variant: 'emerald' });
+    });
+    document.getElementById('btn-copy-w3c-tokens')?.addEventListener('click', () => {
+      navigator.clipboard?.writeText(Ozone.dna.getW3CTokens()).catch(() => {});
+      Ozone.sound.success();
+      Ozone.toast({ title: 'W3C Design Tokens Copied', message: 'DTCG JSON tokens copied to clipboard.', variant: 'violet' });
+    });
+    document.getElementById('btn-demo-brand-reset')?.addEventListener('click', () => {
+      Ozone.sound.click();
+      Ozone.dna.reset();
+      Ozone.toast({ title: 'Branding Reset', message: 'Restored default Ozone Cyber identity.', variant: 'cyan' });
+    });
+
+    window.addEventListener('oz-dna-change', syncBrandingUI);
+    syncBrandingUI();
+
+    document.getElementById('demo-mode-switch')?.addEventListener('oz-change', (e) => {
+      Ozone.setMode(e.detail.checked ? 'atmospheric' : 'precision');
+    });
+
+    document.getElementById('admin-precision-btn')?.addEventListener('click', () => {
+      const next = document.documentElement.dataset.ozMode === 'precision' ? 'atmospheric' : 'precision';
+      Ozone.setMode(next);
+      Ozone.toast({ title: 'Mode Switched', message: `Switched to ${next} mode.`, variant: 'cyan' });
+    });
+
+    // --- Dual-Copy & Modals -------------------------------------------------
+    document.getElementById('copy-snippet-html')?.addEventListener('click', () => {
+      const code = `<oz-stat title="MRR" value="$128,400" delta="+32.4%" trend="up" sparkline="40,55,48,72,95,128"></oz-stat>`;
+      navigator.clipboard?.writeText(code).catch(() => {});
+      Ozone.toast({ title: 'HTML Copied', message: '1-tag semantic stat copied to clipboard.', variant: 'emerald' });
+    });
+
+    document.getElementById('copy-snippet-ai')?.addEventListener('click', () => {
+      const prompt = `Build an executive admin dashboard using OzoneUI (<oz-bento>, <oz-stat>, <oz-chart>, <oz-table>, <oz-smart-view>). Enable privacy masking on revenue and exportable charts.`;
+      navigator.clipboard?.writeText(prompt).catch(() => {});
+      Ozone.toast({ title: 'AI Prompt Copied', message: 'Prompt ready for your AI assistant.', variant: 'violet' });
+    });
+
+    const sampleDialog = document.getElementById('sample-dialog');
+    document.getElementById('open-sample-dialog')?.addEventListener('click', () => sampleDialog?.show());
+    document.getElementById('close-sample-dialog')?.addEventListener('click', () => sampleDialog?.close());
+    document.getElementById('confirm-sample-dialog')?.addEventListener('click', () => {
+      sampleDialog?.close();
+      Ozone.toast({ title: 'Confirmed', message: 'Workspace action committed cleanly.', variant: 'emerald' });
+    });
+    document.getElementById('play-toast-btn')?.addEventListener('click', () => {
+      Ozone.toast({ title: 'Atmospheric Toast', message: 'Glassmorphic notification with procedural audio.', variant: 'cyan' });
+    });
+
+    // --- Marketplace Filtering, Cart & Morph Quick-View ---------------------
+    let cartItems = [];
+    const cartBadge = document.getElementById('cart-counter-badge');
+    const quickDialog = document.getElementById('product-quickview-dialog');
+    const quickBody = document.getElementById('product-quickview-body');
+
+    document.addEventListener('oz-add-cart', (e) => {
+      cartItems.push(e.detail);
+      if (cartBadge) cartBadge.setAttribute('label', `Cart: ${cartItems.length} item${cartItems.length === 1 ? '' : 's'}`);
+    });
+
+    document.getElementById('view-cart-btn')?.addEventListener('click', () => {
+      if (cartItems.length === 0) {
+        Ozone.toast({ title: 'Cart Empty', message: 'Click Add on any marketplace asset first.', variant: 'amber' });
+        return;
+      }
+      Ozone.toast({ title: 'Checkout Ready', message: `${cartItems.length} item(s) ready for instant checkout.`, variant: 'emerald' });
+    });
+
+    document.addEventListener('oz-product-preview', (e) => {
+      const d = e.detail;
+      if (quickDialog && quickBody) {
+        quickDialog.setAttribute('title', d.title);
+        quickBody.innerHTML = `
+          <div class="oz-between">
+            <oz-badge variant="${d.gradient || 'cyan'}" pulse>${d.category}</oz-badge>
+            <oz-rating value="${d.rating}" reviews="${d.reviews}"></oz-rating>
+          </div>
+          <p class="oz-text-sm oz-muted">Created by <strong>${d.seller}</strong>. Includes full Web Standards source, OKLCH token integration, and lifetime updates.</p>
+          <div class="oz-between" style="padding-top:10px;border-top:1px solid var(--oz-border);">
+            <div style="font-size:1.5rem;font-weight:700;">${d.price} <span class="oz-subtle oz-text-xs" style="text-decoration:line-through;">${d.oldPrice || ''}</span></div>
+            <button type="button" class="oz-btn oz-btn--glow" id="quick-add-confirm">Acquire License</button>
+          </div>
+        `;
+        quickBody.querySelector('#quick-add-confirm')?.addEventListener('click', () => {
+          document.dispatchEvent(new CustomEvent('oz-add-cart', { detail: d, bubbles: true }));
+          quickDialog.close();
+          Ozone.toast({ title: 'License Acquired', message: `${d.title} added to cart.`, variant: 'emerald' });
+        });
+        quickDialog.show();
+      }
+    });
+
+    let activeCat = 'All';
+    let marketQuery = '';
+    function filterMarket() {
+      document.querySelectorAll('#marketplace-grid oz-product-card').forEach((card) => {
+        const cat = card.getAttribute('category') || '';
+        const title = (card.getAttribute('title') || '').toLowerCase();
+        const seller = (card.getAttribute('seller') || '').toLowerCase();
+        const matchCat = activeCat === 'All' || cat === activeCat;
+        const matchQ = !marketQuery || title.includes(marketQuery) || seller.includes(marketQuery);
+        card.style.display = matchCat && matchQ ? 'flex' : 'none';
+      });
+    }
+
+    document.querySelectorAll('#market-filters [data-cat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeCat = btn.dataset.cat;
+        document.querySelectorAll('#market-filters [data-cat]').forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+        Ozone.sound.click();
+        filterMarket();
+      });
+    });
+
+    document.getElementById('market-search')?.addEventListener('oz-input', (e) => {
+      marketQuery = e.detail.value.trim().toLowerCase();
+      filterMarket();
+    });
+
+    // --- AI-Native Lab (<oz-renderer> Sandbox + Streaming + Inspection) ----
+    const PRESETS = {
+      kpi: JSON.stringify({
+        type: 'oz-bento',
+        props: { cols: 2 },
+        children: [
+          { type: 'oz-stat', props: { title: 'AI Generated ARR', value: '$412,900', delta: '+44.2%', trend: 'up', sparkline: '120,165,190,260,340,412', glow: 'cyan' } },
+          { type: 'oz-stat', props: { title: 'Autonomous Tasks', value: '98,412', delta: '+19.8%', trend: 'up', sparkline: '45,52,61,74,88,98', glow: 'violet' } },
+          {
+            type: 'oz-card',
+            props: { span: 2, title: 'Live AI Operations Panel', subtitle: 'Safe declarative action binding inside <oz-renderer>', glow: 'emerald' },
+            children: [
+              { type: 'oz-chart', props: { type: 'bar', title: 'Agent Efficiency Index', labels: 'Mon,Tue,Wed,Thu,Fri', data: '68,74,82,91,98', glow: 'emerald' } },
+              { type: 'oz-button', props: { variant: 'glow', label: 'Execute AI Optimization', style: 'margin-top:12px;' }, action: { name: 'optimizeCluster', payload: { nodes: 16, mode: 'turbo' } } }
+            ]
+          }
+        ]
+      }, null, 2),
+
+      market: JSON.stringify({
+        type: 'oz-bento',
+        props: { cols: 2 },
+        children: [
+          { type: 'oz-product-card', props: { title: 'Quantum Neural Theme', category: 'Shaders', price: '$59', old_price: '$99', rating: '5.0', badge: 'AI Curated', seller: 'Ozone Lab', gradient: 'violet' } },
+          { type: 'oz-post', props: { author: 'Nova Agent', handle: '@nova_ai', verified: true, status: 'streaming', time: 'Live', likes: 312, comments: 24, shares: 48, tags: 'AI,StreamedUI', content: 'This entire marketplace & social layout was hydrated from a pure JSON schema!' } }
+        ]
+      }, null, 2),
+
+      broken: `{\n  "type": "oz-bento",\n  "props": { "cols": 2 },\n  "children": [\n    { "type": "oz-stat", "props": { "title": "Streaming Partial JSON", "value": "$84,210", "delta": "+27%", "trend": "up", "sparkline": "20,35,48,62,84" } },\n    { "type": "oz-card", "props": { "title": "Self-Healed Node", "subtitle": "Missing closing brackets & trailing comma repaired!"`
+    };
+
+    const editor = document.getElementById('ai-schema-editor');
+    const renderer = document.getElementById('ai-live-renderer');
+    let streamTimer = null;
+
+    function syncRenderer(val) {
+      if (renderer) renderer.setAttribute('schema', val);
+    }
+
+    if (editor) {
+      editor.value = PRESETS.kpi;
+      syncRenderer(editor.value);
+      editor.addEventListener('input', () => syncRenderer(editor.value));
+    }
+
+    document.querySelectorAll('[data-ai-preset]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (streamTimer) { clearInterval(streamTimer); streamTimer = null; }
+        const key = btn.dataset.aiPreset;
+        document.querySelectorAll('[data-ai-preset]').forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+        if (editor && PRESETS[key]) {
+          editor.value = PRESETS[key];
+          syncRenderer(editor.value);
+          Ozone.sound.click();
+        }
+      });
+    });
+
+    document.getElementById('btn-stream-sim')?.addEventListener('click', () => {
+      if (streamTimer) { clearInterval(streamTimer); streamTimer = null; }
+      const full = PRESETS.kpi;
+      let idx = 32;
+      Ozone.toast({ title: 'Streaming LLM Tokens', message: 'Watch <oz-renderer> self-heal partial JSON live!', variant: 'violet' });
+      streamTimer = setInterval(() => {
+        idx += 18;
+        const slice = full.slice(0, idx);
+        if (editor) editor.value = slice;
+        syncRenderer(slice);
+        if (idx >= full.length) {
+          clearInterval(streamTimer);
+          streamTimer = null;
+          Ozone.sound.success();
+        }
+      }, 45);
+    });
+
+    // AI Introspection & Prompt Preview
+    const uiTreeOut = document.getElementById('ui-tree-output');
+    const scanBtn = document.getElementById('btn-scan-ui');
+    function updateTree() {
+      if (uiTreeOut) {
+        const tree = Ozone.inspectUI().slice(0, 18);
+        uiTreeOut.textContent = JSON.stringify(tree, null, 2);
+      }
+    }
+    scanBtn?.addEventListener('click', () => {
+      Ozone.sound.agent();
+      updateTree();
+      Ozone.toast({ title: 'UI Tree Scanned', message: `Found ${Ozone.inspectUI().length} semantic <oz-*> nodes.`, variant: 'cyan' });
+    });
+    updateTree();
+
+    const promptPreview = document.getElementById('ai-prompt-preview');
+    if (promptPreview) promptPreview.textContent = Ozone.getAIPrompt();
+
+    const copyPromptFn = () => {
+      navigator.clipboard?.writeText(Ozone.getAIPrompt()).catch(() => {});
+      Ozone.toast({ title: 'Copied llms.txt Prompt', message: 'Ready to paste into your AI model.', variant: 'emerald' });
+    };
+    document.getElementById('btn-copy-llms')?.addEventListener('click', copyPromptFn);
+    document.getElementById('btn-copy-prompt-2')?.addEventListener('click', copyPromptFn);
+
+    // --- 31-Component Row-by-Row Showcase Tab -------------------------------
+    const SHOWCASE_SPECS = [
+      {
+        tag: 'oz-header', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Adaptive top navigation header supporting floating pill, glass, enterprise search, minimal variants, Priority+ max-links overflow, and mobile slide/modal/dropdown drawers.',
+        props: ['variant', 'brand', 'badge', 'links', 'max-links', 'cta', 'search', 'icon', 'mobile-menu(slide|slide-left|modal|dropdown)'],
+        code: `<oz-header variant="floating" brand="Aether" badge="Live" links="Overview,Docs" max-links="4" cta="Deploy" mobile-menu="slide"></oz-header>`,
+        preview: `<oz-header variant="floating" brand="Aether" badge="Live" links="Overview,Docs" cta="Deploy" mobile-menu="slide"></oz-header>`
+      },
+      {
+        tag: 'oz-footer', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Multi-column, minimal bar, or live system-status footer with link routing, newsletter form, and status indicator.',
+        props: ['variant', 'brand', 'tagline', 'columns', 'status', 'newsletter'],
+        code: `<oz-footer variant="minimal" brand="OzoneUI" status="Operational" columns='[{"title":"Nav","links":["Docs","Pricing"]}]'></oz-footer>`,
+        preview: `<oz-footer variant="minimal" brand="OzoneUI" status="Operational" columns='[{"title":"Nav","links":["Docs","Pricing","Status"]}]'></oz-footer>`
+      },
+      {
+        tag: 'oz-breadcrumbs', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Clickable hierarchical navigation trail with vector arrow or slash separators and oz-navigate events.',
+        props: ['items', 'separator(arrow|slash)'],
+        code: `<oz-breadcrumbs items="Workspace,Control Plane,Clusters,Node-04"></oz-breadcrumbs>`,
+        preview: `<oz-breadcrumbs items="Workspace,Control Plane,Clusters,Node-04"></oz-breadcrumbs>`
+      },
+      {
+        tag: 'oz-alert', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Semantic callout banner for system notices, warnings, and AI insights with action trigger and dismiss support.',
+        props: ['variant', 'title', 'message', 'icon', 'cta', 'dismissible'],
+        code: `<oz-alert variant="violet" title="AI Insight" message="Cluster latency dropped 24% after edge routing." cta="Inspect" dismissible></oz-alert>`,
+        preview: `<oz-alert variant="violet" title="AI Insight" message="Cluster latency dropped 24% after edge routing." cta="Inspect" dismissible></oz-alert>`
+      },
+      {
+        tag: 'oz-progress', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Glowing OKLCH progress bar supporting determinate percentage telemetry and animated shimmer indeterminate state.',
+        props: ['value', 'max', 'label', 'variant', 'show-value', 'indeterminate'],
+        code: `<oz-progress label="Model Fine-Tuning" value="76" variant="cyan" show-value></oz-progress>`,
+        preview: `<div class="oz-stack" style="gap:16px;"><oz-progress label="Model Fine-Tuning" value="76" variant="cyan" show-value></oz-progress><oz-progress label="Syncing Edge Nodes" indeterminate variant="violet" show-value></oz-progress></div>`
+      },
+      {
+        tag: 'oz-accordion', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Smooth View-Transition expandable FAQ and settings accordion supporting single or multiple open panels.',
+        props: ['items(JSON)', 'multiple'],
+        code: `<oz-accordion items='[{"title":"Zero-Build Ready?","content":"Yes, drop ozone.css + ozone.js into any HTML or PHP page.","open":true},{"title":"Framework Agnostic?","content":"Runs in React, Vue, Svelte, or plain HTML."}]'></oz-accordion>`,
+        preview: `<oz-accordion items='[{"title":"Zero-Build Ready?","content":"Yes, drop ozone.css and ozone.js into any HTML or PHP page.","open":true},{"title":"Framework Agnostic?","content":"Works natively in React, Vue, Svelte, or plain HTML."}]'></oz-accordion>`
+      },
+      {
+        tag: 'oz-timeline', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Vertical telemetry, audit log, and roadmap timeline with glowing status nodes.',
+        props: ['items(JSON)'],
+        code: `<oz-timeline items='[{"time":"Now","title":"Edge Deployed","desc":"18 regions active","status":"emerald"},{"time":"5m ago","title":"Build Verified","desc":"0 errors","status":"cyan"}]'></oz-timeline>`,
+        preview: `<oz-timeline items='[{"time":"Now","title":"Edge Deployed","desc":"18 global regions live","status":"emerald"},{"time":"5m ago","title":"Build Verified","desc":"0 console errors","status":"cyan"}]'></oz-timeline>`
+      },
+      {
+        tag: 'oz-icon', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Universal 4-mode SVG vector engine: 60+ offline Lucide paths, on-demand Phosphor/Tabler/Solar/Heroicons, custom SVG registration, and CSS font support.',
+        props: ['name', 'set', 'size', 'stroke', 'src', 'icon-class', 'glow', 'spin'],
+        code: `<oz-icon name="sparkles" size="22" glow></oz-icon>`,
+        preview: `<div class="oz-row" style="gap:16px;"><oz-icon name="rocket" size="22" glow></oz-icon><oz-icon name="sparkles" size="22"></oz-icon><oz-icon name="cpu" size="22"></oz-icon><oz-icon name="shield" size="22"></oz-icon><oz-icon name="refresh" size="22" spin></oz-icon></div>`
+      },
+      {
+        tag: 'oz-button', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Spring-interactive button with Hallucination-Proof variant aliasing (variant/type/color), icon slots, loading spinner, and toast shorthand.',
+        props: ['variant', 'size', 'icon', 'icon-right', 'pill', 'loading', 'toast'],
+        code: `<oz-button variant="glow" icon="zap" pill toast="Triggered!">Execute</oz-button>`,
+        preview: `<div class="oz-row" style="gap:8px;"><oz-button variant="glow" size="sm" icon="zap" pill toast="Glow clicked!">Glow</oz-button><oz-button variant="primary" size="sm" icon="check">Primary</oz-button><oz-button variant="glass" size="sm" loading>Loading</oz-button><oz-button variant="danger" size="sm">Danger</oz-button></div>`
+      },
+      {
+        tag: 'oz-card', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Atmospheric frosted glass container with cursor-tracked radial specular lighting, optional 3D perspective tilt, glow hue, and JSON snapshot export.',
+        props: ['title', 'subtitle', 'badge', 'tilt', 'glow', 'exportable'],
+        code: `<oz-card title="Neural Node" subtitle="Specular tilt card" badge="Active" tilt glow="cyan" exportable>Ready.</oz-card>`,
+        preview: `<oz-card title="Neural Node" subtitle="Hover for radial light & 3D tilt" badge="Active" tilt glow="cyan" exportable><span class="oz-text-sm oz-muted">Interactive atmospheric glass surface.</span></oz-card>`
+      },
+      {
+        tag: 'oz-badge', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Status pill supporting semantic OKLCH variants, pulsing live indicator dot, and vector icon slot.',
+        props: ['variant', 'pulse', 'icon', 'label'],
+        code: `<oz-badge variant="emerald" icon="verified" pulse>Live Node</oz-badge>`,
+        preview: `<div class="oz-row" style="gap:8px;"><oz-badge variant="cyan" pulse>Streaming</oz-badge><oz-badge variant="emerald" icon="verified">Verified</oz-badge><oz-badge variant="violet" icon="sparkles">AI Native</oz-badge><oz-badge variant="amber">Pending</oz-badge></div>`
+      },
+      {
+        tag: 'oz-input', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Glass text input with prefix <oz-icon>, clean focus ring, and built-in toggleable secret masking (mask="secret").',
+        props: ['label', 'placeholder', 'value', 'type', 'mask(secret)', 'icon'],
+        code: `<oz-input label="API Token" mask="secret" value="oz_live_secret_9021" icon="key"></oz-input>`,
+        preview: `<oz-input label="API Token" mask="secret" value="oz_live_secret_9021" icon="key"></oz-input>`
+      },
+      {
+        tag: 'oz-switch', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Tactile spring toggle switch with procedural harmonic audio chime and keyboard accessibility.',
+        props: ['label', 'checked'],
+        code: `<oz-switch label="Enable Atmospheric Physics" checked></oz-switch>`,
+        preview: `<div class="oz-row" style="gap:18px;"><oz-switch label="Atmospheric Physics" checked></oz-switch><oz-switch label="Eco Guard"></oz-switch></div>`
+      },
+      {
+        tag: 'oz-tabs', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Animated sliding glass pill tab bar with ResizeObserver auto-calibration and panel switching.',
+        props: ['active', 'tabs(csv)'],
+        code: `<oz-tabs active="0"><button slot="tab">Overview</button><button slot="tab">Metrics</button><div slot="panel">Overview panel</div><div slot="panel">Metrics panel</div></oz-tabs>`,
+        preview: `<oz-tabs active="0"><button slot="tab">Overview</button><button slot="tab">Metrics</button><button slot="tab">Logs</button><div slot="panel"><span class="oz-text-sm oz-muted">Active panel: Overview telemetry.</span></div><div slot="panel"><span class="oz-text-sm oz-muted">Active panel: Real-time metrics.</span></div><div slot="panel"><span class="oz-text-sm oz-muted">Active panel: System event logs.</span></div></oz-tabs>`
+      },
+      {
+        tag: 'oz-dialog', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Spring-animated modal dialog with glass backdrop blur, Esc handling, and View Transition morphing.',
+        props: ['title', 'open'],
+        code: `<oz-dialog id="dlg" title="Confirm"><p>Modal content</p></oz-dialog>`,
+        preview: `<div class="oz-row" style="gap:10px;"><oz-button variant="primary" size="sm" icon="panel-top" data-sc-open-dialog>Open Live Spring Dialog</oz-button><span class="oz-text-xs oz-muted">Opens the interactive modal with Esc &amp; backdrop close.</span></div>`
+      },
+      {
+        tag: 'oz-stat', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Executive KPI card with inline SVG sparkline, trend badge, Privacy Veil mask="blur" support, and declarative src/poll live fetching.',
+        props: ['title', 'value', 'delta', 'trend', 'sparkline', 'mask', 'src', 'poll'],
+        code: `<oz-stat title="MRR" value="$128,400" delta="+32.4%" trend="up" sparkline="40,55,48,72,95,128" mask="blur"></oz-stat>`,
+        preview: `<oz-stat title="Monthly Revenue" value="$128,400" delta="+32.4%" trend="up" sparkline="40,55,48,72,95,128" mask="blur" glow="cyan"></oz-stat>`
+      },
+      {
+        tag: 'oz-chart', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Zero-dependency SVG chart supporting Area, Bar, Line, and Donut modes with interactive hover tooltips, live src/poll, and 1-click SVG export.',
+        props: ['type', 'title', 'labels', 'data', 'glow', 'exportable', 'src', 'poll'],
+        code: `<oz-chart type="area" title="Throughput" labels="M,T,W,T,F" data="120,180,150,290,360" glow="cyan" exportable></oz-chart>`,
+        preview: `<oz-chart type="bar" title="Showcase Throughput" labels="Mon,Tue,Wed,Thu,Fri" data="120,195,165,280,355" glow="cyan" exportable></oz-chart>`
+      },
+      {
+        tag: 'oz-table', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Enterprise data grid with live search, column sorting, automatic status badges, PII privacy masking, and 1-click CSV/JSON export.',
+        props: ['title', 'rows(JSON)', 'searchable', 'exportable', 'mask-cols', 'src', 'poll'],
+        code: `<oz-table title="Users" searchable exportable mask-cols="email" rows='[{"name":"Elena","email":"elena@ai.dev","status":"Active"}]'></oz-table>`,
+        preview: `<oz-table title="Live Nodes" searchable exportable mask-cols="owner" rows='[{"node":"US-East","owner":"elena@aether.ai","status":"Active","latency":"14ms"},{"node":"EU-West","owner":"marcus@nexus.io","status":"Trial","latency":"21ms"}]'></oz-table>`
+      },
+      {
+        tag: 'oz-smart-view', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Zero-config data morpher that transforms any JSON array instantaneously between Table, Bar Chart, Bento Cards, and Raw JSON.',
+        props: ['title', 'data(JSON)', 'view(table|chart|cards|json)', 'src'],
+        code: `<oz-smart-view title="Revenue" view="cards" data='[{"item":"Pro","mrr":4200},{"item":"Ent","mrr":9800}]'></oz-smart-view>`,
+        preview: `<oz-smart-view title="Instant Morpher" view="cards" data='[{"id":"A1","plan":"Studio Pro","mrr":"$4,200"},{"id":"A2","plan":"Enterprise","mrr":"$9,800"}]'></oz-smart-view>`
+      },
+      {
+        tag: 'oz-hero', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Cinematic aurora mesh hero section with pulsing badge pill, gradient headline, subtitle, and centered action slot.',
+        props: ['badge', 'title', 'subtitle'],
+        code: `<oz-hero badge="v1.0" title="Build Beyond" subtitle="Next-gen Web Standards UI."><oz-button variant="glow">Start</oz-button></oz-hero>`,
+        preview: `<oz-hero badge="Spatial Hero" title="Ship Stunning Front Pages" subtitle="Gradient typography and aurora mesh lighting in 1 tag."><oz-button variant="glow" size="sm" pill>Launch</oz-button></oz-hero>`
+      },
+      {
+        tag: 'oz-bento', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Responsive Apple/Linear bento grid with drag-and-drop card reordering (sortable) and localStorage persistence (persist-key).',
+        props: ['cols', 'gap', 'sortable', 'persist-key'],
+        code: `<oz-bento cols="2" sortable persist-key="demo"><oz-card title="Drag A"></oz-card><oz-card title="Drag B"></oz-card></oz-bento>`,
+        preview: `<oz-bento cols="2" sortable><oz-card title="Drag Card A" subtitle="Draggable bento item" glow="cyan"></oz-card><oz-card title="Drag Card B" subtitle="Drop to reorder" glow="violet"></oz-card></oz-bento>`
+      },
+      {
+        tag: 'oz-pricing', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Conversion-focused pricing tier card with popular aura ring, feature checklist using SVG checks, and plan-selection events.',
+        props: ['title', 'price', 'period', 'popular', 'features', 'cta'],
+        code: `<oz-pricing title="Pro" price="$49" period="/mo" popular features="31 Components,AI Renderer,Theme DNA"></oz-pricing>`,
+        preview: `<oz-pricing title="Studio Pro" subtitle="Most selected tier" price="$49" period="/mo" popular features="All 31 Components,AI Streaming Renderer,Theme DNA Presets" cta="Deploy Pro"></oz-pricing>`
+      },
+      {
+        tag: 'oz-marquee', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Infinite hardware-accelerated horizontal ticker with soft edge fade masks and pause-on-hover.',
+        props: ['speed'],
+        code: `<oz-marquee speed="20s"><oz-badge variant="cyan">OKLCH</oz-badge><oz-badge variant="violet">AI-Native</oz-badge></oz-marquee>`,
+        preview: `<oz-marquee speed="18s"><oz-badge variant="cyan" icon="sparkles">OKLCH Color</oz-badge><oz-badge variant="violet" icon="bot">AI Native</oz-badge><oz-badge variant="emerald" icon="zap">120fps</oz-badge><oz-badge variant="amber" icon="shield">Privacy Veil</oz-badge></oz-marquee>`
+      },
+      {
+        tag: 'oz-product-card', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: '3D tilt-enabled digital/e-commerce product card with category-mapped vector artwork, wishlist heart toggle, rating, and quick inspect.',
+        props: ['title', 'price', 'old-price', 'rating', 'reviews', 'badge', 'category', 'seller', 'gradient'],
+        code: `<oz-product-card title="Neural Synth" category="Audio" price="$49" old-price="$89" rating="4.9" badge="Hot" gradient="violet"></oz-product-card>`,
+        preview: `<oz-product-card title="Neural Audio Synth" category="Audio" price="$49" old-price="$89" rating="4.9" reviews="214" badge="Hot" seller="SonicForge" gradient="violet"></oz-product-card>`
+      },
+      {
+        tag: 'oz-rating', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'Glowing SVG star rating component supporting both static summaries and interactive user rating selection.',
+        props: ['value', 'max', 'interactive', 'reviews'],
+        code: `<oz-rating value="4.8" reviews="192" interactive></oz-rating>`,
+        preview: `<div class="oz-row" style="gap:12px;"><oz-rating value="4.8" reviews="192" interactive></oz-rating><span class="oz-text-xs oz-muted">(Click stars to rate)</span></div>`
+      },
+      {
+        tag: 'oz-avatar', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'User avatar with image or monogram initials, live presence status dot (online/busy/away/streaming), and verified vector checkmark.',
+        props: ['name', 'src', 'status', 'verified', 'size'],
+        code: `<oz-avatar name="Elena Vance" status="streaming" verified size="44"></oz-avatar>`,
+        preview: `<div class="oz-row" style="gap:16px;"><oz-avatar name="Elena Vance" status="streaming" verified size="44"></oz-avatar><oz-avatar name="Marcus Chen" status="online" verified size="44"></oz-avatar><oz-avatar name="Aria Solis" status="busy" size="44"></oz-avatar></div>`
+      },
+      {
+        tag: 'oz-post', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'Interactive social feed post card with verified avatar, hashtag pills, and animated Like, Comment, Repost, and Bookmark reactions.',
+        props: ['author', 'handle', 'verified', 'status', 'time', 'likes', 'comments', 'shares', 'tags', 'content'],
+        code: `<oz-post author="Elena Vance" handle="@elena" verified status="streaming" time="2m" likes="420" tags="OzoneUI" content="Shipped our new UI today!"></oz-post>`,
+        preview: `<oz-post author="Elena Vance" handle="@elena_ai" verified status="streaming" time="2m ago" likes="420" comments="18" shares="12" tags="OzoneUI,VectorSVG" content="Every icon, chart, and glass card here runs on zero-dependency Web Standards!"></oz-post>`
+      },
+      {
+        tag: 'oz-composer', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'Social and prompt composer that dynamically constructs and prepends live <oz-post> items into any target feed container.',
+        props: ['placeholder', 'target', 'author', 'handle'],
+        code: `<oz-composer target="#social-feed" placeholder="Share an update..."></oz-composer>`,
+        preview: `<oz-composer placeholder="Try typing a quick update (publishes live in Social tab)..."></oz-composer>`
+      },
+      {
+        tag: 'oz-renderer', cat: 'ai', catLabel: 'AI & Spatial OS',
+        desc: 'Declarative streaming JSON-to-UI engine that repairs malformed/partial LLM JSON tokens live and binds safe oz-action events.',
+        props: ['schema(JSON)'],
+        code: `<oz-renderer schema='{"type":"oz-stat","props":{"title":"AI Ops","value":"99.9%","trend":"up","delta":"+4%"}}'></oz-renderer>`,
+        preview: `<oz-renderer schema='{"type":"oz-stat","props":{"title":"Streamed AI Card","value":"99.9%","delta":"+4.2%","trend":"up","sparkline":"72,78,84,91,99"}}'></oz-renderer>`
+      },
+      {
+        tag: 'oz-command', cat: 'ai', catLabel: 'AI & Spatial OS',
+        desc: 'Cmd/Ctrl+K Spatial OS command palette that auto-discovers page actions, tabs, AI Co-Pilot routines, and Theme DNA toggles.',
+        props: ['auto-discover'],
+        code: `<oz-command auto-discover></oz-command>`,
+        preview: `<div class="oz-row" style="gap:10px;"><oz-button variant="primary" size="sm" icon="command" data-sc-open-cmd>Launch Command Palette (Ctrl+K)</oz-button><span class="oz-text-xs oz-muted">Fuzzy searches all page domains &amp; controls.</span></div>`
+      },
+      {
+        tag: 'oz-inspector', cat: 'ai', catLabel: 'AI & Spatial OS',
+        desc: 'Alt+O floating Theme DNA studio for live OKLCH hue, accent glow, blur, radius, and global icon pack customization.',
+        props: ['open'],
+        code: `<oz-inspector></oz-inspector>`,
+        preview: `<div class="oz-row" style="gap:10px;"><oz-button variant="glow" size="sm" icon="wand" data-sc-open-insp>Toggle Theme DNA Studio (Alt+O)</oz-button><span class="oz-text-xs oz-muted">Exports shareable oz:// DNA barcodes.</span></div>`
+      }
+    ];
+
+    const showcaseContainer = document.getElementById('showcase-rows');
+    const showcaseBadge = document.getElementById('showcase-count-badge');
+    let activeScCat = 'all';
+    let scQuery = '';
+
+    function renderShowcaseRows() {
+      if (!showcaseContainer) return;
+      const filtered = SHOWCASE_SPECS.filter((item) => {
+        const matchCat = activeScCat === 'all' || item.cat === activeScCat;
+        const q = scQuery.trim().toLowerCase();
+        const matchQ = !q || item.tag.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q) || item.props.join(' ').toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+
+      if (showcaseBadge) showcaseBadge.setAttribute('label', `${filtered.length} Component${filtered.length === 1 ? '' : 's'}`);
+      showcaseContainer.innerHTML = '';
+
+      if (filtered.length === 0) {
+        showcaseContainer.innerHTML = `<oz-alert variant="amber" title="No matching components" message="Try clearing the search query or selecting All (31)."></oz-alert>`;
+        return;
+      }
+
+      filtered.forEach((item) => {
+        const row = document.createElement('div');
+        row.className = 'showcase-row';
+        row.dataset.showcaseTag = item.tag;
+
+        const left = document.createElement('div');
+        left.className = 'oz-stack';
+        left.style.gap = '12px';
+        left.innerHTML = `
+          <div class="oz-between">
+            <div class="oz-row" style="gap:8px;">
+              <code style="font-size:0.98rem;font-weight:600;color:var(--oz-primary);">&lt;${item.tag}&gt;</code>
+              <oz-badge variant="violet">${item.catLabel}</oz-badge>
+            </div>
+          </div>
+          <p class="oz-text-sm oz-muted" style="line-height:1.6;">${item.desc}</p>
+          <div class="oz-row" style="gap:10px;">
+            ${item.props.map((p) => `<span class="oz-badge" style="font-family:var(--oz-font-mono);font-size:0.7rem;">${p}</span>`).join('')}
+          </div>
+          <pre style="margin:0;padding:11px 13px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);border:1px solid var(--oz-border);font-size:0.73rem;overflow:auto;"></pre>
+          <div class="oz-row" style="gap:8px;">
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-copy-html><oz-icon name="copy" size="13"></oz-icon> Copy HTML</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-copy-ai><oz-icon name="bot" size="13"></oz-icon> Copy AI Prompt</button>
+          </div>
+        `;
+        left.querySelector('pre').textContent = item.code;
+        left.querySelector('[data-copy-html]')?.addEventListener('click', () => {
+          navigator.clipboard?.writeText(item.code).catch(() => {});
+          Ozone.sound.success();
+          Ozone.toast({ title: 'HTML Copied', message: `Copied <${item.tag}> snippet.`, variant: 'emerald' });
+        });
+        left.querySelector('[data-copy-ai]')?.addEventListener('click', () => {
+          const p = `Use OzoneUI <${item.tag}> (${item.desc}). Props: ${item.props.join(', ')}. Example: ${item.code}`;
+          navigator.clipboard?.writeText(p).catch(() => {});
+          Ozone.sound.success();
+          Ozone.toast({ title: 'AI Prompt Copied', message: `Copied prompt for <${item.tag}>.`, variant: 'violet' });
+        });
+
+        const right = document.createElement('div');
+        right.className = 'showcase-preview';
+        right.innerHTML = item.preview;
+
+        right.querySelector('[data-sc-open-dialog]')?.addEventListener('click', () => sampleDialog?.show());
+        right.querySelector('[data-sc-open-cmd]')?.addEventListener('click', () => document.querySelector('oz-command')?.open());
+        right.querySelector('[data-sc-open-insp]')?.addEventListener('click', () => document.querySelector('oz-inspector')?.toggle());
+
+        row.appendChild(left);
+        row.appendChild(right);
+        showcaseContainer.appendChild(row);
+      });
+    }
+
+    document.querySelectorAll('#showcase-filters [data-sc-cat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeScCat = btn.dataset.scCat;
+        document.querySelectorAll('#showcase-filters [data-sc-cat]').forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+        Ozone.sound.click();
+        renderShowcaseRows();
+      });
+    });
+
+    document.getElementById('showcase-search')?.addEventListener('oz-input', (e) => {
+      scQuery = e.detail.value;
+      renderShowcaseRows();
+    });
+
+    renderShowcaseRows();
+  </script>
+</body>
+</html>

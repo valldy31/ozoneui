@@ -1,0 +1,86 @@
+# OzoneUI (`oz-*`) — AI-Native Quad-Domain UI Framework
+
+> Zero-dependency Web Standards framework (OKLCH Atmospheric CSS + Custom Elements). Works in plain HTML, PHP, React, Vue, Svelte, or streamed JSON via `<oz-renderer>`.
+
+## Setup (Zero-Build)
+```html
+<html data-oz-mode="atmospheric" data-oz-theme="dark" data-oz-sound="on">
+<link rel="stylesheet" href="dist/ozone.css">
+<script type="module" src="dist/ozone.js"></script>
+```
+
+## Global Attributes, Branding & Modes
+- `data-oz-preset="ozone | emerald | fintech | amethyst | ai | crimson | gaming | amber | luxury | ocean | saas | nordic | enterprise | daylight | quartz"` (zero-config global OR section-scoped `<section data-oz-preset="...">` palettes)
+- `data-oz-brand="#RRGGBB"` + `data-oz-harmony="analogous | complementary | triadic | monochrome"` (auto-computes OKLCH palette from any HEX color)
+- `data-oz-density="compact | default | spacious"` (UI density & corner geometry)
+- `data-oz-brand-name="Client Name"` (global white-label company identity)
+- URL auto-branding: `?preset=fintech&brand=10b981&name=PayFlow` (shareable client demo links)
+- `data-oz-mode="atmospheric | precision"` (glass refraction vs crisp 1px enterprise)
+- `data-oz-theme="dark | light"`
+- `data-oz-privacy="true | false"` (blurs any `[mask]` PII/financial values)
+- `data-oz-sound="on | off"` (procedural Web Audio micro-FX)
+- `data-oz-icon-set="builtin | lucide | ph | tabler | solar | heroicons"` (global vector icon pack)
+- `mask="blur | secret"` on `<oz-stat>`, `<oz-input>`, or table cells
+- `exportable` on `<oz-chart>` (SVG), `<oz-table>` (CSV/JSON), `<oz-card>`
+- `src="url | mock://metrics | mock://users | mock://products"` + `poll="5s"` for zero-JS live data
+
+## Hallucination-Proof Prop Aliasing
+All `<oz-*>` tags accept natural aliases automatically:
+- `variant` = `type` | `color` | `theme` | `kind` (`primary|glow|glass|ghost|danger|success`)
+- Text content works via innerHTML slot OR `label` | `text` | `title` | `content`
+- Icons: Always use `<oz-icon name="...">` or `icon="..."` props (never raw OS emojis)
+
+## Quad-Domain Components
+
+### 1. Core Foundation
+- `<oz-icon name="sparkles|chart-bar|bot|ph:planet|tabler:flame" set="builtin|ph|tabler|solar|heroicons" size="16" stroke="1.75" src="..." icon-class="..." glow spin>`
+- `<oz-button variant="glow|primary|glass|ghost|danger|success" size="sm|md|lg" icon="..." icon-right="..." pill loading>`
+- `<oz-card glass tilt glow="cyan|violet|emerald|amber|rose" title="..." subtitle="..." badge="..." exportable oz-morph-id="...">`
+- `<oz-badge variant="cyan|violet|emerald|amber|rose|neutral" icon="..." pulse>`
+- `<oz-input label="..." placeholder="..." type="text|password" mask="secret" icon="...">`
+- `<oz-switch label="..." checked>`
+- `<oz-tabs active="0"><button slot="tab">A</button><div slot="panel">...</div></oz-tabs>` (or `tabs="Overview,Users,Billing"`)
+- `<oz-dialog title="..." open>`
+- `<oz-avatar name="Elena Vance" status="online|busy|away|streaming" verified src="...">`
+
+### 2. Admin Backends & BI
+- `<oz-stat title="MRR" value="$128,400" delta="+32.4%" trend="up|down|neutral" sparkline="40,55,48,72,95,128" mask="blur">`
+- `<oz-chart type="area|line|bar|donut" title="..." labels="Mon,Tue,Wed,Thu" data="120,180,150,290" glow="cyan" exportable src="...">`
+- `<oz-table title="..." rows='[{"name":"...","status":"Active","mrr":"$4,200"}]' searchable exportable mask-cols="email">`
+- `<oz-smart-view title="..." data='[...]' view="table|chart|cards|json">` (auto-morphs raw JSON between 4 views)
+
+### 3. High-End Landing Pages
+- `<oz-hero badge="v1.0" title="..." subtitle="...">...actions...</oz-hero>`
+- `<oz-bento cols="3" sortable persist-key="dash-1">` (drag-and-drop card reordering)
+- `<oz-pricing title="Pro" price="$49" period="/mo" popular features="A,B,C" cta="Start Free">`
+- `<oz-marquee speed="28s">...items...</oz-marquee>`
+
+### 4. Marketplaces & Social Networks
+- `<oz-product-card title="..." price="$79" old-price="$129" rating="4.9" reviews="342" badge="Hot" category="AI" seller="Aether" gradient="cyan">`
+- `<oz-rating value="4.8" max="5" interactive>`
+- `<oz-post author="Elena Vance" handle="@elena" verified status="online" time="2m" likes="124" comments="18" shares="9" tags="OzoneUI,AI" content="...">`
+- `<oz-composer placeholder="Share an update..." target="#feed">`
+
+### 5. AI-Native & Spatial OS Layer
+- `<oz-renderer schema='{"type":"oz-bento","props":{"cols":2},"children":[{"type":"oz-stat","props":{"title":"Users","value":"12,480","trend":"up","delta":"+18%"}}]}'>`
+- `<oz-command auto-discover>` (`Cmd/Ctrl+K` palette)
+- `<oz-inspector>` (`Alt+O` Theme DNA studio)
+
+### 6. Layout, Navigation & Feedback
+- `<oz-header variant="glass|floating|minimal|enterprise" brand="OzoneUI" badge="v1.0" links="Product,Docs,Pricing" max-links="4" cta="Start" search mobile-menu="slide|slide-left|modal|dropdown">`
+- `<oz-footer variant="multi-col|minimal|status" brand="OzoneUI" columns='[{"title":"Platform","links":["Admin BI","AI Lab"]}]' status="Operational" newsletter>`
+- `<oz-breadcrumbs items="Home,Admin,Telemetry" separator="arrow|slash">`
+- `<oz-alert variant="cyan|violet|emerald|amber|rose" title="..." message="..." cta="Inspect" dismissible>`
+- `<oz-progress label="GPU Usage" value="78" variant="cyan" show-value indeterminate>`
+- `<oz-accordion items='[{"title":"Question?","content":"Answer."}]' multiple>`
+- `<oz-timeline items='[{"time":"2m","title":"Deployed","desc":"Edge nodes","status":"emerald"}]'>`
+
+## Runtime JS API (`window.Ozone`)
+- `Ozone.toast({ title, message, variant })`
+- `Ozone.icons.setDefaultSet('builtin'|'ph'|'tabler'|'solar'|'heroicons')` / `Ozone.icons.register(name, svg)` / `Ozone.icons.setResolver(fn)`
+- `Ozone.dna.presets` / `Ozone.dna.applyPreset('emerald')` / `Ozone.dna.fromHex('#6366f1', 'complementary')` / `Ozone.dna.fromLogoFile(file)`
+- `Ozone.dna.setDensity('compact'|'default'|'spacious')` / `Ozone.dna.setBrandName('Solaris AI')`
+- `Ozone.dna.getDeployHTML()` / `Ozone.dna.getShareURL()` / `Ozone.dna.getW3CTokens()` / `Ozone.dna.encode()` / `Ozone.dna.apply('...')`
+- `Ozone.agent.moveTo('#id', { label: 'AI', action: 'click' })`
+- `Ozone.morph(() => { /* DOM change */ })`
+- `Ozone.inspectUI()` / `Ozone.getSchemaManifest()` / `Ozone.getAIPrompt()`

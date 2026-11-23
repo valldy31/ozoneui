@@ -1,0 +1,47 @@
+{
+  "name": "ozoneui",
+  "version": "1.0.0",
+  "description": "The AI-Native, Web-Standards Atmospheric Glass & Quad-Domain UI Framework for Admin Backends, Landing Pages, Marketplaces, and Social Networks.",
+  "type": "module",
+  "main": "./dist/ozone.js",
+  "module": "./dist/ozone.js",
+  "style": "./dist/ozone.css",
+  "exports": {
+    ".": {
+      "import": "./dist/ozone.js",
+      "style": "./dist/ozone.css"
+    },
+    "./css": "./dist/ozone.css",
+    "./dist/ozone.css": "./dist/ozone.css",
+    "./dist/ozone.js": "./dist/ozone.js",
+    "./llms.txt": "./llms.txt"
+  },
+  "files": [
+    "dist",
+    "src",
+    "llms.txt",
+    "README.md"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "ui-framework",
+    "web-components",
+    "ai-native",
+    "generative-ui",
+    "design-system",
+    "oklch",
+    "glassmorphism",
+    "admin-dashboard",
+    "charts",
+    "custom-elements"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "vite": "^6.0.0"
+  }
+}
