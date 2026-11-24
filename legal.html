@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EU Impressum, GDPR Privacy &amp; Security Compliance — OzoneUI</title>
+  <meta name="description" content="OzoneUI EU GDPR, ePrivacy Planet49, EAA Accessibility Act, and OWASP security compliance dashboard, local storage manager, Impressum, and MIT License." />
+  <link rel="canonical" href="https://ozoneui.nstudios.eu/legal.html" />
+  <link rel="stylesheet" href="./dist/ozone.css" />
+</head>
+<body data-oz-page="legal">
+  <main class="oz-container oz-stack" style="padding:32px 0 84px;">
+    <div>
+      <oz-badge variant="emerald" icon="shield" pulse>EU GDPR • ePrivacy • EAA • OWASP Ready</oz-badge>
+      <h1 style="font-size:clamp(1.75rem,3.6vw,2.45rem);font-weight:800;letter-spacing:-0.03em;margin:10px 0 6px;">EU Compliance, GDPR Privacy &amp; Security</h1>
+      <p class="oz-text-sm oz-muted" style="max-width:68ch;">Built cleanly for European production deployments: 0 tracking cookies, 0 remote font requests, strict offline mode, and user data controls.</p>
+    </div>
+
+    <!-- INTERACTIVE PRIVACY MANAGER -->
+    <oz-card glow="emerald" title="Live GDPR Data &amp; Consent Manager" subtitle="Inspect, export, or erase local OzoneUI preferences immediately (Art. 17 &amp; Art. 20 GDPR)">
+      <div class="oz-row" style="gap:10px;">
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" id="btn-open-consent"><oz-icon name="shield" size="14"></oz-icon> Open Cookie Preferences</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="btn-toggle-strict"><oz-icon name="lock" size="14"></oz-icon> Toggle Strict Zero-Network Mode</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="btn-export-gdpr"><oz-icon name="download" size="14"></oz-icon> Export My Data (JSON)</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--danger" id="btn-erase-gdpr"><oz-icon name="x" size="14"></oz-icon> Erase All Stored Data</button>
+      </div>
+      <pre id="gdpr-storage-view" style="margin:0;padding:14px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);border:1px solid var(--oz-border);font-family:var(--oz-font-mono);font-size:0.76rem;max-height:220px;overflow:auto;"></pre>
+    </oz-card>
+
+    <div class="oz-grid-2" style="align-items:start;">
+      <oz-card title="EU Compliance Matrix" subtitle="Verified architectural guarantees">
+        <div class="oz-stack" style="gap:12px;">
+          <oz-alert variant="emerald" title="Zero Third-Party Font Requests" message="All Google Fonts @import links were removed; renders cleanly with local system/geometric fonts so visitor IPs are never leaked."></oz-alert>
+          <oz-alert variant="cyan" title="Planet49 Consent Banner (&lt;oz-cookie-consent&gt;)" message="Provides equally weighted Essential Only, Customize, and Accept All options with zero dark patterns."></oz-alert>
+          <oz-alert variant="violet" title="EU Accessibility Act (EN 301 549 / WCAG 2.1 AA)" message="Includes keyboard navigation, focus rings, ARIA roles, skip-to-content link, and global prefers-reduced-motion support."></oz-alert>
+        </div>
+      </oz-card>
+
+      <oz-card title="OWASP Security Architecture" subtitle="Safe by default for AI-generated UI">
+        <div class="oz-stack" style="gap:12px;">
+          <oz-alert variant="cyan" title="XSS-Hardened &lt;oz-renderer&gt;" message="Blocks unknown HTML tags, strips all on* event attributes, and rejects javascript:/vbscript:/data:text/html URIs inside streamed JSON."></oz-alert>
+          <oz-alert variant="amber" title="Strict CSP Ready + 0 Dependencies" message="Runs under Content-Security-Policy default-src 'self' with zero third-party npm packages to compromise."></oz-alert>
+          <oz-alert variant="emerald" title="Global Privacy Veil (data-oz-privacy)" message="1-click PII masking for screen sharing, compliance demos, and support teams."></oz-alert>
+        </div>
+      </oz-card>
+    </div>
+
+    <div class="oz-grid-2" style="align-items:start;">
+      <oz-card title="Legal Notice / Impressum (EU Directive 2000/31/EC)" subtitle="Operator details for ozoneui.nstudios.eu">
+        <p class="oz-text-sm oz-muted"><strong>Publisher:</strong> N Studios (<code>ozoneui.nstudios.eu</code>)</p>
+        <p class="oz-text-sm oz-muted"><strong>Repository &amp; Issues:</strong> <a href="https://github.com/valldy31/ozoneui" target="_blank" rel="noopener" style="color:var(--oz-primary);">github.com/valldy31/ozoneui</a></p>
+        <p class="oz-text-sm oz-muted"><strong>Data Processing:</strong> This static showcase executes strictly client-side in your browser and collects zero server-side analytics, behavioral profiles, or advertising identifiers.</p>
+      </oz-card>
+
+      <oz-card title="MIT Open Source License" subtitle="Free for personal, commercial &amp; SaaS use">
+        <p class="oz-text-sm oz-muted" style="line-height:1.65;">Permission is hereby granted, free of charge, to any person obtaining a copy of OzoneUI software and documentation files, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.</p>
+      </oz-card>
+    </div>
+  </main>
+
+  <script type="module">
+    import Ozone from './dist/ozone.js';
+    import { initSiteShell } from './dist/site-shell.js';
+    initSiteShell({ page: 'legal' });
+
+    const view = document.getElementById('gdpr-storage-view');
+    const paint = () => {
+      const state = {
+        gdprStrictMode: document.documentElement.dataset.ozGdpr === 'strict',
+        consent: Ozone.gdpr.getConsent(),
+        storedKeys: Ozone.gdpr.exportData()
+      };
+      if (view) view.textContent = JSON.stringify(state, null, 2);
+    };
+    paint();
+    window.addEventListener('oz-consent', paint);
+
+    document.getElementById('btn-open-consent')?.addEventListener('click', () => document.querySelector('oz-cookie-consent')?.open());
+    document.getElementById('btn-toggle-strict')?.addEventListener('click', () => {
+      const cur = Ozone.gdpr.getConsent() || { preferences: true, analytics: false, strict: false };
+      Ozone.gdpr.setConsent({ ...cur, strict: document.documentElement.dataset.ozGdpr !== 'strict' });
+      paint();
+      Ozone.toast({ title: 'GDPR Strict Mode', message: document.documentElement.dataset.ozGdpr === 'strict' ? 'Zero external network fetches enforced.' : 'Strict mode disabled.', variant: 'emerald' });
+    });
+    document.getElementById('btn-export-gdpr')?.addEventListener('click', () => {
+      const json = JSON.stringify(Ozone.gdpr.exportData(), null, 2);
+      navigator.clipboard?.writeText(json).catch(() => {});
+      Ozone.toast({ title: 'Data Exported', message: 'Local data JSON copied to clipboard.', variant: 'cyan' });
+    });
+    document.getElementById('btn-erase-gdpr')?.addEventListener('click', () => {
+      const rm = Ozone.gdpr.clearStorage();
+      paint();
+      Ozone.toast({ title: 'Storage Erased', message: `Removed ${rm.length} stored preference key(s).`, variant: 'amber' });
+    });
+  </script>
+</body>
+</html>

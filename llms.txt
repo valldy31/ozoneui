@@ -74,6 +74,55 @@ All `<oz-*>` tags accept natural aliases automatically:
 - `<oz-progress label="GPU Usage" value="78" variant="cyan" show-value indeterminate>`
 - `<oz-accordion items='[{"title":"Question?","content":"Answer."}]' multiple>`
 - `<oz-timeline items='[{"time":"2m","title":"Deployed","desc":"Edge nodes","status":"emerald"}]'>`
+### App shell & sidebar
+- `<oz-app-shell heading="Overview" subtitle="...">` children: one `<oz-sidebar>`, any content, and `slot="actions"` buttons for the topbar. Add `fill` for a fixed-height app.
+- `<oz-sidebar brand="Acme" icon="cpu" searchable user-name="Alex" user-email="a@x.io" active="Overview" persist-key="app" items='[{"title":"Main","items":[{"label":"Overview","icon":"layout"},{"label":"Customers","icon":"user","badge":"3","children":[{"label":"All"},{"label":"Segments"}]}]}]'>` Optional: `side="right"`, `variant="glass|solid|floating"`, `collapsed`, `width="280px"`. Collapses to an icon rail, becomes a drawer under 900px. Events: `oz-navigate`, `oz-collapse`. Put `data-oz-sidebar-toggle` on any button to toggle it.
+
+### Form controls (all accept label, hint, error, disabled; all emit `oz-change`)
+- `<oz-select label="Role" placeholder="Choose" options='[{"value":"a","label":"Admin","group":"Team"}]'>` (options may also be csv: `options="A,B,C"`)
+- `<oz-checkbox label="Subscribe" description="Weekly email" checked>` (`indeterminate` supported)
+- `<oz-radio-group label="Plan" value="pro" variant="cards" options='[{"value":"pro","label":"Pro","desc":"For teams"}]'>` (`inline` for a row)
+- `<oz-textarea label="Bio" maxlength="240" rows="4" autosize>`
+- `<oz-slider label="Budget" min="0" max="5000" step="50" value="1800" prefix="$" show-value>`
+- `<oz-date-picker label="Start" type="date|datetime-local|time|month|week" min="2026-01-01">`
+- `<oz-file-upload label="Files" multiple max-size="5" accept="PNG, JPG">` emits `oz-files` with `detail.files`
+- `<oz-combobox label="Skills" multiple creatable value="A,B" options="A,B,C" placeholder="Search...">` (`detail.values` array)
+### Parallax, Motion & Modern Interactive (Pack F — 49 total components)
+- `<oz-parallax speed="1" direction="both|vertical|horizontal|mouse" tilt badge="Spatial" heading="Depth Layers" subtitle="...">` Multi-layer scroll + pointer parallax scene; put `[data-depth="-0.3"]`, `[data-depth="0.4"]` on child elements for independent depth motion.
+- `<oz-reveal effect="fade-up|fade-down|zoom|blur|flip|slide-left|slide-right" delay="0" duration="680" stagger="90">` Scroll-triggered `IntersectionObserver` reveal animation.
+- `<oz-spotlight color="cyan|violet|emerald|amber|rose" size="380">` Cursor-tracking radial spotlight surface wrapper.
+- `<oz-drawer heading="Quick Inspector" subtitle="..." side="right|left|bottom" size="sm|md|lg|xl" trigger="#btn-id">` Slide-over drawer sheet with optional `slot="footer"`. Fires `oz-open`, `oz-close`.
+- `<oz-dropdown label="Actions" icon="sliders" variant="glass" items='[{"label":"Duplicate","value":"dup","kbd":"⌘D"}]'>` Floating popover action menu with `oz-select`.
+- `<oz-tooltip text="Save changes" position="top|bottom|left|right" shortcut="⌘S"><oz-button>Save</oz-button></oz-tooltip>`
+- `<oz-stepper active="1" clickable steps='[{"title":"Setup","desc":"2 files"},{"title":"Theme","desc":"OKLCH"},{"title":"Ship","desc":"Edge"}]'>` Interactive wizard/pipeline stepper with `oz-step`.
+- `<oz-kanban persist-key="sprint-v1">` Drag-and-drop Kanban board with quick task creation (`oz-kanban-move`, `oz-kanban-add`).
+### Modern Calendar, Pickers & Inputs (Pack G — 53 total components)
+- `<oz-calendar heading="Release Schedule" value="2026-11-24" events='[{"date":"2026-11-24","title":"Release","color":"cyan"}]'>` Standalone interactive calendar grid (`range` supported via `start`/`end`).
+- `<oz-date-picker label="Launch date" range events='[...]'>` Floating glass calendar popover with quick presets (`Today`, `+7 Days`), single or range date selection.
+- `<oz-slider label="Budget" min="0" max="5000" min-value="800" max-value="3600" range ticks prefix="$" show-value>` Single or dual-thumb range slider with optional ticks.
+- `<oz-file-upload label="Assets" multiple accept=".png,.jpg,.json" max-size="10">` Dropzone with Browse Files pill button, image thumbnails, progress bars, and `files='[...]'` seed support.
+- `<oz-color-picker label="Brand Color" value="#00b4d8">` Swatch + hex input + floating palette popover.
+- `<oz-number-input label="Seats" min="1" max="100" value="5">` Numeric stepper (`−` / `+` + arrows).
+- `<oz-otp-input label="Verification code" length="6">` Segmented code input emitting `oz-complete`.
+### Zero-Config CDN (Works directly in Claude Artifacts / ChatGPT / Plain HTML)
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.css">
+<script type="module" src="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.js"></script>
+```
+Or pin `https://ozoneui.nstudios.eu/dist/ozone.css` + `ozone.js`. All form controls with `name="..."` automatically work with `<form>` / `FormData`, and AI agents can read/populate forms via `Ozone.getFormData()` & `Ozone.fillForm({...})`.
+
+### 12-Col Grid, Mobile App Primitives, AI Chat & Dev UI (Pack H — 65 total components)
+- `<oz-grid cols="12" gap="24px">` / `<oz-col span="8" span-md="6" span-sm="12">` Responsive 12-column grid (or `<oz-grid min="260px">`, plus `.oz-grid-12` + `.oz-col-1..12` utility classes).
+- `<oz-bottom-nav items='[{"id":"home","label":"Home","icon":"layout"},{"id":"alerts","label":"Alerts","icon":"activity","badge":"3"}]' variant="floating|docked" position="inline|fixed">` Mobile app / PWA bottom tab bar with safe-area padding.
+- `<oz-fab icon="plus" label="Create" position="inline|bottom-right|bottom-left" items='[{"id":"ai","label":"Ask AI","icon":"sparkles"}]'>` Mobile Floating Action Button + speed-dial.
+- `<oz-ai-chat heading="Assistant" model="Gemini 2.5 Pro" suggestions="Build layout,Audit contrast">` AI prompt + streaming chat widget emitting `oz-send`.
+- `<oz-code-block title="app.html" lang="html" line-numbers code="...">` Syntax viewer with 1-click Copy button.
+- `<oz-split-pane ratio="38"><div>Left</div><div>Right</div></oz-split-pane>` Draggable resizable split container.
+- `<oz-tree active="forms">` Collapsible folder/file tree emitting `oz-select`.
+- `<oz-hover-card heading="Elena" subtitle="Architect" badge="Pro"><a href="#">@elena</a></oz-hover-card>` Floating preview card on hover/focus.
+- `<oz-pagination page="1" total="120" page-size="10">` Page navigation emitting `oz-page`.
+- `<oz-skeleton variant="card|stat|avatar" lines="3">` Animated shimmer placeholder.
+- `<oz-empty-state icon="box" heading="No results" description="..." cta="Reset">` Empty-state callout card emitting `oz-action`.
 
 ## Runtime JS API (`window.Ozone`)
 - `Ozone.toast({ title, message, variant })`
@@ -84,3 +133,7 @@ All `<oz-*>` tags accept natural aliases automatically:
 - `Ozone.agent.moveTo('#id', { label: 'AI', action: 'click' })`
 - `Ozone.morph(() => { /* DOM change */ })`
 - `Ozone.inspectUI()` / `Ozone.getSchemaManifest()` / `Ozone.getAIPrompt()`
+
+### EU GDPR, Accessibility & Site Map (66 total components)
+- <oz-cookie-consent policy-url='legal.html'> Planet49 GDPR banner + Ozone.gdpr + data-oz-gdpr='strict'.
+- URLs: https://ozoneui.nstudios.eu/ | /demo.html | /components.html | /ai.html | /wiki.html | /legal.html | /llms-full.txt

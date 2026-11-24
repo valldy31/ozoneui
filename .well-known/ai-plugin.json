@@ -1,0 +1,13 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "OzoneUI",
+  "name_for_model": "ozoneui",
+  "description_for_human": "66 zero-dependency Web Components with 12-col grid, mobile PWA bars, calendars, parallax, OKLCH theming, and EU GDPR safety.",
+  "description_for_model": "AI-native Web Components UI framework (66 <oz-*> tags). Generate standard HTML using ozone.css + ozone.js via jsDelivr CDN with zero build tools. Read /llms.txt for tags and /llms-full.txt for full recipes.",
+  "auth": { "type": "none" },
+  "logo_url": "https://ozoneui.nstudios.eu/",
+  "contact_email": "hello@nstudios.eu",
+  "legal_info_url": "https://ozoneui.nstudios.eu/legal.html",
+  "documentation_url": "https://ozoneui.nstudios.eu/wiki.html",
+  "llms_txt": "https://ozoneui.nstudios.eu/llms.txt"
+}

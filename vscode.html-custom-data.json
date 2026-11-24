@@ -1,0 +1,1796 @@
+{
+    "version":  1.1,
+    "tags":  [
+                 {
+                     "description":  "[core] Universal 4-mode SVG vector icon (builtin/Iconify/custom/font)",
+                     "name":  "oz-icon",
+                     "attributes":  [
+                                        {
+                                            "name":  "name"
+                                        },
+                                        {
+                                            "name":  "set",
+                                            "values":  [
+                                                           {
+                                                               "name":  "builtin"
+                                                           },
+                                                           {
+                                                               "name":  "lucide"
+                                                           },
+                                                           {
+                                                               "name":  "ph"
+                                                           },
+                                                           {
+                                                               "name":  "tabler"
+                                                           },
+                                                           {
+                                                               "name":  "solar"
+                                                           },
+                                                           {
+                                                               "name":  "heroicons"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "size"
+                                        },
+                                        {
+                                            "name":  "stroke"
+                                        },
+                                        {
+                                            "name":  "src"
+                                        },
+                                        {
+                                            "name":  "icon-class"
+                                        },
+                                        {
+                                            "name":  "glow"
+                                        },
+                                        {
+                                            "name":  "spin"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Atmospheric action button",
+                     "name":  "oz-button",
+                     "attributes":  [
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "primary"
+                                                           },
+                                                           {
+                                                               "name":  "glow"
+                                                           },
+                                                           {
+                                                               "name":  "glass"
+                                                           },
+                                                           {
+                                                               "name":  "ghost"
+                                                           },
+                                                           {
+                                                               "name":  "danger"
+                                                           },
+                                                           {
+                                                               "name":  "success"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "size",
+                                            "values":  [
+                                                           {
+                                                               "name":  "sm"
+                                                           },
+                                                           {
+                                                               "name":  "md"
+                                                           },
+                                                           {
+                                                               "name":  "lg"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "icon"
+                                        },
+                                        {
+                                            "name":  "icon-right"
+                                        },
+                                        {
+                                            "name":  "pill"
+                                        },
+                                        {
+                                            "name":  "loading"
+                                        },
+                                        {
+                                            "name":  "label"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Glass surface card with optional 3D tilt \u0026 glow",
+                     "name":  "oz-card",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "subtitle"
+                                        },
+                                        {
+                                            "name":  "badge"
+                                        },
+                                        {
+                                            "name":  "tilt"
+                                        },
+                                        {
+                                            "name":  "glow",
+                                            "values":  [
+                                                           {
+                                                               "name":  "cyan"
+                                                           },
+                                                           {
+                                                               "name":  "violet"
+                                                           },
+                                                           {
+                                                               "name":  "emerald"
+                                                           },
+                                                           {
+                                                               "name":  "rose"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "exportable"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Status pill with optional live pulse dot",
+                     "name":  "oz-badge",
+                     "attributes":  [
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "cyan"
+                                                           },
+                                                           {
+                                                               "name":  "violet"
+                                                           },
+                                                           {
+                                                               "name":  "emerald"
+                                                           },
+                                                           {
+                                                               "name":  "rose"
+                                                           },
+                                                           {
+                                                               "name":  "neutral"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "pulse"
+                                        },
+                                        {
+                                            "name":  "label"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Glass input with privacy secret mask toggle",
+                     "name":  "oz-input",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "placeholder"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "type"
+                                        },
+                                        {
+                                            "name":  "mask",
+                                            "description":  "mask(secret)"
+                                        },
+                                        {
+                                            "name":  "icon"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Spring-physics toggle switch",
+                     "name":  "oz-switch",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "checked"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Animated pill tab bar",
+                     "name":  "oz-tabs",
+                     "attributes":  [
+                                        {
+                                            "name":  "active"
+                                        },
+                                        {
+                                            "name":  "tabs",
+                                            "description":  "tabs(comma-separated)"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Spring modal dialog",
+                     "name":  "oz-dialog",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "open"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[social] User avatar with live presence status \u0026 verified badge",
+                     "name":  "oz-avatar",
+                     "attributes":  [
+                                        {
+                                            "name":  "name"
+                                        },
+                                        {
+                                            "name":  "src"
+                                        },
+                                        {
+                                            "name":  "status",
+                                            "values":  [
+                                                           {
+                                                               "name":  "online"
+                                                           },
+                                                           {
+                                                               "name":  "busy"
+                                                           },
+                                                           {
+                                                               "name":  "away"
+                                                           },
+                                                           {
+                                                               "name":  "streaming"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "verified"
+                                        },
+                                        {
+                                            "name":  "size"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[admin] KPI metric card with sparkline \u0026 privacy mask",
+                     "name":  "oz-stat",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "delta"
+                                        },
+                                        {
+                                            "name":  "trend",
+                                            "values":  [
+                                                           {
+                                                               "name":  "up"
+                                                           },
+                                                           {
+                                                               "name":  "down"
+                                                           },
+                                                           {
+                                                               "name":  "neutral"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "sparkline"
+                                        },
+                                        {
+                                            "name":  "mask",
+                                            "description":  "mask(blur)"
+                                        },
+                                        {
+                                            "name":  "src"
+                                        },
+                                        {
+                                            "name":  "poll"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[admin] Interactive SVG chart (area, line, bar, donut) with SVG export",
+                     "name":  "oz-chart",
+                     "attributes":  [
+                                        {
+                                            "name":  "type",
+                                            "values":  [
+                                                           {
+                                                               "name":  "area"
+                                                           },
+                                                           {
+                                                               "name":  "line"
+                                                           },
+                                                           {
+                                                               "name":  "bar"
+                                                           },
+                                                           {
+                                                               "name":  "donut"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "labels"
+                                        },
+                                        {
+                                            "name":  "data"
+                                        },
+                                        {
+                                            "name":  "glow"
+                                        },
+                                        {
+                                            "name":  "exportable"
+                                        },
+                                        {
+                                            "name":  "src"
+                                        },
+                                        {
+                                            "name":  "poll"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[admin] Searchable, sortable enterprise grid with CSV/JSON export",
+                     "name":  "oz-table",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "rows",
+                                            "description":  "rows(JSON)"
+                                        },
+                                        {
+                                            "name":  "searchable"
+                                        },
+                                        {
+                                            "name":  "exportable"
+                                        },
+                                        {
+                                            "name":  "mask-cols"
+                                        },
+                                        {
+                                            "name":  "src"
+                                        },
+                                        {
+                                            "name":  "poll"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[admin] Zero-config 4-way data morpher (Table/Chart/Cards/JSON)",
+                     "name":  "oz-smart-view",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "data",
+                                            "description":  "data(JSON)"
+                                        },
+                                        {
+                                            "name":  "view",
+                                            "values":  [
+                                                           {
+                                                               "name":  "table"
+                                                           },
+                                                           {
+                                                               "name":  "chart"
+                                                           },
+                                                           {
+                                                               "name":  "cards"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "src"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[landing] Cinematic aurora hero container",
+                     "name":  "oz-hero",
+                     "attributes":  [
+                                        {
+                                            "name":  "badge"
+                                        },
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "subtitle"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[landing] Responsive drag-and-drop sortable bento grid",
+                     "name":  "oz-bento",
+                     "attributes":  [
+                                        {
+                                            "name":  "cols"
+                                        },
+                                        {
+                                            "name":  "sortable"
+                                        },
+                                        {
+                                            "name":  "persist-key"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[landing] Pricing tier card with popular aura ring",
+                     "name":  "oz-pricing",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "price"
+                                        },
+                                        {
+                                            "name":  "period"
+                                        },
+                                        {
+                                            "name":  "popular"
+                                        },
+                                        {
+                                            "name":  "features",
+                                            "description":  "features(csv)"
+                                        },
+                                        {
+                                            "name":  "cta"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[landing] Infinite smooth-scrolling horizontal ticker",
+                     "name":  "oz-marquee",
+                     "attributes":  {
+                                        "name":  "speed"
+                                    }
+                 },
+                 {
+                     "description":  "[marketplace] 3D tilt product showcase with wishlist \u0026 quick buy",
+                     "name":  "oz-product-card",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "price"
+                                        },
+                                        {
+                                            "name":  "old-price"
+                                        },
+                                        {
+                                            "name":  "rating"
+                                        },
+                                        {
+                                            "name":  "reviews"
+                                        },
+                                        {
+                                            "name":  "badge"
+                                        },
+                                        {
+                                            "name":  "category"
+                                        },
+                                        {
+                                            "name":  "seller"
+                                        },
+                                        {
+                                            "name":  "gradient"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[marketplace] Interactive or static star rating",
+                     "name":  "oz-rating",
+                     "attributes":  [
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "max"
+                                        },
+                                        {
+                                            "name":  "interactive"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[social] Interactive social feed post with live reactions",
+                     "name":  "oz-post",
+                     "attributes":  [
+                                        {
+                                            "name":  "author"
+                                        },
+                                        {
+                                            "name":  "handle"
+                                        },
+                                        {
+                                            "name":  "verified"
+                                        },
+                                        {
+                                            "name":  "status"
+                                        },
+                                        {
+                                            "name":  "time"
+                                        },
+                                        {
+                                            "name":  "likes"
+                                        },
+                                        {
+                                            "name":  "comments"
+                                        },
+                                        {
+                                            "name":  "shares"
+                                        },
+                                        {
+                                            "name":  "tags"
+                                        },
+                                        {
+                                            "name":  "content"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[social] Post composer that publishes live \u003coz-post\u003e items",
+                     "name":  "oz-composer",
+                     "attributes":  [
+                                        {
+                                            "name":  "placeholder"
+                                        },
+                                        {
+                                            "name":  "target"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[ai] Self-healing streaming JSON-to-UI renderer",
+                     "name":  "oz-renderer",
+                     "attributes":  {
+                                        "name":  "schema",
+                                        "description":  "schema(JSON)"
+                                    }
+                 },
+                 {
+                     "description":  "[os] Cmd+K auto-discovering command palette",
+                     "name":  "oz-command",
+                     "attributes":  {
+                                        "name":  "auto-discover"
+                                    }
+                 },
+                 {
+                     "description":  "[os] Alt+O floating Theme DNA visual studio",
+                     "name":  "oz-inspector",
+                     "attributes":  {
+                                        "name":  "open"
+                                    }
+                 },
+                 {
+                     "description":  "[layout] Navigation bar header in glass, floating, minimal, or enterprise style",
+                     "name":  "oz-header",
+                     "attributes":  [
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "glass"
+                                                           },
+                                                           {
+                                                               "name":  "floating"
+                                                           },
+                                                           {
+                                                               "name":  "minimal"
+                                                           },
+                                                           {
+                                                               "name":  "enterprise"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "brand"
+                                        },
+                                        {
+                                            "name":  "badge"
+                                        },
+                                        {
+                                            "name":  "links",
+                                            "description":  "links(csv)"
+                                        },
+                                        {
+                                            "name":  "max-links"
+                                        },
+                                        {
+                                            "name":  "cta"
+                                        },
+                                        {
+                                            "name":  "search"
+                                        },
+                                        {
+                                            "name":  "icon"
+                                        },
+                                        {
+                                            "name":  "mobile-menu",
+                                            "values":  [
+                                                           {
+                                                               "name":  "slide"
+                                                           },
+                                                           {
+                                                               "name":  "slide-left"
+                                                           },
+                                                           {
+                                                               "name":  "modal"
+                                                           },
+                                                           {
+                                                               "name":  "dropdown"
+                                                           }
+                                                       ]
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Multi-column, minimal, or status footer with newsletter \u0026 links",
+                     "name":  "oz-footer",
+                     "attributes":  [
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "multi-col"
+                                                           },
+                                                           {
+                                                               "name":  "minimal"
+                                                           },
+                                                           {
+                                                               "name":  "status"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "brand"
+                                        },
+                                        {
+                                            "name":  "tagline"
+                                        },
+                                        {
+                                            "name":  "columns",
+                                            "description":  "columns(JSON)"
+                                        },
+                                        {
+                                            "name":  "status"
+                                        },
+                                        {
+                                            "name":  "copyright"
+                                        },
+                                        {
+                                            "name":  "newsletter"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Clickable navigation breadcrumb trail",
+                     "name":  "oz-breadcrumbs",
+                     "attributes":  [
+                                        {
+                                            "name":  "items",
+                                            "description":  "items(csv|JSON)"
+                                        },
+                                        {
+                                            "name":  "separator",
+                                            "values":  [
+                                                           {
+                                                               "name":  "arrow"
+                                                           },
+                                                           {
+                                                               "name":  "slash"
+                                                           }
+                                                       ]
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Dismissible callout banner with action button \u0026 semantic colors",
+                     "name":  "oz-alert",
+                     "attributes":  [
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "cyan"
+                                                           },
+                                                           {
+                                                               "name":  "violet"
+                                                           },
+                                                           {
+                                                               "name":  "emerald"
+                                                           },
+                                                           {
+                                                               "name":  "rose"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "message"
+                                        },
+                                        {
+                                            "name":  "icon"
+                                        },
+                                        {
+                                            "name":  "dismissible"
+                                        },
+                                        {
+                                            "name":  "cta"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Glowing progress bar with determinate \u0026 shimmer indeterminate modes",
+                     "name":  "oz-progress",
+                     "attributes":  [
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "max"
+                                        },
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "cyan"
+                                                           },
+                                                           {
+                                                               "name":  "violet"
+                                                           },
+                                                           {
+                                                               "name":  "emerald"
+                                                           },
+                                                           {
+                                                               "name":  "rose"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "show-value"
+                                        },
+                                        {
+                                            "name":  "indeterminate"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Expandable FAQ / settings accordion list",
+                     "name":  "oz-accordion",
+                     "attributes":  [
+                                        {
+                                            "name":  "items",
+                                            "description":  "items(JSON)"
+                                        },
+                                        {
+                                            "name":  "multiple"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Vertical activity, audit, and roadmap timeline",
+                     "name":  "oz-timeline",
+                     "attributes":  {
+                                        "name":  "items",
+                                        "description":  "items(JSON)"
+                                    }
+                 },
+                 {
+                     "description":  "[layout] Collapsible app sidebar: grouped nav, nested items, badges, search, user footer, mobile drawer",
+                     "name":  "oz-sidebar",
+                     "attributes":  [
+                                        {
+                                            "name":  "brand"
+                                        },
+                                        {
+                                            "name":  "icon"
+                                        },
+                                        {
+                                            "name":  "items",
+                                            "description":  "items(JSON groups|flat)"
+                                        },
+                                        {
+                                            "name":  "active"
+                                        },
+                                        {
+                                            "name":  "collapsed"
+                                        },
+                                        {
+                                            "name":  "side",
+                                            "values":  [
+                                                           {
+                                                               "name":  "left"
+                                                           },
+                                                           {
+                                                               "name":  "right"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "glass"
+                                                           },
+                                                           {
+                                                               "name":  "solid"
+                                                           },
+                                                           {
+                                                               "name":  "floating"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "searchable"
+                                        },
+                                        {
+                                            "name":  "user-name"
+                                        },
+                                        {
+                                            "name":  "user-email"
+                                        },
+                                        {
+                                            "name":  "width"
+                                        },
+                                        {
+                                            "name":  "persist-key"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Admin app layout: sidebar + sticky topbar + content; put oz-sidebar, slot=actions and content as children",
+                     "name":  "oz-app-shell",
+                     "attributes":  [
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "subtitle"
+                                        },
+                                        {
+                                            "name":  "topbar"
+                                        },
+                                        {
+                                            "name":  "fill"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Styled native select with groups",
+                     "name":  "oz-select",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "hint"
+                                        },
+                                        {
+                                            "name":  "error"
+                                        },
+                                        {
+                                            "name":  "options",
+                                            "description":  "options(csv|JSON)"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "placeholder"
+                                        },
+                                        {
+                                            "name":  "disabled"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Checkbox with description and indeterminate state",
+                     "name":  "oz-checkbox",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "description"
+                                        },
+                                        {
+                                            "name":  "checked"
+                                        },
+                                        {
+                                            "name":  "indeterminate"
+                                        },
+                                        {
+                                            "name":  "hint"
+                                        },
+                                        {
+                                            "name":  "error"
+                                        },
+                                        {
+                                            "name":  "disabled"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Radio group, plain or selectable cards",
+                     "name":  "oz-radio-group",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "options",
+                                            "description":  "options(csv|JSON)"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "default"
+                                                           },
+                                                           {
+                                                               "name":  "cards"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "inline"
+                                        },
+                                        {
+                                            "name":  "hint"
+                                        },
+                                        {
+                                            "name":  "error"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Textarea with character counter and autosize",
+                     "name":  "oz-textarea",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "placeholder"
+                                        },
+                                        {
+                                            "name":  "rows"
+                                        },
+                                        {
+                                            "name":  "maxlength"
+                                        },
+                                        {
+                                            "name":  "autosize"
+                                        },
+                                        {
+                                            "name":  "hint"
+                                        },
+                                        {
+                                            "name":  "error"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Range slider with live value readout",
+                     "name":  "oz-slider",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "min"
+                                        },
+                                        {
+                                            "name":  "max"
+                                        },
+                                        {
+                                            "name":  "step"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "prefix"
+                                        },
+                                        {
+                                            "name":  "suffix"
+                                        },
+                                        {
+                                            "name":  "show-value"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Native date/time picker in Ozone styling",
+                     "name":  "oz-date-picker",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "type",
+                                            "values":  [
+                                                           {
+                                                               "name":  "date"
+                                                           },
+                                                           {
+                                                               "name":  "datetime-local"
+                                                           },
+                                                           {
+                                                               "name":  "time"
+                                                           },
+                                                           {
+                                                               "name":  "month"
+                                                           },
+                                                           {
+                                                               "name":  "week"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "min"
+                                        },
+                                        {
+                                            "name":  "max"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Drag-and-drop file dropzone with size validation; emits oz-files",
+                     "name":  "oz-file-upload",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "accept"
+                                        },
+                                        {
+                                            "name":  "multiple"
+                                        },
+                                        {
+                                            "name":  "max-size",
+                                            "description":  "max-size(MB)"
+                                        },
+                                        {
+                                            "name":  "prompt"
+                                        },
+                                        {
+                                            "name":  "description"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Searchable select; multiple for chips, creatable to add values",
+                     "name":  "oz-combobox",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "options",
+                                            "description":  "options(csv|JSON)"
+                                        },
+                                        {
+                                            "name":  "value",
+                                            "description":  "value(csv)"
+                                        },
+                                        {
+                                            "name":  "multiple"
+                                        },
+                                        {
+                                            "name":  "creatable"
+                                        },
+                                        {
+                                            "name":  "placeholder"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[landing] Multi-layer scroll and mouse parallax stage for depth backgrounds and cards",
+                     "name":  "oz-parallax",
+                     "attributes":  [
+                                        {
+                                            "name":  "speed"
+                                        },
+                                        {
+                                            "name":  "direction",
+                                            "values":  [
+                                                           {
+                                                               "name":  "vertical"
+                                                           },
+                                                           {
+                                                               "name":  "horizontal"
+                                                           },
+                                                           {
+                                                               "name":  "mouse"
+                                                           },
+                                                           {
+                                                               "name":  "both"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "tilt"
+                                        },
+                                        {
+                                            "name":  "height"
+                                        },
+                                        {
+                                            "name":  "badge"
+                                        },
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "subtitle"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[landing] IntersectionObserver scroll-triggered entrance animator with stagger support",
+                     "name":  "oz-reveal",
+                     "attributes":  [
+                                        {
+                                            "name":  "effect",
+                                            "values":  [
+                                                           {
+                                                               "name":  "fade-up"
+                                                           },
+                                                           {
+                                                               "name":  "fade-down"
+                                                           },
+                                                           {
+                                                               "name":  "zoom"
+                                                           },
+                                                           {
+                                                               "name":  "blur"
+                                                           },
+                                                           {
+                                                               "name":  "flip"
+                                                           },
+                                                           {
+                                                               "name":  "slide-left"
+                                                           },
+                                                           {
+                                                               "name":  "slide-right"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "delay"
+                                        },
+                                        {
+                                            "name":  "duration"
+                                        },
+                                        {
+                                            "name":  "stagger"
+                                        },
+                                        {
+                                            "name":  "once"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[landing] Cursor-tracking radial spotlight surface container",
+                     "name":  "oz-spotlight",
+                     "attributes":  [
+                                        {
+                                            "name":  "color",
+                                            "values":  [
+                                                           {
+                                                               "name":  "cyan"
+                                                           },
+                                                           {
+                                                               "name":  "violet"
+                                                           },
+                                                           {
+                                                               "name":  "emerald"
+                                                           },
+                                                           {
+                                                               "name":  "rose"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "size"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Slide-over side sheet or bottom drawer panel with backdrop \u0026 footer slot",
+                     "name":  "oz-drawer",
+                     "attributes":  [
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "subtitle"
+                                        },
+                                        {
+                                            "name":  "side",
+                                            "values":  [
+                                                           {
+                                                               "name":  "right"
+                                                           },
+                                                           {
+                                                               "name":  "left"
+                                                           },
+                                                           {
+                                                               "name":  "bottom"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "size",
+                                            "values":  [
+                                                           {
+                                                               "name":  "sm"
+                                                           },
+                                                           {
+                                                               "name":  "md"
+                                                           },
+                                                           {
+                                                               "name":  "lg"
+                                                           },
+                                                           {
+                                                               "name":  "xl"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "open"
+                                        },
+                                        {
+                                            "name":  "trigger"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Floating action/context menu popover with icons, shortcuts, and oz-select event",
+                     "name":  "oz-dropdown",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "icon"
+                                        },
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "glass"
+                                                           },
+                                                           {
+                                                               "name":  "primary"
+                                                           },
+                                                           {
+                                                               "name":  "glow"
+                                                           },
+                                                           {
+                                                               "name":  "ghost"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "align",
+                                            "values":  [
+                                                           {
+                                                               "name":  "left"
+                                                           },
+                                                           {
+                                                               "name":  "right"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "items",
+                                            "description":  "items(JSON)"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Accessible floating glass tooltip with optional keyboard shortcut pill",
+                     "name":  "oz-tooltip",
+                     "attributes":  [
+                                        {
+                                            "name":  "text"
+                                        },
+                                        {
+                                            "name":  "position",
+                                            "values":  [
+                                                           {
+                                                               "name":  "top"
+                                                           },
+                                                           {
+                                                               "name":  "bottom"
+                                                           },
+                                                           {
+                                                               "name":  "left"
+                                                           },
+                                                           {
+                                                               "name":  "right"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "shortcut"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Interactive multi-step wizard / pipeline progress stepper",
+                     "name":  "oz-stepper",
+                     "attributes":  [
+                                        {
+                                            "name":  "steps",
+                                            "description":  "steps(csv|JSON)"
+                                        },
+                                        {
+                                            "name":  "active"
+                                        },
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "horizontal"
+                                                           },
+                                                           {
+                                                               "name":  "vertical"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "clickable"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[admin] Drag-and-drop sprint/workflow Kanban board with persistence and task creation",
+                     "name":  "oz-kanban",
+                     "attributes":  [
+                                        {
+                                            "name":  "columns",
+                                            "description":  "columns(JSON)"
+                                        },
+                                        {
+                                            "name":  "persist-key"
+                                        },
+                                        {
+                                            "name":  "addable"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Interactive glass monthly calendar grid with Today button, range selection, and event dots",
+                     "name":  "oz-calendar",
+                     "attributes":  [
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "value",
+                                            "description":  "value(YYYY-MM-DD)"
+                                        },
+                                        {
+                                            "name":  "start"
+                                        },
+                                        {
+                                            "name":  "end"
+                                        },
+                                        {
+                                            "name":  "range"
+                                        },
+                                        {
+                                            "name":  "min"
+                                        },
+                                        {
+                                            "name":  "max"
+                                        },
+                                        {
+                                            "name":  "events",
+                                            "description":  "events(JSON)"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Color swatch trigger, hex input, spectrum wheel, and floating OKLCH swatch popover",
+                     "name":  "oz-color-picker",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "value",
+                                            "description":  "value(hex)"
+                                        },
+                                        {
+                                            "name":  "presets",
+                                            "description":  "presets(csv)"
+                                        },
+                                        {
+                                            "name":  "hint"
+                                        },
+                                        {
+                                            "name":  "error"
+                                        },
+                                        {
+                                            "name":  "disabled"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Numeric stepper input with +/- buttons, keyboard arrows, and min/max/step clamping",
+                     "name":  "oz-number-input",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "min"
+                                        },
+                                        {
+                                            "name":  "max"
+                                        },
+                                        {
+                                            "name":  "step"
+                                        },
+                                        {
+                                            "name":  "hint"
+                                        },
+                                        {
+                                            "name":  "error"
+                                        },
+                                        {
+                                            "name":  "disabled"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[forms] Segmented passkey / 2FA verification code input with auto-advance and paste support",
+                     "name":  "oz-otp-input",
+                     "attributes":  [
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "length"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "hint"
+                                        },
+                                        {
+                                            "name":  "error"
+                                        },
+                                        {
+                                            "name":  "disabled"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] 12-column responsive CSS grid container or auto-fit min-width grid",
+                     "name":  "oz-grid",
+                     "attributes":  [
+                                        {
+                                            "name":  "cols"
+                                        },
+                                        {
+                                            "name":  "gap"
+                                        },
+                                        {
+                                            "name":  "min"
+                                        },
+                                        {
+                                            "name":  "align"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Responsive column child inside \u003coz-grid\u003e with desktop/tablet/mobile spans",
+                     "name":  "oz-col",
+                     "attributes":  [
+                                        {
+                                            "name":  "span",
+                                            "description":  "span(1..12)"
+                                        },
+                                        {
+                                            "name":  "span-md"
+                                        },
+                                        {
+                                            "name":  "span-sm"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Mobile app / PWA bottom tab navigation bar with badges and safe-area padding",
+                     "name":  "oz-bottom-nav",
+                     "attributes":  [
+                                        {
+                                            "name":  "items",
+                                            "description":  "items(JSON)"
+                                        },
+                                        {
+                                            "name":  "active"
+                                        },
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "floating"
+                                                           },
+                                                           {
+                                                               "name":  "docked"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "position",
+                                            "values":  [
+                                                           {
+                                                               "name":  "inline"
+                                                           },
+                                                           {
+                                                               "name":  "fixed"
+                                                           }
+                                                       ]
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Mobile Floating Action Button with expandable speed-dial actions",
+                     "name":  "oz-fab",
+                     "attributes":  [
+                                        {
+                                            "name":  "icon"
+                                        },
+                                        {
+                                            "name":  "label"
+                                        },
+                                        {
+                                            "name":  "items",
+                                            "description":  "items(JSON)"
+                                        },
+                                        {
+                                            "name":  "position",
+                                            "values":  [
+                                                           {
+                                                               "name":  "inline"
+                                                           },
+                                                           {
+                                                               "name":  "bottom-right"
+                                                           },
+                                                           {
+                                                               "name":  "bottom-left"
+                                                           }
+                                                       ]
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[ai] Interactive AI chat feed with model switcher, prompt chips, and streaming reply support",
+                     "name":  "oz-ai-chat",
+                     "attributes":  [
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "model"
+                                        },
+                                        {
+                                            "name":  "models",
+                                            "description":  "models(csv)"
+                                        },
+                                        {
+                                            "name":  "suggestions",
+                                            "description":  "suggestions(csv)"
+                                        },
+                                        {
+                                            "name":  "messages",
+                                            "description":  "messages(JSON)"
+                                        },
+                                        {
+                                            "name":  "placeholder"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Syntax container with language badge, filename header, line numbers, and copy button",
+                     "name":  "oz-code-block",
+                     "attributes":  [
+                                        {
+                                            "name":  "title"
+                                        },
+                                        {
+                                            "name":  "lang"
+                                        },
+                                        {
+                                            "name":  "code"
+                                        },
+                                        {
+                                            "name":  "line-numbers"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Resizable two-pane split container with draggable divider handle",
+                     "name":  "oz-split-pane",
+                     "attributes":  {
+                                        "name":  "ratio",
+                                        "description":  "ratio(percent)"
+                                    }
+                 },
+                 {
+                     "description":  "[layout] Collapsible hierarchical folder and file tree with oz-select events",
+                     "name":  "oz-tree",
+                     "attributes":  [
+                                        {
+                                            "name":  "items",
+                                            "description":  "items(JSON)"
+                                        },
+                                        {
+                                            "name":  "active"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[core] Rich glass preview popover displayed on hover or focus over a trigger",
+                     "name":  "oz-hover-card",
+                     "attributes":  [
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "subtitle"
+                                        },
+                                        {
+                                            "name":  "badge"
+                                        },
+                                        {
+                                            "name":  "meta"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[admin] Accessible page navigation bar with page counts and oz-page events",
+                     "name":  "oz-pagination",
+                     "attributes":  [
+                                        {
+                                            "name":  "page"
+                                        },
+                                        {
+                                            "name":  "total"
+                                        },
+                                        {
+                                            "name":  "page-size"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Animated shimmer placeholder skeleton for cards, stats, avatars, or text",
+                     "name":  "oz-skeleton",
+                     "attributes":  [
+                                        {
+                                            "name":  "variant",
+                                            "values":  [
+                                                           {
+                                                               "name":  "card"
+                                                           },
+                                                           {
+                                                               "name":  "stat"
+                                                           },
+                                                           {
+                                                               "name":  "avatar"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "lines"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] Empty-state callout card with vector icon ring, description, and CTA button",
+                     "name":  "oz-empty-state",
+                     "attributes":  [
+                                        {
+                                            "name":  "icon"
+                                        },
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "description"
+                                        },
+                                        {
+                                            "name":  "cta"
+                                        }
+                                    ]
+                 },
+                 {
+                     "description":  "[layout] EU GDPR / ePrivacy Planet49 consent banner with equally weighted choices and offline strict mode",
+                     "name":  "oz-cookie-consent",
+                     "attributes":  [
+                                        {
+                                            "name":  "heading"
+                                        },
+                                        {
+                                            "name":  "description"
+                                        },
+                                        {
+                                            "name":  "policy-url"
+                                        },
+                                        {
+                                            "name":  "position",
+                                            "values":  [
+                                                           {
+                                                               "name":  "bottom-right"
+                                                           },
+                                                           {
+                                                               "name":  "bottom-bar"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "open"
+                                        }
+                                    ]
+                 }
+             ]
+}

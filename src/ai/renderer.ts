@@ -84,7 +84,8 @@ export class OzRenderer extends OzoneElement {
 
     for (const [key, val] of Object.entries(props)) {
       if (val === undefined || val === null || val === false) continue;
-      if (key === 'action' || key === 'onClick') continue;
+      if (key === 'action' || /^on/i.test(key)) continue;
+      if (/^(href|src|action|formaction|xlink:href)$/i.test(key) && /^\s*(?:javascript|vbscript|data:\s*text\/html)/i.test(String(val))) continue;
       if (key === 'style' && typeof val === 'string') {
         el.setAttribute('style', val);
       } else if (typeof val === 'boolean') {

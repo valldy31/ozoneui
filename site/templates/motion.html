@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Parallax & Motion — OzoneUI Template</title>
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style>
+    body { margin: 0; overflow-x: hidden; }
+    .px-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 12px; }
+    .px-float {
+      padding: 20px 22px; border-radius: var(--oz-radius-md);
+      background: var(--oz-surface); border: 1px solid var(--oz-border-strong);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      box-shadow: var(--oz-shadow-lg);
+    }
+    .px-float h3 { margin: 0 0 6px; font-size: 1rem; font-weight: 700; }
+    .px-float p { margin: 0; font-size: 0.84rem; color: var(--oz-text-muted); line-height: 1.55; }
+    @media (max-width: 860px) { .px-cards { grid-template-columns: minmax(0, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="oz-container" style="padding-top:14px;">
+    <oz-header variant="floating" brand="Ozone Motion" badge="Pack F" links="Parallax,Reveal,Spotlight,Kanban" cta="Inspect Drawer" icon="sparkles" mobile-menu="slide" id="motion-hdr"></oz-header>
+  </div>
+
+  <main class="oz-container oz-stack" style="padding:32px 0 84px;gap:42px;">
+
+    <!-- MULTI-LAYER SCROLL + CURSOR PARALLAX -->
+    <section id="sec-parallax">
+      <oz-parallax
+        speed="1"
+        direction="both"
+        tilt
+        height="420px"
+        badge="120fps Multi-Layer Depth"
+        heading="Spatial Parallax &amp; Kinetic Layers"
+        subtitle="Move your pointer or scroll the page — background aurora orbs, architectural grid, and foreground cards shift independently at their own [data-depth] rate.">
+        <div class="px-cards">
+          <div class="px-float" data-depth="0.22">
+            <oz-badge variant="cyan">Depth 0.22</oz-badge>
+            <h3 style="margin-top:10px;">Scroll Coupled</h3>
+            <p>Driven by passive scroll + requestAnimationFrame without layout thrashing.</p>
+          </div>
+          <div class="px-float" data-depth="0.48">
+            <oz-badge variant="violet">Depth 0.48</oz-badge>
+            <h3 style="margin-top:10px;">3D Cursor Tilt</h3>
+            <p>Soft pointer parallax adds depth on desktop while collapsing cleanly on mobile.</p>
+          </div>
+          <div class="px-float" data-depth="-0.28">
+            <oz-badge variant="emerald">Depth -0.28</oz-badge>
+            <h3 style="margin-top:10px;">Counter-Motion</h3>
+            <p>Negative depth layers drift in the opposite direction for true parallax separation.</p>
+          </div>
+        </div>
+      </oz-parallax>
+    </section>
+
+    <!-- STEPPER & OVERLAYS -->
+    <section class="oz-stack" style="gap:20px;">
+      <div class="oz-between">
+        <div>
+          <h2 style="font-size:1.35rem;font-weight:700;margin:0 0 6px;">Interactive Stepper, Menus &amp; Drawer</h2>
+          <p class="oz-text-sm oz-muted" style="margin:0;">Click any step to advance the pipeline, open the floating menu, hover the tooltip, or launch the drawer.</p>
+        </div>
+        <div class="oz-row" style="gap:10px;">
+          <oz-tooltip text="Keyboard-ready glass tooltip" shortcut="⌘K" position="top">
+            <oz-button variant="glass" size="sm" icon="command">Hover Tooltip</oz-button>
+          </oz-tooltip>
+          <oz-dropdown label="Quick Actions" icon="sliders" variant="glass" align="right" id="motion-dd"></oz-dropdown>
+          <oz-button variant="glow" size="sm" icon="layers" id="motion-open-drawer">Open Side Sheet</oz-button>
+        </div>
+      </div>
+
+      <oz-stepper id="motion-stepper" active="1" clickable steps='[
+        {"title":"Scaffold Tags","desc":"Drop ozone.css + ozone.js"},
+        {"title":"Add Depth","desc":"oz-parallax + oz-reveal"},
+        {"title":"Connect Logic","desc":"Zero-build Web Events"},
+        {"title":"Ship Live","desc":"Edge CDN ready"}
+      ]'></oz-stepper>
+    </section>
+
+    <!-- STAGGERED SCROLL REVEAL + SPOTLIGHT -->
+    <section id="sec-reveal" class="oz-stack" style="gap:20px;">
+      <div>
+        <h2 style="font-size:1.35rem;font-weight:700;margin:0 0 6px;">Scroll Reveal &amp; Radial Spotlight</h2>
+        <p class="oz-text-sm oz-muted" style="margin:0;">Cards stagger cleanly via IntersectionObserver, and Spotlight surfaces illuminate dynamically under the pointer.</p>
+      </div>
+
+      <oz-reveal effect="fade-up" stagger="90" class="oz-grid-3">
+        <oz-spotlight color="cyan">
+          <oz-badge variant="cyan">Spotlight Cyan</oz-badge>
+          <h3 style="margin:14px 0 8px;font-size:1.05rem;">Cursor Illumination</h3>
+          <p class="oz-text-sm oz-muted">Move across this surface to sweep an OKLCH radial beam across glass cards and typography.</p>
+        </oz-spotlight>
+        <oz-spotlight color="violet">
+          <oz-badge variant="violet">Spotlight Violet</oz-badge>
+          <h3 style="margin:14px 0 8px;font-size:1.05rem;">Zero-Dep Observer</h3>
+          <p class="oz-text-sm oz-muted">Supports fade-up, blur, zoom, flip, slide-left, slide-right, plus staggered children out of the box.</p>
+        </oz-spotlight>
+        <oz-spotlight color="emerald">
+          <oz-badge variant="emerald">Spotlight Emerald</oz-badge>
+          <h3 style="margin:14px 0 8px;font-size:1.05rem;">Instant Brand Sync</h3>
+          <p class="oz-text-sm oz-muted">Switch the Master Brand color bar above and every glow, badge, and parallax orb follows immediately.</p>
+        </oz-spotlight>
+      </oz-reveal>
+    </section>
+
+    <!-- KANBAN BOARD -->
+    <section id="sec-kanban" class="oz-stack" style="gap:20px;">
+      <div>
+        <h2 style="font-size:1.35rem;font-weight:700;margin:0 0 6px;">Drag-and-Drop Kanban Board</h2>
+        <p class="oz-text-sm oz-muted" style="margin:0;">Drag cards between columns or type a new task at the bottom of any column.</p>
+      </div>
+      <oz-kanban persist-key="demo-motion-kanban"></oz-kanban>
+    </section>
+  </main>
+
+  <oz-drawer id="motion-drawer" heading="Motion Engine Config" subtitle="Slide-over sheet triggered cleanly from any button" side="right" size="md" trigger="#motion-open-drawer">
+    <oz-alert variant="violet" title="Parallax GPU Accelerated" message="All layer transforms use translate3d and IntersectionObserver for crisp 120fps scrolling."></oz-alert>
+    <oz-select label="Reveal preset" value="fade-up" options="fade-up,blur,zoom,flip,slide-left"></oz-select>
+    <oz-slider label="Parallax intensity" min="20" max="200" value="100" suffix="%" show-value></oz-slider>
+    <oz-checkbox label="Enable 3D pointer tilt on desktop" checked></oz-checkbox>
+    <oz-button slot="footer" variant="glass" size="sm" id="m-drawer-close">Done</oz-button>
+  </oz-drawer>
+
+  <script type="module">
+    import '../../dist/ozone.js';
+    const d = document.getElementById('motion-drawer');
+    document.getElementById('m-drawer-close').addEventListener('click', () => d.close());
+    document.getElementById('motion-hdr').addEventListener('click', (e) => {
+      const txt = (e.target.closest('button,a,.oz-header__cta')?.textContent || '').trim().toLowerCase();
+      if (txt === 'inspect drawer') d.open();
+    });
+  </script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

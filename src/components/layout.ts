@@ -274,7 +274,7 @@ export class OzHeader extends OzoneElement {
 // 26. <oz-footer>
 interface FooterColumn {
   title: string;
-  links: Array<string | { label: string; target?: string }>;
+  links: Array<string | { label: string; href?: string; target?: string }>;
 }
 
 export class OzFooter extends OzoneElement {
@@ -303,7 +303,11 @@ export class OzFooter extends OzoneElement {
             ${status ? `<oz-badge variant="emerald" pulse>${escapeHTML(status)}</oz-badge>` : ''}
             ${cols.flatMap((c) => c.links).slice(0, 4).map((l) => {
               const lbl = typeof l === 'string' ? l : l.label;
+              const href = typeof l === 'string' ? '' : (l.href || '');
               const tgt = typeof l === 'string' ? '' : (l.target || '');
+              if (href) {
+                return `<a class="oz-footer__link" href="${escapeHTML(href)}" style="text-decoration:none;"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${escapeHTML(lbl)}</a>`;
+              }
               return `<button type="button" class="oz-footer__link" data-footer-link="${escapeHTML(lbl)}" data-footer-target="${escapeHTML(tgt)}">${escapeHTML(lbl)}</button>`;
             }).join('')}
           </div>
@@ -343,7 +347,11 @@ export class OzFooter extends OzoneElement {
                 <div class="oz-stack" style="gap:7px;">
                   ${(col.links || []).map((l) => {
                     const lbl = typeof l === 'string' ? l : l.label;
+                    const href = typeof l === 'string' ? '' : (l.href || '');
                     const tgt = typeof l === 'string' ? '' : (l.target || '');
+                    if (href) {
+                      return `<a class="oz-footer__link" href="${escapeHTML(href)}" style="text-decoration:none;"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${escapeHTML(lbl)}</a>`;
+                    }
                     return `<button type="button" class="oz-footer__link" data-footer-link="${escapeHTML(lbl)}" data-footer-target="${escapeHTML(tgt)}">${escapeHTML(lbl)}</button>`;
                   }).join('')}
                 </div>

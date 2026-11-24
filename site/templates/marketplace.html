@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marketplace — OzoneUI Template</title>
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style> body { margin: 0; } </style>
+</head>
+<body>
+  <div class="oz-container" style="padding-top:14px;">
+    <oz-header variant="floating" brand="Aether Market" badge="Beta" links="Browse,Sellers,Collections,Sell" cta="Sign In" icon="shopping-cart" mobile-menu="modal"></oz-header>
+  </div>
+  <main class="oz-container oz-stack" style="padding:28px 0 64px;">
+    <div class="oz-between">
+      <div>
+        <h1 style="font-size:1.6rem;font-weight:700;letter-spacing:-0.025em;margin:0 0 6px;">Digital Asset Marketplace</h1>
+        <p class="oz-text-sm oz-muted" style="margin:0;">Templates, shaders, agents and sound packs from independent creators.</p>
+      </div>
+      <oz-badge variant="cyan" icon="shopping-cart">Cart: 0 items</oz-badge>
+    </div>
+    <oz-card>
+      <div class="oz-between">
+        <div class="oz-row" style="gap:10px;">
+          <oz-badge variant="cyan">All Assets</oz-badge>
+          <oz-badge variant="violet">AI Agents</oz-badge>
+          <oz-badge variant="emerald">Shaders</oz-badge>
+          <oz-badge variant="amber">Templates</oz-badge>
+        </div>
+        <div style="width:min(260px,100%);"><oz-input placeholder="Search marketplace..." icon="search"></oz-input></div>
+      </div>
+    </oz-card>
+    <div class="oz-grid-3">
+      <oz-product-card title="Neural Spatial UI Kit" category="Templates" price="$89" old-price="$149" rating="4.9" reviews="412" badge="Bestseller" seller="Elena Vance" gradient="cyan"></oz-product-card>
+      <oz-product-card title="Raymarched Glass Shaders" category="Shaders" price="$64" old-price="$99" rating="5.0" reviews="289" badge="4K Ready" seller="Kuro Labs" gradient="violet"></oz-product-card>
+      <oz-product-card title="Autonomous Co-Pilot SDK" category="AI Agents" price="$149" old-price="$220" rating="4.8" reviews="176" badge="Trending" seller="Hyperion AI" gradient="emerald"></oz-product-card>
+      <oz-product-card title="Procedural Synth Soundpack" category="Audio" price="$39" old-price="$59" rating="4.9" reviews="510" badge="Zero-Asset" seller="SonicForge" gradient="amber"></oz-product-card>
+      <oz-product-card title="Obsidian BI Dashboard Pro" category="Templates" price="$119" old-price="$179" rating="4.9" reviews="308" badge="Enterprise" seller="Nexus Cloud" gradient="rose"></oz-product-card>
+      <oz-product-card title="WebGPU Particle Engine" category="Shaders" price="$79" old-price="$119" rating="4.7" reviews="142" badge="120fps" seller="Aether Lab" gradient="cyan"></oz-product-card>
+    </div>
+  </main>
+  <oz-footer variant="minimal" brand="Aether Market" status="99.99% Uptime" columns='[{"title":"Nav","links":["Privacy","Terms","Support"]}]'></oz-footer>
+  <script type="module">import '../../dist/ozone.js';</script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

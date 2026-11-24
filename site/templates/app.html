@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin App — OzoneUI Template</title>
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style>
+    body { margin: 0; }
+    .sb-controls {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px;
+      padding: 16px 20px; border-radius: var(--oz-radius-md);
+      background: var(--oz-surface); border: 1px solid var(--oz-border);
+    }
+    .sb-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .sb-group-lbl { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--oz-text-subtle); margin-right: 4px; }
+  </style>
+</head>
+<body>
+  <oz-app-shell id="app-shell" heading="Overview" subtitle="Workspace health, sidebar modes, and controls">
+    <oz-sidebar id="app-sb" persist-key="demo-app" brand="Nexus Cloud" icon="cpu" searchable user-name="Alex Mercer" user-email="alex@nexus.cloud" active="Overview"
+      items='[
+        {"title":"Main","items":[
+          {"label":"Overview","icon":"layout"},
+          {"label":"Analytics","icon":"chart-bar","badge":"New","badgeVariant":"emerald"},
+          {"label":"Customers","icon":"user","children":[{"label":"All customers"},{"label":"Segments"},{"label":"Churn risk","badge":"3","badgeVariant":"rose"}]},
+          {"label":"Marketplace","icon":"store"}
+        ]},
+        {"title":"System","items":[
+          {"label":"Security","icon":"shield"},
+          {"label":"Integrations","icon":"layers","children":[{"label":"API keys"},{"label":"Webhooks"}]},
+          {"label":"Settings","icon":"settings"}
+        ]}
+      ]'></oz-sidebar>
+
+    <oz-dropdown slot="actions" label="Workspace" icon="sliders" variant="glass" align="right" id="app-dd"
+      items='[{"label":"Switch to Floating","value":"floating","icon":"layers","kbd":"F"},{"label":"Move Sidebar Right","value":"right","icon":"arrow-right","kbd":"R"},{"divider":true},{"label":"Open Inspector","value":"drawer","icon":"info","kbd":"⌘I"}]'></oz-dropdown>
+    <oz-button slot="actions" variant="glow" size="sm" icon="plus" id="btn-app-drawer">Open Drawer</oz-button>
+
+    <div class="sb-controls" role="region" aria-label="Sidebar variations">
+      <div class="sb-group">
+        <span class="sb-group-lbl">Style</span>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-sb-var="glass">Glass</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sb-var="solid">Solid</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sb-var="floating">Floating</button>
+      </div>
+      <div class="sb-group">
+        <span class="sb-group-lbl">Side</span>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-sb-side="left">Left</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sb-side="right">Right</button>
+      </div>
+      <div class="sb-group">
+        <span class="sb-group-lbl">Mode</span>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-sb-col="expanded">Expanded</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sb-col="rail">Icon Rail</button>
+      </div>
+    </div>
+
+    <div class="oz-grid-4">
+      <oz-stat title="Monthly Recurring Rev" value="$128,400" delta="+32.4%" trend="up" sparkline="42,58,52,79,94,112,128" glow="cyan"></oz-stat>
+      <oz-stat title="Active Workspaces" value="4,812" delta="+9.1%" trend="up" sparkline="30,34,38,41,44,47,48" glow="violet"></oz-stat>
+      <oz-stat title="Net Retention" value="138.6%" delta="+6.2%" trend="up" sparkline="118,121,126,129,134,138" glow="emerald"></oz-stat>
+      <oz-stat title="P99 Latency" value="18ms" delta="-24.0%" trend="down" sparkline="41,38,32,29,24,20,18" glow="amber"></oz-stat>
+    </div>
+
+    <oz-stepper id="app-stepper" active="2" clickable steps='[{"title":"Provision","desc":"Cluster online"},{"title":"Configure","desc":"RBAC & keys"},{"title":"Verify","desc":"Traffic checks"},{"title":"Production","desc":"Global edge"}]'></oz-stepper>
+
+    <div class="oz-grid-2">
+      <oz-chart type="area" title="Revenue Velocity" subtitle="Last 7 days" labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun" data="180,245,220,340,420,490,610" glow="cyan" exportable></oz-chart>
+      <oz-card title="Workspace settings" subtitle="Quick configuration">
+        <oz-select label="Region" value="eu-central" options='[{"value":"eu-central","label":"EU Central (Frankfurt)"},{"value":"us-east","label":"US East (Virginia)"},{"value":"ap-south","label":"Asia Pacific (Mumbai)"}]'></oz-select>
+        <oz-slider label="Autoscale limit" min="2" max="64" value="24" suffix=" nodes" show-value></oz-slider>
+        <oz-checkbox label="Email me on incidents" description="Critical alerts only, never more than once per hour." checked></oz-checkbox>
+      </oz-card>
+    </div>
+
+    <oz-table title="Enterprise Accounts" src="mock://users" searchable exportable mask-cols="email,mrr"></oz-table>
+  </oz-app-shell>
+
+  <oz-drawer id="app-drawer" heading="Quick Inspector" subtitle="Slide-over panel without leaving the dashboard" side="right" size="md" trigger="#btn-app-drawer">
+    <oz-alert variant="cyan" title="Deployment Healthy" message="Zero failed probes across EU-Central and US-East over the last 24 hours."></oz-alert>
+    <oz-select label="Alert channel" value="slack" options="slack,pagerduty,email"></oz-select>
+    <oz-slider label="Retention (days)" min="7" max="90" value="30" suffix="d" show-value></oz-slider>
+    <oz-checkbox label="Auto-rotate credentials every 30 days" checked></oz-checkbox>
+    <oz-button slot="footer" variant="glass" size="sm" id="drawer-cancel">Close</oz-button>
+    <oz-button slot="footer" variant="glow" size="sm" id="drawer-save">Save Changes</oz-button>
+  </oz-drawer>
+
+  <script type="module">
+    import '../../dist/ozone.js';
+    const sb = document.getElementById('app-sb');
+    const shell = document.getElementById('app-shell');
+    const drawer = document.getElementById('app-drawer');
+
+    const paintBtns = (attr, val) => {
+      document.querySelectorAll('[' + attr + ']').forEach((b) => {
+        const active = b.getAttribute(attr) === val;
+        b.classList.toggle('oz-btn--primary', active);
+        b.classList.toggle('oz-btn--glass', !active);
+      });
+    };
+
+    const setVar = (v) => { sb.setAttribute('variant', v); paintBtns('data-sb-var', v); };
+    const setSide = (s) => {
+      sb.setAttribute('side', s);
+      if (s === 'right') shell.dataset.sidebarSide = 'right';
+      else delete shell.dataset.sidebarSide;
+      paintBtns('data-sb-side', s);
+    };
+    const setCol = (mode) => {
+      sb.collapsed = mode === 'rail';
+      paintBtns('data-sb-col', mode);
+    };
+
+    document.querySelectorAll('[data-sb-var]').forEach((b) => b.addEventListener('click', () => setVar(b.dataset.sbVar)));
+    document.querySelectorAll('[data-sb-side]').forEach((b) => b.addEventListener('click', () => setSide(b.dataset.sbSide)));
+    document.querySelectorAll('[data-sb-col]').forEach((b) => b.addEventListener('click', () => setCol(b.dataset.sbCol)));
+    sb.addEventListener('oz-collapse', (e) => paintBtns('data-sb-col', e.detail.collapsed ? 'rail' : 'expanded'));
+
+    document.getElementById('app-dd').addEventListener('oz-select', (e) => {
+      if (e.detail.value === 'floating') setVar('floating');
+      else if (e.detail.value === 'right') setSide(sb.getAttribute('side') === 'right' ? 'left' : 'right');
+      else if (e.detail.value === 'drawer') drawer.open();
+    });
+    document.getElementById('drawer-cancel').addEventListener('click', () => drawer.close());
+    document.getElementById('drawer-save').addEventListener('click', () => drawer.close());
+  </script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

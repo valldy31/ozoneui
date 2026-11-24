@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>12-Col Grid, Mobile App &amp; AI Chat — OzoneUI Template</title>
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style>
+    body { margin: 0; overflow-x: hidden; }
+    .col-box {
+      padding: 16px 18px; border-radius: var(--oz-radius-md);
+      background: var(--oz-surface); border: 1px solid var(--oz-border-strong);
+      font-size: 0.84rem; font-weight: 600; text-align: center;
+    }
+    .phone-sim {
+      position: relative; max-width: 390px; margin: 0 auto; border-radius: 30px;
+      border: 6px solid var(--oz-border-strong); background: var(--oz-bg);
+      padding: 18px 14px 14px; display: flex; flex-direction: column; gap: 16px;
+      box-shadow: var(--oz-shadow-lg);
+    }
+    .phone-screen { min-height: 210px; display: flex; flex-direction: column; gap: 14px; }
+    .phone-fab-row { display: flex; justify-content: flex-end; margin-top: auto; }
+  </style>
+</head>
+<body>
+  <div class="oz-container" style="padding-top:14px;">
+    <oz-header variant="floating" brand="Ozone Grid & AI" badge="65 Tags" links="Grid,Mobile,AI Chat,Dev" cta="Copy Snippet" icon="grid" mobile-menu="slide" id="m-hdr"></oz-header>
+  </div>
+
+  <main class="oz-container oz-stack" style="padding:32px 0 84px;gap:40px;">
+
+    <!-- 12-COLUMN RESPONSIVE GRID -->
+    <section id="sec-grid" class="oz-stack" style="gap:18px;">
+      <div>
+        <h1 style="font-size:1.7rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 6px;">12-Column Responsive Grid System</h1>
+        <p class="oz-muted" style="margin:0;">Compose responsive layouts with <code>&lt;oz-grid cols="12"&gt;</code> and <code>&lt;oz-col span="..." span-md="..." span-sm="..."&gt;</code> (or CSS classes <code>.oz-grid-12</code> + <code>.oz-col-4</code>).</p>
+      </div>
+
+      <oz-grid cols="12" gap="18">
+        <oz-col span="8" span-md="12"><div class="col-box">span="8" (span-md="12" • main workspace)</div></oz-col>
+        <oz-col span="4" span-md="12"><div class="col-box">span="4" (right sidebar / summary)</div></oz-col>
+        <oz-col span="4" span-md="6" span-sm="12"><div class="col-box">span="4" • 1/3 card</div></oz-col>
+        <oz-col span="4" span-md="6" span-sm="12"><div class="col-box">span="4" • 1/3 card</div></oz-col>
+        <oz-col span="4" span-md="12" span-sm="12"><div class="col-box">span="4" • 1/3 card</div></oz-col>
+        <oz-col span="3" span-md="6" span-sm="12"><div class="col-box">span="3"</div></oz-col>
+        <oz-col span="3" span-md="6" span-sm="12"><div class="col-box">span="3"</div></oz-col>
+        <oz-col span="3" span-md="6" span-sm="12"><div class="col-box">span="3"</div></oz-col>
+        <oz-col span="3" span-md="6" span-sm="12"><div class="col-box">span="3"</div></oz-col>
+      </oz-grid>
+    </section>
+
+    <!-- MOBILE APP TAB BAR + FAB & AI CHAT -->
+    <section id="sec-mobile" class="oz-stack" style="gap:18px;">
+      <oz-grid cols="12" gap="26">
+        <oz-col span="5" span-md="12">
+          <oz-card title="Mobile App &amp; PWA Shell" subtitle="Bottom Navigation + Speed-Dial FAB">
+            <div class="phone-sim">
+              <div class="phone-screen">
+                <div class="oz-between">
+                  <strong style="font-size:0.95rem;" id="mob-tab-title">Home Feed</strong>
+                  <oz-hover-card heading="Alex Mercer" subtitle="Mobile App Creator" badge="Pro" meta="Online • Safe-area PWA ready">
+                    <oz-badge variant="cyan" style="cursor:pointer;">Hover Author</oz-badge>
+                  </oz-hover-card>
+                </div>
+                <oz-stat title="Mobile Active Users" value="28.4K" delta="+19%" trend="up" sparkline="14,18,21,24,28" glow="cyan"></oz-stat>
+                <div class="phone-fab-row">
+                  <oz-fab id="demo-fab" icon="plus" items='[{"id":"post","label":"New Post","icon":"message-circle"},{"id":"ai","label":"Ask AI","icon":"sparkles"},{"id":"upload","label":"Upload File","icon":"plus"}]'></oz-fab>
+                </div>
+              </div>
+              <oz-bottom-nav id="mob-nav" variant="floating" active="home"></oz-bottom-nav>
+            </div>
+          </oz-card>
+        </oz-col>
+
+        <oz-col span="7" span-md="12" id="sec-ai">
+          <oz-ai-chat id="demo-chat" heading="Ozone AI Agent" model="Gemini 2.5 Pro"
+            suggestions="Scaffold 12-col dashboard,Create mobile PWA shell,Audit OKLCH contrast">
+          </oz-ai-chat>
+        </oz-col>
+      </oz-grid>
+    </section>
+
+    <!-- SPLIT PANE + TREE + CODE BLOCK -->
+    <section id="sec-dev" class="oz-stack" style="gap:18px;">
+      <div>
+        <h2 style="font-size:1.35rem;font-weight:700;margin:0 0 6px;">Resizable Split Pane, File Tree &amp; Code Viewer</h2>
+        <p class="oz-text-sm oz-muted" style="margin:0;">Drag the divider bar or click any file in the tree to preview copy-ready HTML &amp; CSS.</p>
+      </div>
+
+      <oz-split-pane ratio="32">
+        <oz-tree id="dev-tree" active="grid"></oz-tree>
+        <oz-code-block id="dev-code" title="12-column-layout.html" lang="html" line-numbers
+          code="<oz-grid cols=&quot;12&quot; gap=&quot;24&quot;>&#10;  <oz-col span=&quot;8&quot; span-md=&quot;12&quot;>Main Workspace</oz-col>&#10;  <oz-col span=&quot;4&quot; span-md=&quot;12&quot;>Sidebar Panel</oz-col>&#10;</oz-grid>&#10;<oz-bottom-nav position=&quot;fixed&quot; variant=&quot;floating&quot;></oz-bottom-nav>">
+        </oz-code-block>
+      </oz-split-pane>
+    </section>
+
+    <!-- PRODUCTION STATES: SKELETON, EMPTY STATE & PAGINATION -->
+    <section class="oz-stack" style="gap:20px;">
+      <oz-grid cols="12" gap="24">
+        <oz-col span="6" span-md="12">
+          <oz-card title="Skeleton Loading Placeholders" subtitle="Shimmer states before live fetch completes">
+            <oz-skeleton variant="avatar" lines="2"></oz-skeleton>
+            <oz-skeleton variant="stat"></oz-skeleton>
+          </oz-card>
+        </oz-col>
+        <oz-col span="6" span-md="12">
+          <oz-empty-state icon="sparkles" heading="No Saved Queries Yet" description="Run your first AI prompt or import JSON telemetry to populate this workspace." cta="Create Query"></oz-empty-state>
+        </oz-col>
+      </oz-grid>
+      <oz-card>
+        <oz-pagination page="2" total="120" page-size="10"></oz-pagination>
+      </oz-card>
+    </section>
+  </main>
+
+  <script type="module">
+    import '../../dist/ozone.js';
+    const titles = { home: 'Home Feed', explore: 'Explore Components', alerts: 'Notifications (3)', profile: 'Profile Settings' };
+    document.getElementById('mob-nav').addEventListener('oz-navigate', (e) => {
+      document.getElementById('mob-tab-title').textContent = titles[e.detail.id] || e.detail.id;
+    });
+    const snippets = {
+      'styles/ozone.css': '/* Pure OKLCH Tokens & Responsive 12-Col Engine */\n:root { --oz-hue: 205; --oz-accent-hue: 280; }',
+      'components/shell-forms.ts': '<oz-bottom-nav position="fixed" variant="floating"></oz-bottom-nav>\n<oz-fab position="bottom-right"></oz-fab>',
+      'ai/renderer.ts': '<oz-ai-chat heading="Assistant" model="Gemini 2.5 Pro"></oz-ai-chat>',
+      'llms.txt': '<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.css">\n<script type="module" src="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.js"><\/script>'
+    };
+    document.getElementById('dev-tree').addEventListener('oz-select', (e) => {
+      const lbl = e.detail.label;
+      if (snippets[lbl]) {
+        const cb = document.getElementById('dev-code');
+        cb.setAttribute('title', lbl);
+        cb.setAttribute('code', snippets[lbl]);
+      }
+    });
+  </script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

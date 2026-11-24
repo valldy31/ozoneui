@@ -228,6 +228,8 @@ export class OzInput extends OzoneElement {
       </div>
     `;
 
+    const _err = this.prop('error'), _hint = this.prop('hint');
+    if (_err || _hint) { const m = document.createElement('div'); m.className = 'oz-field__msg' + (_err ? ' oz-field__msg--error' : ''); m.style.marginTop = '6px'; m.textContent = _err || _hint; this.querySelector('.oz-input-wrap').appendChild(m); if (_err) this.querySelector('.oz-input-box').classList.add('oz-input-box--error'); }
     const input = this.querySelector('input')!;
     input.addEventListener('input', () => {
       this.dispatchEvent(new CustomEvent('oz-input', { detail: { value: input.value }, bubbles: true }));

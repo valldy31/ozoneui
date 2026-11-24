@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>All 66 Web Components & Interactive Playground — OzoneUI</title>
+  <meta name="description" content="Explore all 66 zero-dependency OzoneUI Web Components: 12-col grid, sidebars, mobile PWA bars, calendars, pickers, sliders, parallax, charts, tables, and AI chat." />
+  <link rel="canonical" href="https://ozoneui.nstudios.eu/components.html" />
+  <link rel="alternate" type="text/markdown" href="/llms.txt" />
+  <meta property="og:title" content="All 66 Components — OzoneUI" />
+  <meta property="og:description" content="Searchable live showcase of all 66 Web Standards tags with copyable HTML and AI prompts." />
+  <link rel="stylesheet" href="./dist/ozone.css" />
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"OzoneUI Component Catalog","url":"https://ozoneui.nstudios.eu/components.html","programmingLanguage":["HTML","CSS","TypeScript","JavaScript"],"license":"https://opensource.org/licenses/MIT"}
+  </script>
+</head>
+<body data-oz-page="components">
+  <main class="oz-container oz-stack" style="padding:32px 0 80px;">
+    <div class="oz-between">
+      <div>
+        <oz-badge variant="cyan" pulse>66 Zero-Dependency Custom Elements</oz-badge>
+        <h1 style="font-size:clamp(1.75rem,3.6vw,2.45rem);font-weight:800;letter-spacing:-0.03em;margin:10px 0 6px;">All 66 OzoneUI Components</h1>
+        <p class="oz-text-sm oz-muted" style="max-width:68ch;">Every component explained on its own dedicated row with props, copyable HTML, 1-click AI prompt, and a live interactive sandbox.</p>
+      </div>
+      <div class="oz-row" style="gap:10px;">
+        <oz-badge variant="violet" icon="layers" pulse id="showcase-count-badge">66 Components</oz-badge>
+        <a href="demo.html" class="oz-btn oz-btn--sm oz-btn--glow" style="text-decoration:none;"><oz-icon name="layout" size="14"></oz-icon> Live Templates Demo</a>
+      </div>
+    </div>
+
+    <oz-card>
+      <div class="oz-between">
+        <div class="oz-row" style="gap:8px;" id="showcase-filters">
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-sc-cat="all">All (66)</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="layout">Layout, Grid &amp; Shell</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="core">Core Primitives</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="forms">Forms, Calendar &amp; Pickers</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="admin">Admin, Charts &amp; Kanban</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="landing">Landing &amp; Parallax</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="social">Marketplace &amp; Social</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-sc-cat="ai">AI &amp; Spatial OS</button>
+        </div>
+        <div style="width:min(280px,100%);"><oz-input placeholder="Search 66 components..." id="showcase-search" icon="search"></oz-input></div>
+      </div>
+    </oz-card>
+
+    <div id="showcase-rows" class="oz-stack"></div>
+  </main>
+
+  <oz-dialog id="sample-dialog" title="Atmospheric Spring Dialog">
+    <div class="oz-stack" style="gap:14px;">
+      <p class="oz-text-sm oz-muted">Native dialog modal rendered cleanly inside the OzoneUI playground.</p>
+      <div class="oz-row" style="justify-content:flex-end;gap:10px;">
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" id="close-sample-dialog">Close</button>
+        <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" id="confirm-sample-dialog">Confirm</button>
+      </div>
+    </div>
+  </oz-dialog>
+
+  <script type="module">
+    import Ozone from './dist/ozone.js';
+    import { initSiteShell } from './dist/site-shell.js';
+    initSiteShell({ page: 'components' });
+
+    const sampleDialog = document.getElementById('sample-dialog');
+    document.getElementById('close-sample-dialog')?.addEventListener('click', () => sampleDialog?.close());
+    document.getElementById('confirm-sample-dialog')?.addEventListener('click', () => {
+      sampleDialog?.close();
+      Ozone.toast({ title: 'Confirmed', message: 'Dialog action completed.', variant: 'emerald' });
+    });
+    const SHOWCASE_SPECS = [
+      {
+        tag: 'oz-header', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Adaptive top navigation header supporting floating pill, glass, enterprise search, minimal variants, Priority+ max-links overflow, and mobile slide/modal/dropdown drawers.',
+        props: ['variant', 'brand', 'badge', 'links', 'max-links', 'cta', 'search', 'icon', 'mobile-menu(slide|slide-left|modal|dropdown)'],
+        code: `<oz-header variant="floating" brand="Aether" badge="Live" links="Overview,Docs" max-links="4" cta="Deploy" mobile-menu="slide"></oz-header>`,
+        preview: `<oz-header variant="floating" brand="Aether" badge="Live" links="Overview,Docs" cta="Deploy" mobile-menu="slide"></oz-header>`
+      },
+      {
+        tag: 'oz-footer', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Multi-column, minimal bar, or live system-status footer with link routing, newsletter form, and status indicator.',
+        props: ['variant', 'brand', 'tagline', 'columns', 'status', 'newsletter'],
+        code: `<oz-footer variant="minimal" brand="OzoneUI" status="Operational" columns='[{"title":"Nav","links":["Docs","Pricing"]}]'></oz-footer>`,
+        preview: `<oz-footer variant="minimal" brand="OzoneUI" status="Operational" columns='[{"title":"Nav","links":["Docs","Pricing","Status"]}]'></oz-footer>`
+      },
+      {
+        tag: 'oz-breadcrumbs', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Clickable hierarchical navigation trail with vector arrow or slash separators and oz-navigate events.',
+        props: ['items', 'separator(arrow|slash)'],
+        code: `<oz-breadcrumbs items="Workspace,Control Plane,Clusters,Node-04"></oz-breadcrumbs>`,
+        preview: `<oz-breadcrumbs items="Workspace,Control Plane,Clusters,Node-04"></oz-breadcrumbs>`
+      },
+      {
+        tag: 'oz-alert', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Semantic callout banner for system notices, warnings, and AI insights with action trigger and dismiss support.',
+        props: ['variant', 'title', 'message', 'icon', 'cta', 'dismissible'],
+        code: `<oz-alert variant="violet" title="AI Insight" message="Cluster latency dropped 24% after edge routing." cta="Inspect" dismissible></oz-alert>`,
+        preview: `<oz-alert variant="violet" title="AI Insight" message="Cluster latency dropped 24% after edge routing." cta="Inspect" dismissible></oz-alert>`
+      },
+      {
+        tag: 'oz-progress', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Glowing OKLCH progress bar supporting determinate percentage telemetry and animated shimmer indeterminate state.',
+        props: ['value', 'max', 'label', 'variant', 'show-value', 'indeterminate'],
+        code: `<oz-progress label="Model Fine-Tuning" value="76" variant="cyan" show-value></oz-progress>`,
+        preview: `<div class="oz-stack" style="gap:16px;"><oz-progress label="Model Fine-Tuning" value="76" variant="cyan" show-value></oz-progress><oz-progress label="Syncing Edge Nodes" indeterminate variant="violet" show-value></oz-progress></div>`
+      },
+      {
+        tag: 'oz-accordion', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Smooth View-Transition expandable FAQ and settings accordion supporting single or multiple open panels.',
+        props: ['items(JSON)', 'multiple'],
+        code: `<oz-accordion items='[{"title":"Zero-Build Ready?","content":"Yes, drop ozone.css + ozone.js into any HTML or PHP page.","open":true},{"title":"Framework Agnostic?","content":"Runs in React, Vue, Svelte, or plain HTML."}]'></oz-accordion>`,
+        preview: `<oz-accordion items='[{"title":"Zero-Build Ready?","content":"Yes, drop ozone.css and ozone.js into any HTML or PHP page.","open":true},{"title":"Framework Agnostic?","content":"Works natively in React, Vue, Svelte, or plain HTML."}]'></oz-accordion>`
+      },
+      {
+        tag: 'oz-timeline', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Vertical telemetry, audit log, and roadmap timeline with glowing status nodes.',
+        props: ['items(JSON)'],
+        code: `<oz-timeline items='[{"time":"Now","title":"Edge Deployed","desc":"18 regions active","status":"emerald"},{"time":"5m ago","title":"Build Verified","desc":"0 errors","status":"cyan"}]'></oz-timeline>`,
+        preview: `<oz-timeline items='[{"time":"Now","title":"Edge Deployed","desc":"18 global regions live","status":"emerald"},{"time":"5m ago","title":"Build Verified","desc":"0 console errors","status":"cyan"}]'></oz-timeline>`
+      },
+      {
+        tag: 'oz-icon', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Universal 4-mode SVG vector engine: 60+ offline Lucide paths, on-demand Phosphor/Tabler/Solar/Heroicons, custom SVG registration, and CSS font support.',
+        props: ['name', 'set', 'size', 'stroke', 'src', 'icon-class', 'glow', 'spin'],
+        code: `<oz-icon name="sparkles" size="22" glow></oz-icon>`,
+        preview: `<div class="oz-row" style="gap:16px;"><oz-icon name="rocket" size="22" glow></oz-icon><oz-icon name="sparkles" size="22"></oz-icon><oz-icon name="cpu" size="22"></oz-icon><oz-icon name="shield" size="22"></oz-icon><oz-icon name="refresh" size="22" spin></oz-icon></div>`
+      },
+      {
+        tag: 'oz-button', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Spring-interactive button with Hallucination-Proof variant aliasing (variant/type/color), icon slots, loading spinner, and toast shorthand.',
+        props: ['variant', 'size', 'icon', 'icon-right', 'pill', 'loading', 'toast'],
+        code: `<oz-button variant="glow" icon="zap" pill toast="Triggered!">Execute</oz-button>`,
+        preview: `<div class="oz-row" style="gap:8px;"><oz-button variant="glow" size="sm" icon="zap" pill toast="Glow clicked!">Glow</oz-button><oz-button variant="primary" size="sm" icon="check">Primary</oz-button><oz-button variant="glass" size="sm" loading>Loading</oz-button><oz-button variant="danger" size="sm">Danger</oz-button></div>`
+      },
+      {
+        tag: 'oz-card', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Atmospheric frosted glass container with cursor-tracked radial specular lighting, optional 3D perspective tilt, glow hue, and JSON snapshot export.',
+        props: ['title', 'subtitle', 'badge', 'tilt', 'glow', 'exportable'],
+        code: `<oz-card title="Neural Node" subtitle="Specular tilt card" badge="Active" tilt glow="cyan" exportable>Ready.</oz-card>`,
+        preview: `<oz-card title="Neural Node" subtitle="Hover for radial light & 3D tilt" badge="Active" tilt glow="cyan" exportable><span class="oz-text-sm oz-muted">Interactive atmospheric glass surface.</span></oz-card>`
+      },
+      {
+        tag: 'oz-badge', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Status pill supporting semantic OKLCH variants, pulsing live indicator dot, and vector icon slot.',
+        props: ['variant', 'pulse', 'icon', 'label'],
+        code: `<oz-badge variant="emerald" icon="verified" pulse>Live Node</oz-badge>`,
+        preview: `<div class="oz-row" style="gap:8px;"><oz-badge variant="cyan" pulse>Streaming</oz-badge><oz-badge variant="emerald" icon="verified">Verified</oz-badge><oz-badge variant="violet" icon="sparkles">AI Native</oz-badge><oz-badge variant="amber">Pending</oz-badge></div>`
+      },
+      {
+        tag: 'oz-input', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Glass text input with prefix <oz-icon>, clean focus ring, and built-in toggleable secret masking (mask="secret").',
+        props: ['label', 'placeholder', 'value', 'type', 'mask(secret)', 'icon'],
+        code: `<oz-input label="API Token" mask="secret" value="oz_live_secret_9021" icon="key"></oz-input>`,
+        preview: `<oz-input label="API Token" mask="secret" value="oz_live_secret_9021" icon="key"></oz-input>`
+      },
+      {
+        tag: 'oz-switch', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Tactile spring toggle switch with procedural harmonic audio chime and keyboard accessibility.',
+        props: ['label', 'checked'],
+        code: `<oz-switch label="Enable Atmospheric Physics" checked></oz-switch>`,
+        preview: `<div class="oz-row" style="gap:18px;"><oz-switch label="Atmospheric Physics" checked></oz-switch><oz-switch label="Eco Guard"></oz-switch></div>`
+      },
+      {
+        tag: 'oz-tabs', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Animated sliding glass pill tab bar with ResizeObserver auto-calibration and panel switching.',
+        props: ['active', 'tabs(csv)'],
+        code: `<oz-tabs active="0"><button slot="tab">Overview</button><button slot="tab">Metrics</button><div slot="panel">Overview panel</div><div slot="panel">Metrics panel</div></oz-tabs>`,
+        preview: `<oz-tabs active="0"><button slot="tab">Overview</button><button slot="tab">Metrics</button><button slot="tab">Logs</button><div slot="panel"><span class="oz-text-sm oz-muted">Active panel: Overview telemetry.</span></div><div slot="panel"><span class="oz-text-sm oz-muted">Active panel: Real-time metrics.</span></div><div slot="panel"><span class="oz-text-sm oz-muted">Active panel: System event logs.</span></div></oz-tabs>`
+      },
+      {
+        tag: 'oz-dialog', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Spring-animated modal dialog with glass backdrop blur, Esc handling, and View Transition morphing.',
+        props: ['title', 'open'],
+        code: `<oz-dialog id="dlg" title="Confirm"><p>Modal content</p></oz-dialog>`,
+        preview: `<div class="oz-row" style="gap:10px;"><oz-button variant="primary" size="sm" icon="panel-top" data-sc-open-dialog>Open Live Spring Dialog</oz-button><span class="oz-text-xs oz-muted">Opens the interactive modal with Esc &amp; backdrop close.</span></div>`
+      },
+      {
+        tag: 'oz-sidebar', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Collapsible app sidebar with grouped nav, nested submenus, search filter, badges, glass/solid/floating variants, icon rail & mobile drawer.',
+        props: ['brand', 'items(JSON)', 'collapsed', 'side(left|right)', 'variant(glass|solid|floating)', 'searchable', 'persist-key'],
+        code: `<oz-sidebar brand="Nexus" icon="cpu" searchable active="Overview" items='[{"label":"Overview","icon":"layout"},{"label":"Settings","icon":"settings"}]'></oz-sidebar>`,
+        preview: `<div class="oz-row" style="gap:10px;"><a class="oz-btn oz-btn--sm oz-btn--primary" href="./site/demo.html#template=app">Open Live Sidebar App</a><span class="oz-text-xs oz-muted">Supports Glass, Solid, Floating, Left/Right &amp; Icon Rail.</span></div>`
+      },
+      {
+        tag: 'oz-app-shell', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Full application shell pairing <oz-sidebar>, sticky topbar (heading, subtitle, action slot), and scrollable content.',
+        props: ['heading', 'subtitle', 'topbar', 'fill'],
+        code: `<oz-app-shell heading="Overview" subtitle="Live workspace"><oz-sidebar ...></oz-sidebar><main>...</main></oz-app-shell>`,
+        preview: `<div class="oz-row" style="gap:10px;"><a class="oz-btn oz-btn--sm oz-btn--glass" href="./site/templates/app.html" target="_blank">Preview App Shell Template</a></div>`
+      },
+      {
+        tag: 'oz-select', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Zero-dep native <select> wrapped in Ozone glass chrome with grouped options, custom SVG chevron, hint & error states.',
+        props: ['label', 'options(csv|JSON)', 'value', 'placeholder', 'hint', 'error'],
+        code: `<oz-select label="Region" value="eu" options='[{"value":"eu","label":"EU Central"},{"value":"us","label":"US East"}]'></oz-select>`,
+        preview: `<oz-select label="Region" value="eu" options='[{"value":"eu","label":"EU Central (Frankfurt)"},{"value":"us","label":"US East (Virginia)"}]'></oz-select>`
+      },
+      {
+        tag: 'oz-checkbox', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Accessible checkbox with optional description text, spring checkmark, and indeterminate state.',
+        props: ['label', 'description', 'checked', 'indeterminate', 'disabled'],
+        code: `<oz-checkbox label="Auto-scale workers" description="Triggers under heavy load." checked></oz-checkbox>`,
+        preview: `<div class="oz-stack" style="gap:12px;"><oz-checkbox label="Auto-scale workers" description="Triggers automatically under heavy load." checked></oz-checkbox><oz-checkbox label="Partial selection" indeterminate></oz-checkbox></div>`
+      },
+      {
+        tag: 'oz-radio-group', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Radio group supporting inline pill rows or rich selectable plan cards.',
+        props: ['label', 'options(csv|JSON)', 'value', 'variant(default|cards)', 'inline'],
+        code: `<oz-radio-group label="Tier" value="pro" variant="cards" options='[{"value":"free","label":"Free","desc":"$0"},{"value":"pro","label":"Pro","desc":"$49"}]'></oz-radio-group>`,
+        preview: `<oz-radio-group label="Tier" value="pro" variant="cards" options='[{"value":"free","label":"Free","desc":"Hobby"},{"value":"pro","label":"Pro","desc":"Teams"}]'></oz-radio-group>`
+      },
+      {
+        tag: 'oz-textarea', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Glass multi-line textarea with optional autosize height expansion and live character limit counter.',
+        props: ['label', 'placeholder', 'rows', 'maxlength', 'autosize'],
+        code: `<oz-textarea label="Release Notes" maxlength="200" rows="3" autosize></oz-textarea>`,
+        preview: `<oz-textarea label="Release Notes" placeholder="Write summary..." maxlength="200" rows="3" autosize></oz-textarea>`
+      },
+      {
+        tag: 'oz-slider', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Smooth single or dual-thumb range slider with ticks, prefix/suffix formatting, and live readout.',
+        props: ['label', 'min', 'max', 'step', 'value', 'min-value', 'max-value', 'range', 'ticks', 'prefix', 'suffix'],
+        code: `<oz-slider label="Budget" range min="0" max="5000" min-value="800" max-value="3600" prefix="$" show-value ticks></oz-slider>`,
+        preview: `<oz-slider label="Budget Band" range min="0" max="5000" step="100" min-value="800" max-value="3600" prefix="$" show-value ticks></oz-slider>`
+      },
+      {
+        tag: 'oz-date-picker', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Modern glass trigger opening a viewport-aware floating calendar popover with quick presets and single or date-range modes.',
+        props: ['label', 'value', 'range', 'start', 'end', 'events(JSON)', 'min', 'max'],
+        code: `<oz-date-picker label="Launch Window" range start="2026-11-20" end="2026-11-26"></oz-date-picker>`,
+        preview: `<oz-date-picker label="Launch Date" value="2026-11-24" hint="Click to open floating glass calendar popover."></oz-date-picker>`
+      },
+      {
+        tag: 'oz-calendar', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Standalone interactive monthly calendar grid with Today shortcut, event dots, and date range selection.',
+        props: ['heading', 'value', 'range', 'start', 'end', 'events(JSON)'],
+        code: `<oz-calendar heading="Roadmap" value="2026-11-24"></oz-calendar>`,
+        preview: `<oz-calendar heading="Release Roadmap" value="2026-11-24" events='[{"date":"2026-11-24","title":"OzoneUI v1.2","color":"cyan"}]'></oz-calendar>`
+      },
+      {
+        tag: 'oz-file-upload', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Drag-and-drop zone with Browse Files button, size validation, image thumbnails, animated progress bars, and seed files.',
+        props: ['label', 'accept', 'multiple', 'max-size(MB)', 'files(JSON)'],
+        code: `<oz-file-upload label="Brand Assets" multiple max-size="10"></oz-file-upload>`,
+        preview: `<oz-file-upload label="Upload Assets" multiple max-size="10" files='[{"name":"brand-tokens.json","size":18432}]'></oz-file-upload>`
+      },
+      {
+        tag: 'oz-combobox', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Searchable single or multi-select combobox with removable chips, keyboard navigation, and creatable tags.',
+        props: ['label', 'options', 'value', 'multiple', 'creatable', 'placeholder'],
+        code: `<oz-combobox label="Tags" multiple creatable value="OKLCH,Web" options="OKLCH,Web,AI,Charts"></oz-combobox>`,
+        preview: `<oz-combobox label="Stack" multiple creatable value="OKLCH,Web" options="OKLCH,Web,AI,Charts,Motion"></oz-combobox>`
+      },
+      {
+        tag: 'oz-color-picker', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Color swatch button, editable HEX input, native color wheel, and floating OKLCH swatch palette.',
+        props: ['label', 'value', 'presets(csv)'],
+        code: `<oz-color-picker label="Brand Primary" value="#00b4d8"></oz-color-picker>`,
+        preview: `<oz-color-picker label="Brand Primary" value="#00b4d8"></oz-color-picker>`
+      },
+      {
+        tag: 'oz-number-input', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Tactile numeric stepper control with −/+ buttons, keyboard arrow stepping, and min/max bounds.',
+        props: ['label', 'value', 'min', 'max', 'step'],
+        code: `<oz-number-input label="Replicas" min="1" max="32" value="6"></oz-number-input>`,
+        preview: `<oz-number-input label="Replicas" min="1" max="32" value="6"></oz-number-input>`
+      },
+      {
+        tag: 'oz-otp-input', cat: 'forms', catLabel: 'Forms & Pickers',
+        desc: 'Segmented passkey / 2FA code input supporting auto-advance, backspace rewind, and full clipboard paste.',
+        props: ['label', 'length', 'value'],
+        code: `<oz-otp-input label="Verification Code" length="6"></oz-otp-input>`,
+        preview: `<oz-otp-input label="Verification Code" length="6"></oz-otp-input>`
+      },
+      {
+        tag: 'oz-parallax', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: '120fps multi-layer scroll & cursor parallax stage animating any child [data-depth] layer with aurora orbs and optional 3D tilt.',
+        props: ['speed', 'direction(both|vertical|horizontal|mouse)', 'tilt', 'height', 'badge', 'heading'],
+        code: `<oz-parallax tilt badge="Spatial" heading="Parallax Layers" height="220px"></oz-parallax>`,
+        preview: `<oz-parallax tilt badge="120fps Depth" heading="Hover or Scroll for Depth" height="220px"><div class="oz-badge oz-badge--cyan" data-depth="0.4" style="align-self:center;">Floating [data-depth="0.4"]</div></oz-parallax>`
+      },
+      {
+        tag: 'oz-reveal', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'IntersectionObserver scroll reveal animator with 7 easing presets and automatic child stagger delays.',
+        props: ['effect(fade-up|blur|zoom|flip|slide-left)', 'delay', 'duration', 'stagger'],
+        code: `<oz-reveal effect="fade-up" stagger="80">...</oz-reveal>`,
+        preview: `<oz-reveal effect="zoom"><oz-badge variant="emerald">Revealed smoothly when in viewport</oz-badge></oz-reveal>`
+      },
+      {
+        tag: 'oz-spotlight', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Cursor-tracking radial spotlight glass surface that illuminates smoothly beneath the pointer.',
+        props: ['color(cyan|violet|emerald|amber|rose)', 'size'],
+        code: `<oz-spotlight color="cyan">Move cursor across this surface.</oz-spotlight>`,
+        preview: `<oz-spotlight color="violet"><strong style="font-size:0.9rem;">Hover here</strong><div class="oz-text-xs oz-muted" style="margin-top:4px;">Radial cursor beam illuminates surface.</div></oz-spotlight>`
+      },
+      {
+        tag: 'oz-drawer', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Slide-over side sheet or mobile bottom drawer with backdrop blur, Escape close, and declarative trigger selector.',
+        props: ['heading', 'subtitle', 'side(right|left|bottom)', 'size(sm|md|lg)', 'trigger'],
+        code: `<oz-drawer heading="Inspector" trigger="#open-btn">Drawer body</oz-drawer>`,
+        preview: `<div class="oz-row" style="gap:10px;"><a class="oz-btn oz-btn--sm oz-btn--primary" href="./site/demo.html#template=motion">Test Drawer in Motion Demo</a></div>`
+      },
+      {
+        tag: 'oz-dropdown', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Viewport-aware floating action menu popover with icons, keyboard shortcuts, dividers, and oz-select event.',
+        props: ['label', 'icon', 'variant', 'align', 'items(JSON)'],
+        code: `<oz-dropdown label="Actions" icon="sliders"></oz-dropdown>`,
+        preview: `<oz-dropdown label="Actions Menu" icon="sliders" variant="glass"></oz-dropdown>`
+      },
+      {
+        tag: 'oz-tooltip', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Accessible floating glass tooltip with directional placement and optional shortcut pill.',
+        props: ['text', 'position(top|bottom|left|right)', 'shortcut'],
+        code: `<oz-tooltip text="Save file" shortcut="⌘S"><oz-button size="sm">Hover Me</oz-button></oz-tooltip>`,
+        preview: `<oz-tooltip text="Floating glass tooltip" shortcut="⌘K" position="top"><oz-button variant="glass" size="sm" icon="command">Hover Tooltip</oz-button></oz-tooltip>`
+      },
+      {
+        tag: 'oz-stepper', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Interactive multi-step wizard / onboarding pipeline stepper with completed checkmarks and clickable steps.',
+        props: ['steps(csv|JSON)', 'active', 'variant(horizontal|vertical)', 'clickable'],
+        code: `<oz-stepper active="1" clickable steps="Setup,Theme,Launch"></oz-stepper>`,
+        preview: `<oz-stepper active="1" clickable steps="Setup,Theme,Launch"></oz-stepper>`
+      },
+      {
+        tag: 'oz-kanban', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Drag-and-drop sprint Kanban board with persistent columns, priority pills, and inline task creation.',
+        props: ['columns(JSON)', 'persist-key', 'addable'],
+        code: `<oz-kanban persist-key="board-1"></oz-kanban>`,
+        preview: `<div class="oz-row" style="gap:10px;"><a class="oz-btn oz-btn--sm oz-btn--glow" href="./site/demo.html#template=motion">Open Interactive Kanban Board</a></div>`
+      },
+      {
+        tag: 'oz-cookie-consent', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'EU GDPR / ePrivacy Planet49 consent banner with equally weighted Essential Only, Customize, and Accept All actions + strict offline toggle.',
+        props: ['heading', 'description', 'policy-url', 'position(bottom-right|bottom-bar)', 'open'],
+        code: `<oz-cookie-consent policy-url="legal.html"></oz-cookie-consent>`,
+        preview: `<div class="oz-row" style="gap:10px;"><button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-sc-open-gdpr>Preview GDPR Consent Banner</button><a href="legal.html" class="oz-btn oz-btn--sm oz-btn--glass">Privacy Manager</a></div>`
+      },
+      {
+        tag: 'oz-grid', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: '12-column responsive CSS grid (<oz-grid cols="12">) or auto-fit min-width layout paired with <oz-col span="..." span-md="..." span-sm="...">.',
+        props: ['cols', 'gap', 'min', 'align'],
+        code: `<oz-grid cols="12" gap="16"><oz-col span="8">Main</oz-col><oz-col span="4">Side</oz-col></oz-grid>`,
+        preview: `<oz-grid cols="12" gap="10"><oz-col span="8"><div class="oz-badge oz-badge--cyan" style="width:100%;justify-content:center;">span="8"</div></oz-col><oz-col span="4"><div class="oz-badge oz-badge--violet" style="width:100%;justify-content:center;">span="4"</div></oz-col></oz-grid>`
+      },
+      {
+        tag: 'oz-col', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Responsive column child inside <oz-grid> supporting desktop, tablet (span-md), and mobile (span-sm) column spans.',
+        props: ['span(1..12)', 'span-md', 'span-sm'],
+        code: `<oz-col span="4" span-md="6" span-sm="12">Card</oz-col>`,
+        preview: `<oz-grid cols="12" gap="10"><oz-col span="4"><div class="oz-badge" style="width:100%;justify-content:center;">1/3</div></oz-col><oz-col span="4"><div class="oz-badge" style="width:100%;justify-content:center;">1/3</div></oz-col><oz-col span="4"><div class="oz-badge" style="width:100%;justify-content:center;">1/3</div></oz-col></oz-grid>`
+      },
+      {
+        tag: 'oz-bottom-nav', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Mobile app & PWA glass bottom navigation bar with active indicator pills, notification badges, and iOS/Android safe-area support.',
+        props: ['items(JSON)', 'active', 'variant(floating|docked)', 'position(inline|fixed)'],
+        code: `<oz-bottom-nav variant="floating" active="home"></oz-bottom-nav>`,
+        preview: `<oz-bottom-nav variant="floating" active="explore"></oz-bottom-nav>`
+      },
+      {
+        tag: 'oz-fab', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Mobile Floating Action Button with expandable speed-dial action menu.',
+        props: ['icon', 'label', 'items(JSON)', 'position(inline|bottom-right)'],
+        code: `<oz-fab icon="plus" label="Create" items='[{"id":"ai","label":"Ask AI","icon":"sparkles"}]'></oz-fab>`,
+        preview: `<oz-fab icon="plus" label="Speed Dial" items='[{"id":"ai","label":"Ask AI","icon":"sparkles"},{"id":"new","label":"New Card","icon":"plus"}]'></oz-fab>`
+      },
+      {
+        tag: 'oz-ai-chat', cat: 'ai', catLabel: 'AI & Spatial OS',
+        desc: 'Streaming AI assistant chat interface with model selector dropdown, prompt suggestion chips, and oz-send event.',
+        props: ['heading', 'model', 'models(csv)', 'suggestions(csv)', 'placeholder'],
+        code: `<oz-ai-chat heading="Assistant" model="Gemini 2.5 Pro" suggestions="Scaffold Grid,Audit Colors"></oz-ai-chat>`,
+        preview: `<oz-ai-chat heading="Ozone AI" model="Gemini 2.5 Pro" suggestions="Build 12-col layout,Pick emerald theme"></oz-ai-chat>`
+      },
+      {
+        tag: 'oz-code-block', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Developer code block with filename header, language badge, line numbers, and 1-click clipboard copy.',
+        props: ['title', 'lang', 'code', 'line-numbers'],
+        code: `<oz-code-block title="app.html" lang="html" line-numbers code="<oz-stat title='MRR' value='$128k'></oz-stat>"></oz-code-block>`,
+        preview: `<oz-code-block title="quickstart.html" lang="html" line-numbers code="<oz-grid cols=&quot;12&quot;>&#10;  <oz-col span=&quot;6&quot;>Left</oz-col>&#10;  <oz-col span=&quot;6&quot;>Right</oz-col>&#10;</oz-grid>"></oz-code-block>`
+      },
+      {
+        tag: 'oz-split-pane', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Draggable resizable two-pane split container collapsing cleanly on mobile viewports.',
+        props: ['ratio(percent)'],
+        code: `<oz-split-pane ratio="40"><div>Left</div><div>Right</div></oz-split-pane>`,
+        preview: `<oz-split-pane ratio="38"><div class="oz-text-xs oz-muted">Left pane (drag handle)</div><div class="oz-text-xs">Right pane content</div></oz-split-pane>`
+      },
+      {
+        tag: 'oz-tree', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Collapsible folder and file hierarchy tree emitting oz-select events.',
+        props: ['items(JSON)', 'active'],
+        code: `<oz-tree active="forms"></oz-tree>`,
+        preview: `<oz-tree active="styles"></oz-tree>`
+      },
+      {
+        tag: 'oz-hover-card', cat: 'core', catLabel: 'Core Primitives',
+        desc: 'Floating glass profile / info card displayed on hover or focus over any trigger.',
+        props: ['heading', 'subtitle', 'badge', 'meta'],
+        code: `<oz-hover-card heading="Elena Vance" badge="Pro"><oz-badge variant="cyan">Hover Me</oz-badge></oz-hover-card>`,
+        preview: `<oz-hover-card heading="Elena Vance" subtitle="Principal Systems Architect" badge="Verified" meta="Published 65 Web Components"><oz-badge variant="cyan" style="cursor:pointer;">Hover Author Card</oz-badge></oz-hover-card>`
+      },
+      {
+        tag: 'oz-pagination', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Accessible table & archive pagination bar with page totals and oz-page events.',
+        props: ['page', 'total', 'page-size'],
+        code: `<oz-pagination page="2" total="120" page-size="10"></oz-pagination>`,
+        preview: `<oz-pagination page="2" total="120" page-size="10"></oz-pagination>`
+      },
+      {
+        tag: 'oz-skeleton', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Animated shimmer loading placeholders while async endpoints resolve.',
+        props: ['variant(card|stat|avatar)', 'lines'],
+        code: `<oz-skeleton variant="avatar" lines="2"></oz-skeleton>`,
+        preview: `<oz-skeleton variant="avatar" lines="2"></oz-skeleton>`
+      },
+      {
+        tag: 'oz-empty-state', cat: 'layout', catLabel: 'Layout & Headers',
+        desc: 'Zero-data placeholder card with vector icon ring, description, and CTA trigger.',
+        props: ['icon', 'heading', 'description', 'cta'],
+        code: `<oz-empty-state icon="sparkles" heading="No Saved Queries" cta="Create Query"></oz-empty-state>`,
+        preview: `<oz-empty-state icon="sparkles" heading="No Saved Queries Yet" description="Run your first AI prompt to generate a view." cta="Create Query"></oz-empty-state>`
+      },
+      {
+        tag: 'oz-stat', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Executive KPI card with inline SVG sparkline, trend badge, Privacy Veil mask="blur" support, and declarative src/poll live fetching.',
+        props: ['title', 'value', 'delta', 'trend', 'sparkline', 'mask', 'src', 'poll'],
+        code: `<oz-stat title="MRR" value="$128,400" delta="+32.4%" trend="up" sparkline="40,55,48,72,95,128" mask="blur"></oz-stat>`,
+        preview: `<oz-stat title="Monthly Revenue" value="$128,400" delta="+32.4%" trend="up" sparkline="40,55,48,72,95,128" mask="blur" glow="cyan"></oz-stat>`
+      },
+      {
+        tag: 'oz-chart', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Zero-dependency SVG chart supporting Area, Bar, Line, and Donut modes with interactive hover tooltips, live src/poll, and 1-click SVG export.',
+        props: ['type', 'title', 'labels', 'data', 'glow', 'exportable', 'src', 'poll'],
+        code: `<oz-chart type="area" title="Throughput" labels="M,T,W,T,F" data="120,180,150,290,360" glow="cyan" exportable></oz-chart>`,
+        preview: `<oz-chart type="bar" title="Showcase Throughput" labels="Mon,Tue,Wed,Thu,Fri" data="120,195,165,280,355" glow="cyan" exportable></oz-chart>`
+      },
+      {
+        tag: 'oz-table', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Enterprise data grid with live search, column sorting, automatic status badges, PII privacy masking, and 1-click CSV/JSON export.',
+        props: ['title', 'rows(JSON)', 'searchable', 'exportable', 'mask-cols', 'src', 'poll'],
+        code: `<oz-table title="Users" searchable exportable mask-cols="email" rows='[{"name":"Elena","email":"elena@ai.dev","status":"Active"}]'></oz-table>`,
+        preview: `<oz-table title="Live Nodes" searchable exportable mask-cols="owner" rows='[{"node":"US-East","owner":"elena@aether.ai","status":"Active","latency":"14ms"},{"node":"EU-West","owner":"marcus@nexus.io","status":"Trial","latency":"21ms"}]'></oz-table>`
+      },
+      {
+        tag: 'oz-smart-view', cat: 'admin', catLabel: 'Admin & BI',
+        desc: 'Zero-config data morpher that transforms any JSON array instantaneously between Table, Bar Chart, Bento Cards, and Raw JSON.',
+        props: ['title', 'data(JSON)', 'view(table|chart|cards|json)', 'src'],
+        code: `<oz-smart-view title="Revenue" view="cards" data='[{"item":"Pro","mrr":4200},{"item":"Ent","mrr":9800}]'></oz-smart-view>`,
+        preview: `<oz-smart-view title="Instant Morpher" view="cards" data='[{"id":"A1","plan":"Studio Pro","mrr":"$4,200"},{"id":"A2","plan":"Enterprise","mrr":"$9,800"}]'></oz-smart-view>`
+      },
+      {
+        tag: 'oz-hero', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Cinematic aurora mesh hero section with pulsing badge pill, gradient headline, subtitle, and centered action slot.',
+        props: ['badge', 'title', 'subtitle'],
+        code: `<oz-hero badge="v1.0" title="Build Beyond" subtitle="Next-gen Web Standards UI."><oz-button variant="glow">Start</oz-button></oz-hero>`,
+        preview: `<oz-hero badge="Spatial Hero" title="Ship Stunning Front Pages" subtitle="Gradient typography and aurora mesh lighting in 1 tag."><oz-button variant="glow" size="sm" pill>Launch</oz-button></oz-hero>`
+      },
+      {
+        tag: 'oz-bento', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Responsive Apple/Linear bento grid with drag-and-drop card reordering (sortable) and localStorage persistence (persist-key).',
+        props: ['cols', 'gap', 'sortable', 'persist-key'],
+        code: `<oz-bento cols="2" sortable persist-key="demo"><oz-card title="Drag A"></oz-card><oz-card title="Drag B"></oz-card></oz-bento>`,
+        preview: `<oz-bento cols="2" sortable><oz-card title="Drag Card A" subtitle="Draggable bento item" glow="cyan"></oz-card><oz-card title="Drag Card B" subtitle="Drop to reorder" glow="violet"></oz-card></oz-bento>`
+      },
+      {
+        tag: 'oz-pricing', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Conversion-focused pricing tier card with popular aura ring, feature checklist using SVG checks, and plan-selection events.',
+        props: ['title', 'price', 'period', 'popular', 'features', 'cta'],
+        code: `<oz-pricing title="Pro" price="$49" period="/mo" popular features="31 Components,AI Renderer,Theme DNA"></oz-pricing>`,
+        preview: `<oz-pricing title="Studio Pro" subtitle="Most selected tier" price="$49" period="/mo" popular features="All 31 Components,AI Streaming Renderer,Theme DNA Presets" cta="Deploy Pro"></oz-pricing>`
+      },
+      {
+        tag: 'oz-marquee', cat: 'landing', catLabel: 'Landing & Motion',
+        desc: 'Infinite hardware-accelerated horizontal ticker with soft edge fade masks and pause-on-hover.',
+        props: ['speed'],
+        code: `<oz-marquee speed="20s"><oz-badge variant="cyan">OKLCH</oz-badge><oz-badge variant="violet">AI-Native</oz-badge></oz-marquee>`,
+        preview: `<oz-marquee speed="18s"><oz-badge variant="cyan" icon="sparkles">OKLCH Color</oz-badge><oz-badge variant="violet" icon="bot">AI Native</oz-badge><oz-badge variant="emerald" icon="zap">120fps</oz-badge><oz-badge variant="amber" icon="shield">Privacy Veil</oz-badge></oz-marquee>`
+      },
+      {
+        tag: 'oz-product-card', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: '3D tilt-enabled digital/e-commerce product card with category-mapped vector artwork, wishlist heart toggle, rating, and quick inspect.',
+        props: ['title', 'price', 'old-price', 'rating', 'reviews', 'badge', 'category', 'seller', 'gradient'],
+        code: `<oz-product-card title="Neural Synth" category="Audio" price="$49" old-price="$89" rating="4.9" badge="Hot" gradient="violet"></oz-product-card>`,
+        preview: `<oz-product-card title="Neural Audio Synth" category="Audio" price="$49" old-price="$89" rating="4.9" reviews="214" badge="Hot" seller="SonicForge" gradient="violet"></oz-product-card>`
+      },
+      {
+        tag: 'oz-rating', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'Glowing SVG star rating component supporting both static summaries and interactive user rating selection.',
+        props: ['value', 'max', 'interactive', 'reviews'],
+        code: `<oz-rating value="4.8" reviews="192" interactive></oz-rating>`,
+        preview: `<div class="oz-row" style="gap:12px;"><oz-rating value="4.8" reviews="192" interactive></oz-rating><span class="oz-text-xs oz-muted">(Click stars to rate)</span></div>`
+      },
+      {
+        tag: 'oz-avatar', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'User avatar with image or monogram initials, live presence status dot (online/busy/away/streaming), and verified vector checkmark.',
+        props: ['name', 'src', 'status', 'verified', 'size'],
+        code: `<oz-avatar name="Elena Vance" status="streaming" verified size="44"></oz-avatar>`,
+        preview: `<div class="oz-row" style="gap:16px;"><oz-avatar name="Elena Vance" status="streaming" verified size="44"></oz-avatar><oz-avatar name="Marcus Chen" status="online" verified size="44"></oz-avatar><oz-avatar name="Aria Solis" status="busy" size="44"></oz-avatar></div>`
+      },
+      {
+        tag: 'oz-post', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'Interactive social feed post card with verified avatar, hashtag pills, and animated Like, Comment, Repost, and Bookmark reactions.',
+        props: ['author', 'handle', 'verified', 'status', 'time', 'likes', 'comments', 'shares', 'tags', 'content'],
+        code: `<oz-post author="Elena Vance" handle="@elena" verified status="streaming" time="2m" likes="420" tags="OzoneUI" content="Shipped our new UI today!"></oz-post>`,
+        preview: `<oz-post author="Elena Vance" handle="@elena_ai" verified status="streaming" time="2m ago" likes="420" comments="18" shares="12" tags="OzoneUI,VectorSVG" content="Every icon, chart, and glass card here runs on zero-dependency Web Standards!"></oz-post>`
+      },
+      {
+        tag: 'oz-composer', cat: 'social', catLabel: 'Marketplace & Social',
+        desc: 'Social and prompt composer that dynamically constructs and prepends live <oz-post> items into any target feed container.',
+        props: ['placeholder', 'target', 'author', 'handle'],
+        code: `<oz-composer target="#social-feed" placeholder="Share an update..."></oz-composer>`,
+        preview: `<oz-composer placeholder="Try typing a quick update (publishes live in Social tab)..."></oz-composer>`
+      },
+      {
+        tag: 'oz-renderer', cat: 'ai', catLabel: 'AI & Spatial OS',
+        desc: 'Declarative streaming JSON-to-UI engine that repairs malformed/partial LLM JSON tokens live and binds safe oz-action events.',
+        props: ['schema(JSON)'],
+        code: `<oz-renderer schema='{"type":"oz-stat","props":{"title":"AI Ops","value":"99.9%","trend":"up","delta":"+4%"}}'></oz-renderer>`,
+        preview: `<oz-renderer schema='{"type":"oz-stat","props":{"title":"Streamed AI Card","value":"99.9%","delta":"+4.2%","trend":"up","sparkline":"72,78,84,91,99"}}'></oz-renderer>`
+      },
+      {
+        tag: 'oz-command', cat: 'ai', catLabel: 'AI & Spatial OS',
+        desc: 'Cmd/Ctrl+K Spatial OS command palette that auto-discovers page actions, tabs, AI Co-Pilot routines, and Theme DNA toggles.',
+        props: ['auto-discover'],
+        code: `<oz-command auto-discover></oz-command>`,
+        preview: `<div class="oz-row" style="gap:10px;"><oz-button variant="primary" size="sm" icon="command" data-sc-open-cmd>Launch Command Palette (Ctrl+K)</oz-button><span class="oz-text-xs oz-muted">Fuzzy searches all page domains &amp; controls.</span></div>`
+      },
+      {
+        tag: 'oz-inspector', cat: 'ai', catLabel: 'AI & Spatial OS',
+        desc: 'Alt+O floating Theme DNA studio for live OKLCH hue, accent glow, blur, radius, and global icon pack customization.',
+        props: ['open'],
+        code: `<oz-inspector></oz-inspector>`,
+        preview: `<div class="oz-row" style="gap:10px;"><oz-button variant="glow" size="sm" icon="wand" data-sc-open-insp>Toggle Theme DNA Studio (Alt+O)</oz-button><span class="oz-text-xs oz-muted">Exports shareable oz:// DNA barcodes.</span></div>`
+      }
+    ];
+
+    const showcaseContainer = document.getElementById('showcase-rows');
+    const showcaseBadge = document.getElementById('showcase-count-badge');
+    let activeScCat = 'all';
+    let scQuery = '';
+
+    function renderShowcaseRows() {
+      if (!showcaseContainer) return;
+      const filtered = SHOWCASE_SPECS.filter((item) => {
+        const matchCat = activeScCat === 'all' || item.cat === activeScCat;
+        const q = scQuery.trim().toLowerCase();
+        const matchQ = !q || item.tag.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q) || item.props.join(' ').toLowerCase().includes(q);
+        return matchCat && matchQ;
+      });
+
+      if (showcaseBadge) showcaseBadge.setAttribute('label', `${filtered.length} Component${filtered.length === 1 ? '' : 's'}`);
+      showcaseContainer.innerHTML = '';
+
+      if (filtered.length === 0) {
+        showcaseContainer.innerHTML = `<oz-alert variant="amber" title="No matching components" message="Try clearing the search query or selecting All (66)."></oz-alert>`;
+        return;
+      }
+
+      filtered.forEach((item) => {
+        const row = document.createElement('div');
+        row.className = 'showcase-row';
+        row.dataset.showcaseTag = item.tag;
+
+        const left = document.createElement('div');
+        left.className = 'oz-stack';
+        left.style.gap = '12px';
+        left.innerHTML = `
+          <div class="oz-between">
+            <div class="oz-row" style="gap:8px;">
+              <code style="font-size:0.98rem;font-weight:600;color:var(--oz-primary);">&lt;${item.tag}&gt;</code>
+              <oz-badge variant="violet">${item.catLabel}</oz-badge>
+            </div>
+          </div>
+          <p class="oz-text-sm oz-muted" style="line-height:1.6;">${item.desc}</p>
+          <div class="oz-row" style="gap:10px;">
+            ${item.props.map((p) => `<span class="oz-badge" style="font-family:var(--oz-font-mono);font-size:0.7rem;">${p}</span>`).join('')}
+          </div>
+          <pre style="margin:0;padding:11px 13px;border-radius:var(--oz-radius-sm);background:var(--oz-surface-inset);border:1px solid var(--oz-border);font-size:0.73rem;overflow:auto;"></pre>
+          <div class="oz-row" style="gap:8px;">
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-copy-html><oz-icon name="copy" size="13"></oz-icon> Copy HTML</button>
+            <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-copy-ai><oz-icon name="bot" size="13"></oz-icon> Copy AI Prompt</button>
+          </div>
+        `;
+        left.querySelector('pre').textContent = item.code;
+        left.querySelector('[data-copy-html]')?.addEventListener('click', () => {
+          navigator.clipboard?.writeText(item.code).catch(() => {});
+          Ozone.sound.success();
+          Ozone.toast({ title: 'HTML Copied', message: `Copied <${item.tag}> snippet.`, variant: 'emerald' });
+        });
+        left.querySelector('[data-copy-ai]')?.addEventListener('click', () => {
+          const p = `Use OzoneUI <${item.tag}> (${item.desc}). Props: ${item.props.join(', ')}. Example: ${item.code}`;
+          navigator.clipboard?.writeText(p).catch(() => {});
+          Ozone.sound.success();
+          Ozone.toast({ title: 'AI Prompt Copied', message: `Copied prompt for <${item.tag}>.`, variant: 'violet' });
+        });
+
+        const right = document.createElement('div');
+        right.className = 'showcase-preview';
+        right.innerHTML = item.preview;
+
+        right.querySelector('[data-sc-open-dialog]')?.addEventListener('click', () => sampleDialog?.show());
+        right.querySelector('[data-sc-open-cmd]')?.addEventListener('click', () => document.querySelector('oz-command')?.open());
+        right.querySelector('[data-sc-open-insp]')?.addEventListener('click', () => document.querySelector('oz-inspector')?.toggle());
+        right.querySelector('[data-sc-open-gdpr]')?.addEventListener('click', () => document.querySelector('oz-cookie-consent')?.open());
+
+        row.appendChild(left);
+        row.appendChild(right);
+        showcaseContainer.appendChild(row);
+      });
+    }
+
+    document.querySelectorAll('#showcase-filters [data-sc-cat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeScCat = btn.dataset.scCat;
+        document.querySelectorAll('#showcase-filters [data-sc-cat]').forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+                Ozone.sound.click();
+        renderShowcaseRows();
+      });
+    });
+
+    document.getElementById('showcase-search')?.addEventListener('oz-input', (e) => {
+      scQuery = e.detail.value;
+      renderShowcaseRows();
+    });
+
+    renderShowcaseRows();
+  </script>
+</body>
+</html>

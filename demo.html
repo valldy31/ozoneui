@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live 8-Template Interactive Demo — OzoneUI</title>
+  <meta name="description" content="Preview 8 OzoneUI templates on desktop, tablet, and mobile in dark or light mode with instant brand palette switching and 1-click Copy HTML." />
+  <link rel="canonical" href="https://ozoneui.nstudios.eu/demo.html" />
+  <link rel="alternate" type="text/markdown" href="/llms.txt" />
+  <link rel="stylesheet" href="./dist/ozone.css" />
+  <style>
+    html, body { height: 100%; margin: 0; }
+    body { display: flex; flex-direction: column; overflow: hidden; }
+    .oz-site-topbar { flex: 0 0 auto; margin-top: 8px; }
+
+    .masterbar {
+      flex: 0 0 auto; display: flex; align-items: center; gap: 14px;
+      padding: 8px 20px; border-bottom: 1px solid var(--oz-border);
+      background: var(--oz-bg-elevated); position: relative; z-index: 10;
+    }
+    .masterbar--top { margin-top: 8px; border-top: 1px solid var(--oz-border); }
+    .group { display: flex; align-items: center; gap: 6px; }
+    .group-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--oz-text-subtle); margin-right: 2px; white-space: nowrap; }
+    .scroll { overflow-x: auto; scrollbar-width: none; flex: 1 1 auto; min-width: 0; }
+    .scroll::-webkit-scrollbar { display: none; }
+    .scroll .group { width: max-content; }
+    .spacer { flex: 1 1 auto; }
+    .divider { width: 1px; align-self: stretch; background: var(--oz-border); margin: 4px 2px; }
+
+    .chip {
+      appearance: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 12px; border-radius: var(--oz-radius-pill);
+      border: 1px solid var(--oz-border); background: transparent; color: var(--oz-text-muted);
+      font: inherit; font-size: 0.8rem; font-weight: 500; white-space: nowrap; transition: all 150ms ease;
+    }
+    .chip:hover { background: var(--oz-surface-hover); color: var(--oz-text); }
+    .chip[aria-pressed="true"] { background: var(--oz-primary-soft); color: var(--oz-text); border-color: var(--oz-primary); }
+    .chip svg { width: 15px; height: 15px; flex: none; }
+    .chip--icon { padding: 6px 9px; }
+
+    .swatch {
+      appearance: none; cursor: pointer; width: 24px; height: 24px; border-radius: 50%; padding: 0;
+      border: 2px solid transparent; outline: 1px solid var(--oz-border); transition: transform 140ms ease;
+    }
+    .swatch:hover { transform: scale(1.12); }
+    .swatch[aria-pressed="true"] { border-color: var(--oz-bg-elevated); outline: 2px solid var(--oz-text); }
+
+    .stage {
+      flex: 1 1 auto; min-height: 0; overflow: auto;
+      display: flex; justify-content: center; align-items: flex-start;
+      padding: 20px; background: radial-gradient(circle at 20% 0%, var(--oz-primary-soft), transparent 55%), var(--oz-bg);
+    }
+    .device {
+      width: 100%; height: 100%; max-width: 100%;
+      border: 1px solid var(--oz-border-strong); border-radius: 14px; overflow: hidden;
+      background: var(--oz-bg); box-shadow: var(--oz-shadow-lg);
+      transition: width 320ms cubic-bezier(.2,.8,.2,1);
+    }
+    .stage[data-view="tablet"] .device { width: 820px; }
+    .stage[data-view="mobile"] .device { width: 390px; border-radius: 28px; border-width: 8px; }
+    .device iframe { width: 100%; height: 100%; border: 0; display: block; background: var(--oz-bg); }
+
+    @media (max-width: 900px) {
+      .masterbar { padding: 8px 12px; gap: 10px; }
+      .masterbar--bottom { flex-wrap: wrap; }
+      .group-label { display: none; }
+      .stage { padding: 10px; }
+      .stage[data-view="tablet"] .device { width: 100%; }
+    }
+  </style>
+</head>
+<body data-oz-page="demo">
+
+  <!-- MASTER BAR 1: 8 Templates -->
+  <div class="masterbar masterbar--top" role="navigation" aria-label="Templates">
+    <div class="scroll">
+      <div class="group" id="templates">
+        <span class="group-label">Template</span>
+        <button type="button" class="chip" data-template="landing">Landing</button>
+        <button type="button" class="chip" data-template="admin">Admin Dashboard</button>
+        <button type="button" class="chip" data-template="app">Sidebar App</button>
+        <button type="button" class="chip" data-template="forms">Forms</button>
+        <button type="button" class="chip" data-template="motion">Parallax &amp; Motion</button>
+        <button type="button" class="chip" data-template="mobile">Mobile, Grid &amp; AI</button>
+        <button type="button" class="chip" data-template="marketplace">Marketplace</button>
+        <button type="button" class="chip" data-template="social">Social</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MASTER BAR 2: Viewport, Theme, Colors & Copy HTML -->
+  <div class="masterbar masterbar--bottom" role="toolbar" aria-label="Preview view options">
+    <div class="group" id="views">
+      <span class="group-label">View</span>
+      <button type="button" class="chip" data-view="desktop" title="Desktop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span>Desktop</span></button>
+      <button type="button" class="chip" data-view="tablet" title="Tablet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M11 18h2"/></svg><span>Tablet</span></button>
+      <button type="button" class="chip" data-view="mobile" title="Mobile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg><span>Mobile</span></button>
+    </div>
+    <div class="divider"></div>
+    <div class="group" id="themes">
+      <span class="group-label">Theme</span>
+      <button type="button" class="chip" data-theme="dark">Dark</button>
+      <button type="button" class="chip" data-theme="light">Light</button>
+    </div>
+    <div class="divider"></div>
+    <div class="group" id="colors"><span class="group-label">Brand</span></div>
+    <div class="spacer"></div>
+    <button type="button" class="chip" id="copy-html" title="Copy standalone template HTML with CDN links &amp; selected theme">Copy HTML</button>
+    <a class="chip chip--icon" id="open-tab" href="#" target="_blank" rel="noopener" title="Open template in a new tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M10 14L21 3M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/></svg>
+    </a>
+  </div>
+
+  <main class="stage" id="stage" data-view="desktop">
+    <div class="device"><iframe id="preview" title="Template preview"></iframe></div>
+  </main>
+
+  <script type="module">
+    import Ozone from './dist/ozone.js';
+    import { initSiteShell } from './dist/site-shell.js';
+    initSiteShell({ page: 'demo', footer: false });
+
+    const TEMPLATES = {
+      landing: 'site/templates/landing.html',
+      admin: 'site/templates/admin.html',
+      app: 'site/templates/app.html',
+      forms: 'site/templates/forms.html',
+      motion: 'site/templates/motion.html',
+      mobile: 'site/templates/mobile.html',
+      marketplace: 'site/templates/marketplace.html',
+      social: 'site/templates/social.html'
+    };
+    const COLORS = [
+      { id: 'ozone', label: 'Ozone Cyber', hue: 205, accent: 280, swatch: '#00b4d8' },
+      { id: 'emerald', label: 'Emerald', hue: 155, accent: 195, swatch: '#10b981' },
+      { id: 'amethyst', label: 'Amethyst', hue: 285, accent: 330, swatch: '#a855f7' },
+      { id: 'crimson', label: 'Crimson', hue: 12, accent: 42, swatch: '#f43f5e' },
+      { id: 'amber', label: 'Solar', hue: 75, accent: 38, swatch: '#f59e0b' },
+      { id: 'ocean', label: 'Ocean', hue: 235, accent: 198, swatch: '#3b82f6' }
+    ];
+    const DEFAULTS = { template: 'landing', view: 'desktop', theme: 'dark', color: 'ozone' };
+    const saved = (() => { try { return JSON.parse(localStorage.getItem('oz-demo') || '{}'); } catch { return {}; } })();
+    const hash = Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
+    const state = { ...DEFAULTS, ...saved, ...hash };
+    if (!TEMPLATES[state.template]) state.template = DEFAULTS.template;
+    if (!['desktop', 'tablet', 'mobile'].includes(state.view)) state.view = DEFAULTS.view;
+    if (!['dark', 'light'].includes(state.theme)) state.theme = DEFAULTS.theme;
+    if (!COLORS.find((c) => c.id === state.color)) state.color = DEFAULTS.color;
+
+    const frame = document.getElementById('preview');
+    const stage = document.getElementById('stage');
+    const colorsEl = document.getElementById('colors');
+    COLORS.forEach((c) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'swatch'; b.dataset.color = c.id; b.title = c.label; b.style.background = c.swatch;
+      colorsEl.appendChild(b);
+    });
+
+    function styleDoc(doc) {
+      if (!doc || !doc.documentElement) return;
+      const root = doc.documentElement, c = COLORS.find((x) => x.id === state.color);
+      root.dataset.ozTheme = state.theme;
+      root.dataset.ozPreset = c.id;
+      root.style.setProperty('--oz-hue', String(c.hue));
+      root.style.setProperty('--oz-accent-hue', String(c.accent));
+    }
+
+    function applyShell() {
+      styleDoc(document);
+      stage.dataset.view = state.view;
+      document.querySelectorAll('[data-template]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.template === state.template));
+      document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.view === state.view));
+      document.querySelectorAll('[data-theme]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.theme === state.theme));
+      document.querySelectorAll('[data-color]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.color === state.color));
+      document.getElementById('open-tab').href = TEMPLATES[state.template] + `#theme=${state.theme}&color=${state.color}`;
+      try { localStorage.setItem('oz-demo', JSON.stringify(state)); } catch {}
+      history.replaceState(null, '', '#' + new URLSearchParams(state).toString());
+    }
+
+    function loadTemplate() {
+      const src = TEMPLATES[state.template];
+      if (!frame.src.endsWith(src)) frame.src = src;
+    }
+    frame.addEventListener('load', () => { try { styleDoc(frame.contentDocument); } catch {} });
+
+    function set(patch, reload) {
+      Object.assign(state, patch);
+      applyShell();
+      if (reload) loadTemplate(); else { try { styleDoc(frame.contentDocument); } catch {} }
+    }
+
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-template],[data-view],[data-theme],[data-color]');
+      if (!t || t.tagName === 'A') return;
+      if (t.dataset.template) set({ template: t.dataset.template }, true);
+      else if (t.dataset.view) set({ view: t.dataset.view });
+      else if (t.dataset.theme) set({ theme: t.dataset.theme });
+      else if (t.dataset.color) set({ color: t.dataset.color });
+    });
+
+    // Keep demo theme/color synced when user switches via Universal Controls Modal
+    window.addEventListener('oz-dna-change', () => {
+      const d = Ozone.dna.read();
+      state.theme = d.theme;
+      if (COLORS.find((x) => x.id === d.preset)) state.color = d.preset;
+      try { styleDoc(frame.contentDocument); } catch {}
+    });
+
+    document.getElementById('copy-html').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      try {
+        let raw = await (await fetch(TEMPLATES[state.template])).text();
+        raw = raw.replace(/data-oz-theme="(?:dark|light)"/, `data-oz-theme="${state.theme}" data-oz-preset="${state.color}"`)
+                 .replace(/\.\.\/\.\.\/dist\//g, 'https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/');
+        await navigator.clipboard?.writeText(raw);
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy HTML'; }, 1600);
+      } catch { btn.textContent = 'Copy Failed'; }
+    });
+
+    applyShell();
+    loadTemplate();
+  </script>
+</body>
+</html>

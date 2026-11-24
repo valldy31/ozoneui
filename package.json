@@ -5,6 +5,7 @@
   "type": "module",
   "main": "./dist/ozone.js",
   "module": "./dist/ozone.js",
+  "types": "./dist/ozone.d.ts",
   "style": "./dist/ozone.css",
   "exports": {
     ".": {

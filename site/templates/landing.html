@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OzoneUI — The AI-Native Web Standards UI Framework</title>
+  <meta name="description" content="OzoneUI: 31 zero-dependency Web Components with OKLCH theming, built for humans and AI agents. No build step." />
+  <link rel="canonical" href="https://ozoneui.nstudios.eu/" />
+  <meta property="og:title" content="OzoneUI — The AI-Native UI Framework" />
+  <meta property="og:description" content="31 zero-dependency custom elements. OKLCH theming. One-line AI prompt. No build step." />
+  <meta property="og:url" content="https://ozoneui.nstudios.eu/" />
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style>
+    body { margin: 0; }
+    .site-header { position: sticky; top: 12px; z-index: 800; margin: 14px auto 0; }
+    .section { padding: 72px 0 0; }
+    .section-head { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+    .section-head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.03em; margin: 0 0 12px; }
+    .code-box { margin: 0; padding: 20px 22px; border-radius: var(--oz-radius-md); background: var(--oz-surface-inset); border: 1px solid var(--oz-border); font-size: 0.82rem; overflow: auto; line-height: 1.7; }
+    .marquee-chip { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: var(--oz-radius-pill); background: var(--oz-surface); border: 1px solid var(--oz-border-strong); font-weight: 500; font-size: 0.85rem; white-space: nowrap; }
+    .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+    .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+    .step-num { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: var(--oz-primary); }
+    .cta-band { text-align: center; padding: 48px 24px; }
+    @media (max-width: 900px) { .feature-grid, .steps { grid-template-columns: minmax(0, 1fr); } .section { padding-top: 56px; } }
+  </style>
+</head>
+<body>
+  <div class="oz-container site-header">
+    <oz-header variant="floating" brand="OzoneUI" badge="v1.0" links="Demo,Features,How it works,Pricing,Docs" cta="Open Demo" icon="diamond" mobile-menu="slide"></oz-header>
+  </div>
+
+  <main class="oz-container" style="padding-bottom: 72px;">
+
+    <section class="section" style="padding-top: 40px;">
+      <oz-hero
+        badge="OKLCH Theming • Zero Dependencies • AI-Native"
+        title="The UI Framework Built for Humans &amp; AI Agents"
+        subtitle="65 Web Standards custom tags with a 12-column responsive grid, mobile bottom bars, AI chat, calendars, sidebars, parallax and more.">
+        <oz-button variant="glow" size="lg" pill icon="rocket" icon-right="arrow-right" id="cta-start">Get Started</oz-button>
+        <oz-button variant="glass" size="lg" pill icon="copy" id="cta-prompt">Copy AI Prompt</oz-button>
+      </oz-hero>
+    </section>
+
+    <section class="section" style="padding-top: 48px;">
+      <oz-marquee speed="32s">
+        <div class="marquee-chip"><oz-icon name="sparkles" size="15" glow></oz-icon> OKLCH Perceptual Color</div>
+        <div class="marquee-chip"><oz-icon name="chart-bar" size="15"></oz-icon> Zero-Dep SVG Charts</div>
+        <div class="marquee-chip"><oz-icon name="bot" size="15"></oz-icon> Streaming JSON Renderer</div>
+        <div class="marquee-chip"><oz-icon name="wand" size="15"></oz-icon> Theme DNA Presets</div>
+        <div class="marquee-chip"><oz-icon name="shield" size="15"></oz-icon> Privacy Veil</div>
+        <div class="marquee-chip"><oz-icon name="zap" size="15"></oz-icon> 120fps Glass</div>
+      </oz-marquee>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-head">
+        <h2>Everything you need, nothing you don't</h2>
+        <p class="oz-muted">One stylesheet and one script give you a complete component system.</p>
+      </div>
+      <div class="feature-grid">
+        <oz-card tilt glow="cyan" title="31 Components" subtitle="Admin, landing, marketplace, social and AI">
+          <p class="oz-text-sm oz-muted">Stats, charts, tables, bento grids, pricing, posts, headers and more, each one a single semantic tag.</p>
+        </oz-card>
+        <oz-card tilt glow="violet" title="AI-Native" subtitle="Hallucination-proof attributes">
+          <p class="oz-text-sm oz-muted">Paste <code>llms.txt</code> into any assistant. It builds correct pages on the first try, with <code>&lt;oz-renderer&gt;</code> streaming JSON into live UI.</p>
+        </oz-card>
+        <oz-card tilt glow="emerald" title="One-Click Branding" subtitle="Presets, hex or logo">
+          <p class="oz-text-sm oz-muted">Switch palettes with <code>?preset=emerald</code>, derive a theme from a brand color or extract one from a logo.</p>
+        </oz-card>
+        <oz-card tilt glow="amber" title="Zero Build" subtitle="Works in HTML, PHP, React or Vue">
+          <p class="oz-text-sm oz-muted">No bundler, no framework lock-in. Custom elements hydrate automatically wherever you include the script.</p>
+        </oz-card>
+        <oz-card tilt glow="rose" title="Dark &amp; Light" subtitle="OKLCH dual-mode engine">
+          <p class="oz-text-sm oz-muted">Perceptually even colors and accessible contrast in both modes, driven by a handful of CSS variables.</p>
+        </oz-card>
+        <oz-card tilt glow="cyan" title="Responsive by Default" subtitle="Mobile menus and fluid grids">
+          <p class="oz-text-sm oz-muted">Icon-only mobile headers with slide, modal or dropdown menus, plus grids that collapse cleanly.</p>
+        </oz-card>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="section-head">
+        <h2>Up and running in three steps</h2>
+        <p class="oz-muted">From empty file to working UI in under a minute.</p>
+      </div>
+      <div class="steps">
+        <oz-card title="Include">
+          <div class="step-num">STEP 1</div>
+          <p class="oz-text-sm oz-muted">Add the stylesheet and the script to your page.</p>
+        </oz-card>
+        <oz-card title="Write tags">
+          <div class="step-num">STEP 2</div>
+          <p class="oz-text-sm oz-muted">Use <code>&lt;oz-*&gt;</code> elements. Attributes replace dozens of utility classes.</p>
+        </oz-card>
+        <oz-card title="Brand it">
+          <div class="step-num">STEP 3</div>
+          <p class="oz-text-sm oz-muted">Pick a preset or enter a hex color, and the whole UI follows.</p>
+        </oz-card>
+      </div>
+      <div style="margin-top: 32px;">
+        <pre class="code-box">&lt;link rel="stylesheet" href="ozone.css"&gt;
+&lt;script type="module" src="ozone.js"&gt;&lt;/script&gt;
+
+&lt;oz-stat title="MRR" value="$128,400" delta="+32.4%" trend="up"
+         sparkline="40,55,48,72,95,128"&gt;&lt;/oz-stat&gt;</pre>
+      </div>
+    </section>
+
+    <section class="section" id="live-demo">
+      <div class="section-head">
+        <h2>See it live</h2>
+        <p class="oz-muted">Real components, rendered by the framework on this page.</p>
+      </div>
+      <div class="oz-grid-3">
+        <oz-stat title="Monthly Recurring Rev" value="$128,400" delta="+32.4%" trend="up" sparkline="42,58,52,79,94,112,128" glow="cyan"></oz-stat>
+        <oz-stat title="Net Retention" value="138.6%" delta="+6.2%" trend="up" sparkline="118,121,126,129,134,138" glow="emerald"></oz-stat>
+        <oz-stat title="P99 Edge Latency" value="18ms" delta="-24.0%" trend="down" sparkline="41,38,32,29,24,20,18" glow="amber"></oz-stat>
+      </div>
+      <div style="margin-top: 26px;">
+        <oz-chart type="area" title="Weekly Inference Throughput" labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun" data="180,245,220,340,420,490,610" glow="cyan" exportable></oz-chart>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section-head">
+        <h2>Simple pricing</h2>
+        <p class="oz-muted">Start free. Upgrade when your team needs more.</p>
+      </div>
+      <div class="oz-grid-3">
+        <oz-pricing title="Open Core" subtitle="For solo makers &amp; static sites" price="$0" period="/forever" features="All 31 Web Components,OKLCH Dual Mode Engine,Zero-Dependency SVG Charts,MIT Open Source" cta="Start Free"></oz-pricing>
+        <oz-pricing title="Studio Pro" subtitle="For high-growth SaaS &amp; AI teams" price="$49" period="/mo" popular features="AI Streaming Renderer,Ghost Co-Pilot,Theme DNA Presets,Priority Support" cta="Go Pro"></oz-pricing>
+        <oz-pricing title="Enterprise" subtitle="Design systems at scale" price="$199" period="/mo" features="Multi-Brand Governance,Custom Action Schemas,Dedicated SLA,Unlimited Seats" cta="Contact Us"></oz-pricing>
+      </div>
+    </section>
+
+    <section class="section" id="docs">
+      <oz-card glow="violet">
+        <div class="cta-band">
+          <h2 style="font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.03em; margin: 0 0 12px;">Build your next interface with OzoneUI</h2>
+          <p class="oz-muted" style="max-width: 52ch; margin: 0 auto 28px;">Open source and free to start. Browse the full component showcase or grab the code on GitHub.</p>
+          <div class="oz-row" style="justify-content: center;">
+            <oz-button variant="glow" size="lg" pill icon="layers" id="cta-showcase">Browse Components</oz-button>
+            <oz-button variant="glass" size="lg" pill icon="globe" id="cta-github">View on GitHub</oz-button>
+          </div>
+        </div>
+      </oz-card>
+    </section>
+  </main>
+
+  <oz-footer variant="multi-col" brand="OzoneUI" tagline="Web Standards, AI-Native UI Framework."
+    columns='[{"title":"Product","links":["Features","Pricing","Docs"]},{"title":"Resources","links":["GitHub","llms.txt","Showcase"]}]'
+    copyright="© 2026 N Studios. Built with Web Standards."></oz-footer>
+
+  <script type="module">
+    import '../../dist/ozone.js';
+
+    const REPO = 'https://github.com/valldy31/ozoneui';
+    const go = (id, fn) => document.getElementById(id)?.addEventListener('click', fn);
+
+    go('cta-start', () => document.getElementById('how-it-works').scrollIntoView({ behavior: 'smooth' }));
+    go('cta-showcase', () => document.getElementById('features').scrollIntoView({ behavior: 'smooth' }));
+    go('cta-github', () => window.open(REPO, '_blank', 'noopener'));
+    go('cta-prompt', async () => {
+      try {
+        const text = await (await fetch('../../llms.txt')).text();
+        await navigator.clipboard.writeText(text);
+        alert('AI prompt copied. Paste it into ChatGPT, Claude, Gemini or Cursor.');
+      } catch (e) {
+        window.open('../../llms.txt', '_blank');
+      }
+    });
+  </script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

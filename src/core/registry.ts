@@ -46,7 +46,42 @@ export const COMPONENT_MANIFEST: ComponentSchemaEntry[] = [
   { tag: 'oz-alert', domain: 'layout', description: 'Dismissible callout banner with action button & semantic colors', props: ['variant(cyan|violet|emerald|amber|rose)', 'title', 'message', 'icon', 'dismissible', 'cta'] },
   { tag: 'oz-progress', domain: 'layout', description: 'Glowing progress bar with determinate & shimmer indeterminate modes', props: ['value', 'max', 'label', 'variant(cyan|violet|emerald|amber|rose)', 'show-value', 'indeterminate'] },
   { tag: 'oz-accordion', domain: 'layout', description: 'Expandable FAQ / settings accordion list', props: ['items(JSON)', 'multiple'] },
-  { tag: 'oz-timeline', domain: 'layout', description: 'Vertical activity, audit, and roadmap timeline', props: ['items(JSON)'] }
+  { tag: 'oz-timeline', domain: 'layout', description: 'Vertical activity, audit, and roadmap timeline', props: ['items(JSON)'] },
+  { tag: 'oz-sidebar', domain: 'layout', description: 'Collapsible app sidebar: grouped nav, nested items, badges, search, user footer, mobile drawer', props: ['brand', 'icon', 'items(JSON groups|flat)', 'active', 'collapsed', 'side(left|right)', 'variant(glass|solid|floating)', 'searchable', 'user-name', 'user-email', 'width', 'persist-key'] },
+  { tag: 'oz-app-shell', domain: 'layout', description: 'Admin app layout: sidebar + sticky topbar + content; put oz-sidebar, slot=actions and content as children', props: ['heading', 'subtitle', 'topbar', 'fill'] },
+  { tag: 'oz-select', domain: 'forms', description: 'Styled native select with groups', props: ['label', 'hint', 'error', 'options(csv|JSON)', 'value', 'placeholder', 'disabled'] },
+  { tag: 'oz-checkbox', domain: 'forms', description: 'Checkbox with description and indeterminate state', props: ['label', 'description', 'checked', 'indeterminate', 'hint', 'error', 'disabled'] },
+  { tag: 'oz-radio-group', domain: 'forms', description: 'Radio group, plain or selectable cards', props: ['label', 'options(csv|JSON)', 'value', 'variant(default|cards)', 'inline', 'hint', 'error'] },
+  { tag: 'oz-textarea', domain: 'forms', description: 'Textarea with character counter and autosize', props: ['label', 'placeholder', 'rows', 'maxlength', 'autosize', 'hint', 'error'] },
+  { tag: 'oz-slider', domain: 'forms', description: 'Range slider with live value readout', props: ['label', 'min', 'max', 'step', 'value', 'prefix', 'suffix', 'show-value'] },
+  { tag: 'oz-date-picker', domain: 'forms', description: 'Native date/time picker in Ozone styling', props: ['label', 'type(date|datetime-local|time|month|week)', 'value', 'min', 'max'] },
+  { tag: 'oz-file-upload', domain: 'forms', description: 'Drag-and-drop file dropzone with size validation; emits oz-files', props: ['label', 'accept', 'multiple', 'max-size(MB)', 'prompt', 'description'] },
+  { tag: 'oz-combobox', domain: 'forms', description: 'Searchable select; multiple for chips, creatable to add values', props: ['label', 'options(csv|JSON)', 'value(csv)', 'multiple', 'creatable', 'placeholder'] },
+  { tag: 'oz-parallax', domain: 'landing', description: 'Multi-layer scroll and mouse parallax stage for depth backgrounds and cards', props: ['speed', 'direction(vertical|horizontal|mouse|both)', 'tilt', 'height', 'badge', 'heading', 'subtitle'] },
+  { tag: 'oz-reveal', domain: 'landing', description: 'IntersectionObserver scroll-triggered entrance animator with stagger support', props: ['effect(fade-up|fade-down|zoom|blur|flip|slide-left|slide-right)', 'delay', 'duration', 'stagger', 'once'] },
+  { tag: 'oz-spotlight', domain: 'landing', description: 'Cursor-tracking radial spotlight surface container', props: ['color(cyan|violet|emerald|amber|rose)', 'size'] },
+  { tag: 'oz-drawer', domain: 'layout', description: 'Slide-over side sheet or bottom drawer panel with backdrop & footer slot', props: ['heading', 'subtitle', 'side(right|left|bottom)', 'size(sm|md|lg|xl)', 'open', 'trigger'] },
+  { tag: 'oz-dropdown', domain: 'core', description: 'Floating action/context menu popover with icons, shortcuts, and oz-select event', props: ['label', 'icon', 'variant(glass|primary|glow|ghost)', 'align(left|right)', 'items(JSON)'] },
+  { tag: 'oz-tooltip', domain: 'core', description: 'Accessible floating glass tooltip with optional keyboard shortcut pill', props: ['text', 'position(top|bottom|left|right)', 'shortcut'] },
+  { tag: 'oz-stepper', domain: 'layout', description: 'Interactive multi-step wizard / pipeline progress stepper', props: ['steps(csv|JSON)', 'active', 'variant(horizontal|vertical)', 'clickable'] },
+  { tag: 'oz-kanban', domain: 'admin', description: 'Drag-and-drop sprint/workflow Kanban board with persistence and task creation', props: ['columns(JSON)', 'persist-key', 'addable'] },
+  { tag: 'oz-calendar', domain: 'forms', description: 'Interactive glass monthly calendar grid with Today button, range selection, and event dots', props: ['heading', 'value(YYYY-MM-DD)', 'start', 'end', 'range', 'min', 'max', 'events(JSON)'] },
+  { tag: 'oz-color-picker', domain: 'forms', description: 'Color swatch trigger, hex input, spectrum wheel, and floating OKLCH swatch popover', props: ['label', 'value(hex)', 'presets(csv)', 'hint', 'error', 'disabled'] },
+  { tag: 'oz-number-input', domain: 'forms', description: 'Numeric stepper input with +/- buttons, keyboard arrows, and min/max/step clamping', props: ['label', 'value', 'min', 'max', 'step', 'hint', 'error', 'disabled'] },
+  { tag: 'oz-otp-input', domain: 'forms', description: 'Segmented passkey / 2FA verification code input with auto-advance and paste support', props: ['label', 'length', 'value', 'hint', 'error', 'disabled'] },
+  { tag: 'oz-grid', domain: 'layout', description: '12-column responsive CSS grid container or auto-fit min-width grid', props: ['cols', 'gap', 'min', 'align'] },
+  { tag: 'oz-col', domain: 'layout', description: 'Responsive column child inside <oz-grid> with desktop/tablet/mobile spans', props: ['span(1..12)', 'span-md', 'span-sm'] },
+  { tag: 'oz-bottom-nav', domain: 'layout', description: 'Mobile app / PWA bottom tab navigation bar with badges and safe-area padding', props: ['items(JSON)', 'active', 'variant(floating|docked)', 'position(inline|fixed)'] },
+  { tag: 'oz-fab', domain: 'core', description: 'Mobile Floating Action Button with expandable speed-dial actions', props: ['icon', 'label', 'items(JSON)', 'position(inline|bottom-right|bottom-left)'] },
+  { tag: 'oz-ai-chat', domain: 'ai', description: 'Interactive AI chat feed with model switcher, prompt chips, and streaming reply support', props: ['heading', 'model', 'models(csv)', 'suggestions(csv)', 'messages(JSON)', 'placeholder'] },
+  { tag: 'oz-code-block', domain: 'core', description: 'Syntax container with language badge, filename header, line numbers, and copy button', props: ['title', 'lang', 'code', 'line-numbers'] },
+  { tag: 'oz-split-pane', domain: 'layout', description: 'Resizable two-pane split container with draggable divider handle', props: ['ratio(percent)'] },
+  { tag: 'oz-tree', domain: 'layout', description: 'Collapsible hierarchical folder and file tree with oz-select events', props: ['items(JSON)', 'active'] },
+  { tag: 'oz-hover-card', domain: 'core', description: 'Rich glass preview popover displayed on hover or focus over a trigger', props: ['heading', 'subtitle', 'badge', 'meta'] },
+  { tag: 'oz-pagination', domain: 'admin', description: 'Accessible page navigation bar with page counts and oz-page events', props: ['page', 'total', 'page-size'] },
+  { tag: 'oz-skeleton', domain: 'layout', description: 'Animated shimmer placeholder skeleton for cards, stats, avatars, or text', props: ['variant(card|stat|avatar)', 'lines'] },
+  { tag: 'oz-empty-state', domain: 'layout', description: 'Empty-state callout card with vector icon ring, description, and CTA button', props: ['icon', 'heading', 'description', 'cta'] },
+  { tag: 'oz-cookie-consent', domain: 'layout', description: 'EU GDPR / ePrivacy Planet49 consent banner with equally weighted choices and offline strict mode', props: ['heading', 'description', 'policy-url', 'position(bottom-right|bottom-bar)', 'open'] }
 ];
 
 export function registerComponent(tag: string, ctor: CustomElementConstructor) {
@@ -58,7 +93,7 @@ export function registerComponent(tag: string, ctor: CustomElementConstructor) {
 export function morph(updateFn: () => void) {
   const doc = document as Document & { startViewTransition?: (cb: () => void) => void };
   if (typeof doc.startViewTransition === 'function' && document.documentElement.dataset.ozPerf !== 'eco') {
-    doc.startViewTransition(updateFn);
+    const vt = doc.startViewTransition(updateFn); vt?.finished?.catch(() => {}); vt?.ready?.catch(() => {}); vt?.updateCallbackDone?.catch(() => {});
   } else {
     updateFn();
   }

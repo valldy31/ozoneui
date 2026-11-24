@@ -1,51 +1,89 @@
-# 🌌 OzoneUI
+# 🌌 OzoneUI (`v1.0.0`)
 
-**The AI-Native, Web-Standards Quad-Domain UI Framework of the Future.**
+**The AI-Native, EU-Compliant, Zero-Dependency Web Standards UI Framework.**
 
-Build mission-critical **Admin Backends with Charts**, **Apple/Linear-tier Landing Pages**, **3D-Tilt Digital Marketplaces**, and **Live Social Networks** from a single `< 45 KB` zero-dependency Web Standards engine—using plain HTML, PHP, React, Vue, or streamed LLM JSON via `<oz-renderer>`.
+Build **Admin Backends & BI Charts**, **Apple/Linear-tier Landing Pages with Parallax**, **Mobile PWAs**, **SaaS Forms & Pickers**, **3D-Tilt Marketplaces**, and **Social Networks** from a single zero-dependency Web Standards engine (**66 `<oz-*>` Custom Elements** + OKLCH Atmospheric CSS). Works in plain HTML, PHP, React, Vue, Svelte, Laravel, or streamed LLM JSON via `<oz-renderer>`.
+
+Live Website: **[https://ozoneui.nstudios.eu](https://ozoneui.nstudios.eu)**
 
 ---
 
-## ⚡ Quickstart (Zero-Build CDN / XAMPP / HTML)
+## ⚡ Quickstart (Zero-Build CDN / HTML / PHP)
 
-Drop `ozone.css` and `ozone.js` into any HTML or PHP page:
+Drop `ozone.css` and `ozone.js` into any project—or load directly via jsDelivr CDN (`https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.css` + `ozone.js`):
 
 ```html
 <!doctype html>
 <html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark" data-oz-sound="on">
 <head>
-  <link rel="stylesheet" href="./dist/ozone.css" />
-  <script type="module" src="./dist/ozone.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.css" />
+  <script type="module" src="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.js"></script>
 </head>
 <body>
-  <oz-bento cols="3" sortable>
-    <oz-stat title="MRR" value="$128,400" delta="+32.4%" trend="up" sparkline="40,55,48,72,95,128"></oz-stat>
-    <oz-chart type="area" title="Growth" labels="Mon,Tue,Wed,Thu,Fri" data="120,180,150,290,380" glow="cyan" exportable></oz-chart>
-    <oz-product-card title="Neural Synth Pro" price="$79" old-price="$129" rating="4.9" reviews="310" badge="Bestseller" seller="Aether Labs"></oz-product-card>
-  </oz-bento>
+  <oz-grid cols="12" gap="20px">
+    <oz-col span="8" span-md="12">
+      <oz-chart type="area" title="MRR Growth" labels="Mon,Tue,Wed,Thu,Fri" data="120,180,150,290,380" glow="cyan" exportable></oz-chart>
+    </oz-col>
+    <oz-col span="4" span-md="12">
+      <oz-ai-chat heading="Ozone Co-Pilot" model="Gemini 2.5 Pro" suggestions="Audit contrast,Build form"></oz-ai-chat>
+    </oz-col>
+  </oz-grid>
 
   <oz-command auto-discover></oz-command>
   <oz-inspector></oz-inspector>
+  <oz-cookie-consent policy-url="./legal.html"></oz-cookie-consent>
 </body>
 </html>
 ```
 
 ---
 
-## 🏆 The 12 Superpowers of OzoneUI
+## 🧩 66 Zero-Dependency Web Components
 
-1. **OKLCH Atmospheric Glass + Precision Enterprise Dual Engine** (`data-oz-mode="atmospheric" | "precision"`, `data-oz-theme="dark" | "light"`).
-2. **Quad-Domain Component Suite**: Admin & BI (`<oz-stat>`, `<oz-chart>`, `<oz-table>`), Landing Pages (`<oz-hero>`, `<oz-bento>`, `<oz-pricing>`, `<oz-marquee>`), Marketplaces (`<oz-product-card>`, `<oz-rating>`), and Social Feeds (`<oz-post>`, `<oz-composer>`, `<oz-avatar>`).
-3. **Zero-Dependency SVG Charts & Data Tables**: Area, Line, Bar, Donut, and Sparklines with interactive hover tooltips + searchable/sortable tables.
-4. **Hallucination-Proof AI Prop Resolver + `/llms.txt`**: Smart attribute aliasing (`variant`/`type`/`color`) and self-healing JSON repair.
-5. **`<oz-renderer>` Live Streaming JSON-to-UI Engine**: Stream partial or full JSON UI schemas directly from an AI agent into live components with safe `oz-action` dispatching.
-6. **Live Theme DNA Barcode & Floating `<oz-inspector>` (`Alt+O`)**: Adjust hues, blur, radii, and modes visually and export a single `oz://...` Theme DNA string.
-7. **Procedural Web Audio Synthesizer & Haptics (`Ozone.sound`)**: Zero-asset Web Audio API micro-sounds and tactile feedback.
-8. **Bi-Directional AI Ghost Cursor (`Ozone.agent`)**: Smooth glowing AI Co-Pilot cursor that glides across the viewport to demonstrate or perform live actions visibly.
-9. **`<oz-smart-view>` Zero-Config 4-Way Data Morphing**: Instantaneously switches any raw JSON array between **Table ↔ Chart ↔ Bento Cards ↔ Raw JSON**.
-10. **`<oz-command auto-discover>` (`Cmd/Ctrl + K`)**: Automatically indexes page actions, tabs, and commands with zero manual wiring.
-11. **Declarative `src=""` Live Fetch + `sortable` Drag-and-Drop Bento**: Built-in skeleton loading, polling (`poll="5s"`), and persistent grid reordering.
-12. **Global Streamer Privacy Veil (`data-oz-privacy="true"`), Shared-Element Morphs (`Ozone.morph`), and 1-Click SVG/CSV Export (`exportable`)**.
+| Category | Components (`<oz-*>`) |
+| :--- | :--- |
+| **Core Foundation (9)** | `oz-icon`, `oz-button`, `oz-card`, `oz-badge`, `oz-input`, `oz-switch`, `oz-tabs`, `oz-dialog`, `oz-avatar` |
+| **Layout, Grid & Mobile PWA (9)** | `oz-header`, `oz-footer`, `oz-breadcrumbs`, `oz-grid`, `oz-col`, `oz-split-pane`, `oz-tree`, `oz-bottom-nav`, `oz-fab` |
+| **App Shell & Sidebar (2)** | `oz-app-shell`, `oz-sidebar` |
+| **Forms, Pickers & Upload (12)** | `oz-select`, `oz-checkbox`, `oz-radio-group`, `oz-textarea`, `oz-slider` *(single + dual-range)*, `oz-date-picker` *(floating glass calendar popover + presets + range)*, `oz-calendar`, `oz-file-upload` *(Browse button, previews, progress)*, `oz-combobox`, `oz-color-picker`, `oz-number-input`, `oz-otp-input` |
+| **Admin Backends, BI & Dev UI (10)** | `oz-stat`, `oz-chart` *(Area, Line, Bar, Donut, Sparkline)*, `oz-table`, `oz-smart-view` *(Table ↔ Chart ↔ Cards ↔ JSON)*, `oz-kanban`, `oz-code-block`, `oz-pagination`, `oz-skeleton`, `oz-empty-state`, `oz-stepper` |
+| **Landing, Parallax & Motion (11)** | `oz-hero`, `oz-bento` *(drag-and-drop sortable)*, `oz-pricing`, `oz-marquee`, `oz-parallax`, `oz-reveal`, `oz-spotlight`, `oz-drawer`, `oz-dropdown`, `oz-tooltip`, `oz-hover-card` |
+| **Feedback, Marketplace & Social (8)** | `oz-alert`, `oz-progress`, `oz-accordion`, `oz-timeline`, `oz-product-card`, `oz-rating`, `oz-post`, `oz-composer` |
+| **AI-Native, OS & GDPR (5)** | `oz-renderer`, `oz-ai-chat`, `oz-command` (`⌘K`), `oz-inspector` (`Alt+O`), `oz-cookie-consent` |
+
+> All form controls with `name="..."` sync automatically with native `<form>` / `FormData`, and support programmatic agent reading/filling via `Ozone.getFormData()` & `Ozone.fillForm({...})`.
+
+---
+
+## 🌐 Connected Website & Live Template Studio
+
+All root pages are connected via a shared navigation header (`dist/site-shell.js`) featuring the **Controls & Options Modal** (`#btn-control-center`: Dark/Light, Atmospheric/Precision, Theme DNA `Alt+O`, AI Co-Pilot, Privacy Veil, Sound FX, 8 Brand Palettes + Custom HEX Picker, Cookie & GDPR preferences):
+
+- **[`index.html`](./index.html)** — Flagship overview with interactive 12-col grid, mobile PWA showcase, parallax spatial card, live calendar/pickers/upload demo, and brand switcher.
+- **[`demo.html`](./demo.html)** — Live Template Studio switching between 8 full templates in [`site/templates/`](./site/templates):
+  - `landing.html`, `admin.html`, `app.html`, `forms.html`, `motion.html`, `mobile.html`, `marketplace.html`, `social.html`
+- **[`components.html`](./components.html)** — Filterable & searchable interactive catalog for all **66 Web Components** with 1-click **Copy HTML** & **Copy AI Prompt**.
+- **[`ai.html`](./ai.html)** — Zero-Config Client Brand Studio, live `<oz-renderer>` streaming JSON sandbox, and `Ozone.inspectUI()` / `Ozone.fillForm()` interactive tester.
+- **[`wiki.html`](./wiki.html)** — Help Center & Developer Wiki with `<oz-tree>` sidebar, live search, copyable `<oz-code-block>` guides, and FAQ schema.
+- **[`legal.html`](./legal.html)** — EU Impressum, GDPR & ePrivacy compliance matrix, OWASP XSS hardening reference, and Live LocalStorage & Consent Manager.
+
+---
+
+## 🛡️ EU GDPR, EAA Accessibility & OWASP Security
+
+- **Zero Third-Party Font IP Leaks (GDPR / *LG München*)**: `ozone.css` loads zero external Google Fonts; typography uses a pure sovereign system stack (`Inter`, `SF Pro Display`, `Segoe UI`, `JetBrains Mono`).
+- **Planet49-Compliant Consent (`<oz-cookie-consent>` + `Ozone.gdpr`)**: Equal-prominence **Accept All** / **Essential Only** controls, granular category preferences, `Ozone.gdpr.exportData()`, and `Ozone.gdpr.clearStorage()`.
+- **Strict Offline Icon Mode (`data-oz-gdpr="strict"`)**: Disables external Iconify CDN lookups in `<oz-icon>` so zero third-party network requests leave the origin.
+- **OWASP XSS Hardening**: `<oz-renderer>` strips all `on*` inline event attributes and blocks `javascript:`, `vbscript:`, and `data:text/html` URIs across JSON-to-UI schemas.
+- **EU Accessibility Act (EN 301 549 / WCAG 2.1 AA)**: Keyboard `.oz-skip-link`, `:focus-visible` focus rings, semantic landmarks, and `@media (prefers-reduced-motion: reduce)` guards.
+
+---
+
+## 🤖 AI SEO, LLM Tooling & IDE Autocomplete
+
+- **AI Agent Specs**: [`llms.txt`](./llms.txt) (compact reference), [`llms-full.txt`](./llms-full.txt) (complete AI manual), and [`/.well-known/ai-plugin.json`](./.well-known/ai-plugin.json).
+- **Crawler & Sitemap SEO**: [`robots.txt`](./robots.txt) and [`sitemap.xml`](./sitemap.xml) + `SoftwareSourceCode` / `FAQPage` JSON-LD structured data.
+- **VS Code & TypeScript Intellisense**: [`vscode.html-custom-data.json`](./vscode.html-custom-data.json) (configured via [`.vscode/settings.json`](./.vscode/settings.json)) and [`dist/ozone.d.ts`](./dist/ozone.d.ts).
 
 ---
 
@@ -57,6 +95,6 @@ npm run dev     # Start local dev server
 npm run build   # Type-check & build dist/ozone.js + dist/ozone.css
 ```
 
-## 🤖 AI Prompt Integration
+## 📄 License
 
-Paste [`llms.txt`](./llms.txt) into your AI assistant's system prompt, `.cursorrules`, `CLAUDE.md`, or `GEMINI.md`—or call `Ozone.getAIPrompt()` directly in the browser console.
+MIT License — see [`legal.html`](./legal.html).

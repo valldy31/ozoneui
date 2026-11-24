@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard — OzoneUI Template</title>
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style>
+    body { margin: 0; }
+    .wrap { padding-bottom: 64px; }
+  </style>
+</head>
+<body>
+  <div class="oz-container" style="padding-top:14px;">
+    <oz-header variant="enterprise" brand="Nexus Ops" links="Overview,Clusters,Incidents,Security,Billing" max-links="3" search cta="New Deploy" icon="cpu" mobile-menu="slide"></oz-header>
+  </div>
+  <main class="oz-container oz-stack wrap" style="padding-top:28px;">
+    <div class="oz-between">
+      <div>
+        <h1 style="font-size:1.6rem;font-weight:700;letter-spacing:-0.025em;margin:0 0 6px;">Operations Overview</h1>
+        <p class="oz-text-sm oz-muted" style="margin:0;">Live platform health, revenue and capacity across all regions.</p>
+      </div>
+      <oz-badge variant="emerald" pulse>All Systems Operational</oz-badge>
+    </div>
+
+    <div class="oz-grid-4">
+      <oz-stat title="Monthly Recurring Rev" value="$128,400" delta="+32.4%" trend="up" sparkline="42,58,52,79,94,112,128" glow="cyan"></oz-stat>
+      <oz-stat title="Active Workspaces" value="4,812" delta="+9.1%" trend="up" sparkline="30,34,38,41,44,47,48" glow="violet"></oz-stat>
+      <oz-stat title="Net Retention" value="138.6%" delta="+6.2%" trend="up" sparkline="118,121,126,129,134,138" glow="emerald"></oz-stat>
+      <oz-stat title="P99 Edge Latency" value="18ms" delta="-24.0%" trend="down" sparkline="41,38,32,29,24,20,18" glow="amber"></oz-stat>
+    </div>
+
+    <div class="oz-grid-2">
+      <oz-chart type="area" title="Compute &amp; Revenue Velocity" subtitle="Last 7 days" labels="Mon,Tue,Wed,Thu,Fri,Sat,Sun" data="180,245,220,340,420,490,610" glow="cyan" exportable></oz-chart>
+      <oz-chart type="donut" title="Revenue Mix" subtitle="By product line" labels="Platform,Marketplace,AI Inference,Enterprise" data="54000,32000,28500,13900" glow="violet" exportable></oz-chart>
+    </div>
+
+    <oz-table title="Enterprise Accounts" src="mock://users" searchable exportable mask-cols="email,mrr"></oz-table>
+
+    <div class="oz-grid-2" style="align-items:start;">
+      <oz-card title="Cluster Capacity" subtitle="Real-time thresholds">
+        <oz-alert variant="amber" title="Inference Burst Detected" message="EU-Central GPU pool scaled automatically to handle +42% throughput." dismissible></oz-alert>
+        <oz-progress label="GPU Cluster Memory" value="81" variant="amber" show-value></oz-progress>
+        <oz-progress label="Read Replicas" value="54" variant="cyan" show-value></oz-progress>
+        <oz-progress label="Edge Cache Hit Ratio" value="97" variant="emerald" show-value></oz-progress>
+      </oz-card>
+      <oz-card title="Audit Log" subtitle="Recent control-plane events">
+        <oz-timeline items='[
+          {"time":"2m ago","title":"Auto-scaled 12 workers","desc":"Triggered by latency policy","status":"emerald"},
+          {"time":"18m ago","title":"Rotated API keys","desc":"Masked under Privacy Veil","status":"cyan"},
+          {"time":"1h ago","title":"Published schema v1.0","desc":"Synced component contracts","status":"violet"}
+        ]'></oz-timeline>
+      </oz-card>
+    </div>
+  </main>
+  <script type="module">import '../../dist/ozone.js';</script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

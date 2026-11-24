@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Help Center &amp; Developer Wiki — OzoneUI</title>
+  <meta name="description" content="Complete OzoneUI guide: 60-second CDN quickstart, 12-column grid, mobile PWA bars, native form submission, AI agent prompting (llms.txt), and EU GDPR compliance." />
+  <link rel="canonical" href="https://ozoneui.nstudios.eu/wiki.html" />
+  <link rel="alternate" type="text/markdown" href="/llms.txt" />
+  <link rel="stylesheet" href="./dist/ozone.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Does OzoneUI work without npm, React, or a build step?","acceptedAnswer":{"@type":"Answer","text":"Yes. Drop dist/ozone.css and dist/ozone.js (or our jsDelivr CDN links) into any plain HTML, PHP, Laravel, React, Vue, or Svelte page and all 66 <oz-*> Web Components hydrate automatically."}},
+      {"@type":"Question","name":"Is OzoneUI compliant with EU GDPR and German Google Fonts rulings?","acceptedAnswer":{"@type":"Answer","text":"Yes. OzoneUI makes zero external font requests, supports strict offline mode via data-oz-gdpr='strict', ships with <oz-cookie-consent> following EU Planet49 rules, and includes Privacy Veil PII masking."}},
+      {"@type":"Question","name":"How do AI assistants build UI with OzoneUI?","acceptedAnswer":{"@type":"Answer","text":"Paste https://ozoneui.nstudios.eu/llms.txt or llms-full.txt into ChatGPT, Claude, Gemini, or Cursor. OzoneUI tags use roughly 80% fewer tokens than utility classes and include <oz-renderer> for live streaming JSON UI."}},
+      {"@type":"Question","name":"Do OzoneUI form components work inside standard HTML <form> tags and FormData?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every form control with a name attribute syncs a hidden input automatically for native HTML/PHP POST submissions, and Ozone.getFormData() / Ozone.fillForm() read and fill values in one call."}}
+    ]
+  }
+  </script>
+</head>
+<body data-oz-page="wiki">
+  <main class="oz-container oz-stack" style="padding:32px 0 84px;">
+    <div class="oz-between">
+      <div>
+        <oz-badge variant="cyan" pulse>Documentation, Recipes &amp; FAQ</oz-badge>
+        <h1 style="font-size:clamp(1.75rem,3.6vw,2.45rem);font-weight:800;letter-spacing:-0.03em;margin:10px 0 6px;">OzoneUI Help &amp; Developer Wiki</h1>
+        <p class="oz-text-sm oz-muted" style="max-width:68ch;">Everything developers and AI coding agents need to install, customize, secure, and deploy OzoneUI on the open web.</p>
+      </div>
+      <div style="width:min(300px,100%);">
+        <oz-input id="wiki-search" placeholder="Filter wiki topics..." icon="search"></oz-input>
+      </div>
+    </div>
+
+    <oz-grid cols="12" gap="28">
+      <oz-col span="4" span-md="12">
+        <oz-card title="Wiki Topics" subtitle="Jump to section">
+          <oz-tree id="wiki-tree" active="quickstart"></oz-tree>
+        </oz-card>
+      </oz-col>
+
+      <oz-col span="8" span-md="12">
+        <div class="oz-stack" id="wiki-sections" style="gap:24px;">
+
+          <oz-card id="sec-quickstart" data-wiki="quickstart install cdn html react php" title="1. 60-Second Quickstart (CDN &amp; Local)" subtitle="Works anywhere HTML runs — 0 npm dependencies">
+            <p class="oz-text-sm oz-muted">Include <code>ozone.css</code> and <code>ozone.js</code> once in your document head. Every <code>&lt;oz-*&gt;</code> tag self-hydrates.</p>
+            <oz-code-block title="index.html (CDN)" lang="html" line-numbers
+              code="&lt;!doctype html&gt;&#10;&lt;html lang=&quot;en&quot; data-oz-mode=&quot;atmospheric&quot; data-oz-theme=&quot;dark&quot; data-oz-preset=&quot;emerald&quot;&gt;&#10;&lt;head&gt;&#10;  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.css&quot;&gt;&#10;  &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.js&quot;&gt;&lt;/script&gt;&#10;&lt;/head&gt;&#10;&lt;body&gt;&#10;  &lt;oz-hero title=&quot;Ship faster&quot; subtitle=&quot;Zero build UI.&quot;&gt;&lt;/oz-hero&gt;&#10;&lt;/body&gt;&#10;&lt;/html&gt;">
+            </oz-code-block>
+          </oz-card>
+
+          <oz-card id="sec-grid" data-wiki="12 column responsive grid oz-grid oz-col mobile layout" title="2. 12-Column Grid &amp; Responsive Breakpoints" subtitle="<oz-grid> + <oz-col> and utility classes">
+            <p class="oz-text-sm oz-muted">Use semantic <code>&lt;oz-grid cols=&quot;12&quot;&gt;</code> with responsive tablet (<code>span-md</code>) and phone (<code>span-sm</code>) props, or CSS classes <code>.oz-grid-12</code> + <code>.oz-col-4</code>.</p>
+            <oz-code-block title="responsive-grid.html" lang="html"
+              code="&lt;oz-grid cols=&quot;12&quot; gap=&quot;24&quot;&gt;&#10;  &lt;oz-col span=&quot;8&quot; span-md=&quot;12&quot;&gt;Main Dashboard&lt;/oz-col&gt;&#10;  &lt;oz-col span=&quot;4&quot; span-md=&quot;12&quot;&gt;Activity Feed&lt;/oz-col&gt;&#10;&lt;/oz-grid&gt;">
+            </oz-code-block>
+          </oz-card>
+
+          <oz-card id="sec-mobile" data-wiki="mobile app pwa bottom nav fab sidebar drawer safe area" title="3. Mobile Apps, Sidebars &amp; PWAs" subtitle="Safe-area bottom tabs, FAB speed-dial &amp; slide drawers">
+            <p class="oz-text-sm oz-muted">Combine <code>&lt;oz-app-shell&gt;</code> + <code>&lt;oz-sidebar&gt;</code> for desktop admin sidebars (with automatic 900px mobile drawer), or <code>&lt;oz-bottom-nav position=&quot;fixed&quot;&gt;</code> + <code>&lt;oz-fab position=&quot;bottom-right&quot;&gt;</code> for mobile PWAs.</p>
+            <oz-code-block title="mobile-pwa.html" lang="html"
+              code="&lt;oz-bottom-nav position=&quot;fixed&quot; variant=&quot;floating&quot; active=&quot;home&quot;&gt;&lt;/oz-bottom-nav&gt;&#10;&lt;oz-fab position=&quot;bottom-right&quot; icon=&quot;plus&quot; items='[{&quot;id&quot;:&quot;ai&quot;,&quot;label&quot;:&quot;Ask AI&quot;,&quot;icon&quot;:&quot;sparkles&quot;}]'&gt;&lt;/oz-fab&gt;">
+            </oz-code-block>
+          </oz-card>
+
+          <oz-card id="sec-forms" data-wiki="forms formdata php validation date picker slider upload combobox ai fillForm" title="4. Forms, Calendars &amp; AI Form Automation" subtitle="Native HTML <form> bridge + Ozone.fillForm()">
+            <p class="oz-text-sm oz-muted">Any OzoneUI form element (<code>&lt;oz-select&gt;</code>, <code>&lt;oz-date-picker&gt;</code>, <code>&lt;oz-slider range&gt;</code>, <code>&lt;oz-combobox&gt;</code>, <code>&lt;oz-color-picker&gt;</code>, <code>&lt;oz-number-input&gt;</code>, <code>&lt;oz-otp-input&gt;</code>) with a <code>name</code> attribute syncs to native <code>FormData</code> automatically.</p>
+            <oz-code-block title="form-bridge.js" lang="js"
+              code="// Read every &lt;oz-*&gt; input in 1 call:&#10;const values = Ozone.getFormData('#checkout-form');&#10;&#10;// AI agents can fill an entire form cleanly:&#10;Ozone.fillForm({ region: 'EU-Central', nodes: 16 });">
+            </oz-code-block>
+          </oz-card>
+
+          <oz-card id="sec-ai" data-wiki="ai seo llms.txt oz-renderer streaming chat vscode typescript ide" title="5. AI Agents, Streaming &lt;oz-renderer&gt; &amp; IDE Support" subtitle="80% fewer tokens + live autocomplete">
+            <p class="oz-text-sm oz-muted">Share <a href="llms.txt" style="color:var(--oz-primary);">llms.txt</a> or <a href="llms-full.txt" style="color:var(--oz-primary);">llms-full.txt</a> with your assistant. In VS Code / Cursor, our included <code>vscode.html-custom-data.json</code> &amp; <code>dist/ozone.d.ts</code> give instant tag and attribute IntelliSense across all 66 components.</p>
+          </oz-card>
+
+          <oz-card id="sec-security" data-wiki="eu gdpr eaa privacy veil strict offline csp xss security" title="6. EU GDPR, EAA Accessibility &amp; CSP Security" subtitle="Zero third-party fonts, strict offline mode &amp; Planet49 banner">
+            <p class="oz-text-sm oz-muted">OzoneUI eliminates remote Google Fonts requests (GDPR-safe), strips dangerous <code>on*</code>/<code>javascript:</code> vectors in <code>&lt;oz-renderer&gt;</code>, respects OS <code>prefers-reduced-motion</code> (EU Accessibility Act), and includes <code>&lt;oz-cookie-consent&gt;</code> + <code>data-oz-gdpr="strict"</code>. See <a href="legal.html" style="color:var(--oz-primary);">EU &amp; GDPR Center</a>.</p>
+          </oz-card>
+
+          <oz-card id="sec-faq" data-wiki="faq help questions troubleshooting" title="7. Frequently Asked Questions" subtitle="Quick answers">
+            <oz-accordion multiple items='[
+              {"title":"Why does OzoneUI work in React, Vue, PHP, and static HTML?","content":"Every component is a standard W3C Custom Element with attribute aliasing and clean CustomEvents, requiring zero JSX wrappers or framework builds.","open":true},
+              {"title":"How do I customize brand colors without touching CSS files?","content":"Set data-oz-preset=\"emerald\" or pass ?preset=amethyst&brand=#7c3aed&name=MyApp in the URL, or use Ozone.dna.fromHex(\"#10b981\")."},
+              {"title":"Does OzoneUI collect telemetry or set tracking cookies?","content":"Never. Zero analytics or external tracking calls exist. Optional theme state uses localStorage under user consent via Ozone.gdpr."}
+            ]'></oz-accordion>
+          </oz-card>
+
+        </div>
+      </oz-col>
+    </oz-grid>
+  </main>
+
+  <script type="module">
+    import './dist/ozone.js';
+    import { initSiteShell } from './dist/site-shell.js';
+    initSiteShell({ page: 'wiki' });
+
+    const tree = document.getElementById('wiki-tree');
+    tree.setAttribute('items', JSON.stringify([
+      { id: 'quickstart', label: '1. 60-Second Quickstart', icon: 'rocket' },
+      { id: 'grid',       label: '2. 12-Col Grid & Layout', icon: 'grid' },
+      { id: 'mobile',     label: '3. Mobile Apps & PWAs', icon: 'layout' },
+      { id: 'forms',      label: '4. Forms & Fill API', icon: 'sliders' },
+      { id: 'ai',         label: '5. AI & IDE Setup', icon: 'sparkles' },
+      { id: 'security',   label: '6. EU, GDPR & Security', icon: 'shield' },
+      { id: 'faq',        label: '7. FAQ', icon: 'info' }
+    ]));
+    tree.addEventListener('oz-select', (e) => {
+      document.getElementById('sec-' + e.detail.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.getElementById('wiki-search')?.addEventListener('oz-input', (e) => {
+      const q = e.detail.value.trim().toLowerCase();
+      document.querySelectorAll('#wiki-sections oz-card').forEach((c) => {
+        const hay = ((c.getAttribute('title') || '') + ' ' + (c.dataset.wiki || '') + ' ' + c.textContent).toLowerCase();
+        c.style.display = !q || hay.includes(q) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>

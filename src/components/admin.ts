@@ -92,6 +92,9 @@ export class OzChart extends OzoneElement {
 
   private livePayload: { labels?: string[]; data?: number[] } | null = null;
   private activeType: string | null = null;
+  private ro: ResizeObserver | null = null;
+  private lastW = 0;
+  private rt = 0;
 
   protected onDataLoading() {
     if (!this.livePayload && !this.hasAttribute('data')) {
@@ -200,6 +203,19 @@ export class OzChart extends OzoneElement {
         if (tooltip) tooltip.style.opacity = '0';
       });
     });
+    this.lastW = this.clientWidth;
+    if (!this.ro && typeof ResizeObserver !== 'undefined') {
+      this.ro = new ResizeObserver(() => {
+        if (!this.isConnected) { this.ro?.disconnect(); this.ro = null; return; }
+        const cw = this.clientWidth;
+        if (Math.abs(cw - this.lastW) > 16) {
+          this.lastW = cw;
+          window.clearTimeout(this.rt);
+          this.rt = window.setTimeout(() => this.safeRender(), 120);
+        }
+      });
+      this.ro.observe(this);
+    }
   }
 
   private renderSvg(type: string, values: number[], labels: string[], color: string): string {
@@ -243,83 +259,35 @@ export class OzChart extends OzoneElement {
       `;
     }
 
-    const w = 600;
-    const h = 210;
-    const padX = 28;
-    const padY = 22;
-    const padBottom = 32;
-    const plotW = w - padX * 2;
-    const plotH = h - padY - padBottom;
-    const max = Math.max(...values) * 1.12 || 10;
-    const min = type === 'bar' ? 0 : Math.min(0, ...values);
-    const span = max - min || 1;
-
-    const gridLines = [0, 0.25, 0.5, 0.75, 1].map((t) => {
-      const y = padY + plotH * (1 - t);
-      return `<line x1="${padX}" y1="${y.toFixed(1)}" x2="${w - padX}" y2="${y.toFixed(1)}" stroke="var(--oz-border)" stroke-dasharray="3 4" />`;
-    }).join('');
-
-    const xLabels = labels.map((lbl, i) => {
-      const x = values.length === 1 ? padX + plotW / 2 : padX + (i / (values.length - 1)) * plotW;
-      return `<text x="${x.toFixed(1)}" y="${h - 8}" text-anchor="middle" fill="var(--oz-text-subtle)" font-size="11">${escapeHTML(lbl)}</text>`;
-    }).join('');
-
+    const cs = getComputedStyle(this);
+    const innerW = this.clientWidth - (parseFloat(cs.paddingLeft) || 0) - (parseFloat(cs.paddingRight) || 0);
+    const w = Math.max(240, Math.round(innerW || 600));
+    const compact = w < 460;
+    const h = compact ? 230 : Math.round(Math.min(340, Math.max(250, w * 0.3)));
+    const padL = 46, padR = compact ? 14 : 20, padY = 20, padBottom = 34, inset = 12;
+    const plotW = w - padL - padR, plotH = h - padY - padBottom;
+    const max = Math.max(...values) * 1.12 || 10, min = type === 'bar' ? 0 : Math.min(0, ...values), span = max - min || 1;
+    const fmt = (n: number) => { const a = Math.abs(n); return a >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M' : a >= 1e3 ? (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'k' : String(Math.round(n)); };
+    const gridLines = [0, 0.25, 0.5, 0.75, 1].map((t) => { const y = (padY + plotH * (1 - t)).toFixed(1); return `<line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="var(--oz-border)" stroke-dasharray="3 4" /><text x="${padL - 10}" y="${(Number(y) + 4).toFixed(1)}" text-anchor="end" fill="var(--oz-text-subtle)" font-size="12">${fmt(min + span * t)}</text>`; }).join('');
+    const step = Math.max(1, Math.ceil(values.length / Math.max(2, Math.floor(plotW / 56))));
+    const svgOpen = `<svg viewBox="0 0 ${w} ${h}" width="100%" height="${h}" style="display:block;width:100%;height:${h}px;overflow:visible;">`;
     if (type === 'bar') {
-      const slotW = plotW / values.length;
-      const barW = Math.min(42, slotW * 0.58);
+      const slotW = plotW / values.length, barW = Math.min(48, Math.max(8, slotW * 0.56));
       const bars = values.map((v, i) => {
         const barH = Math.max(4, ((v - min) / span) * plotH);
-        const x = padX + i * slotW + (slotW - barW) / 2;
-        const y = padY + plotH - barH;
-        return `
-          <rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" rx="6" fill="url(#oz-grad-${uid})" data-tip="${escapeHTML(labels[i])}: ${v.toLocaleString()}" style="cursor:pointer;" />
-        `;
+        const x = padL + i * slotW + (slotW - barW) / 2, y = padY + plotH - barH;
+        return `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${barH.toFixed(1)}" rx="6" fill="url(#oz-grad-${uid})" data-tip="${escapeHTML(labels[i])}: ${v.toLocaleString()}" style="cursor:pointer;" />`;
       }).join('');
-      const barXLabels = labels.map((lbl, i) => {
-        const x = padX + i * slotW + slotW / 2;
-        return `<text x="${x.toFixed(1)}" y="${h - 8}" text-anchor="middle" fill="var(--oz-text-subtle)" font-size="11">${escapeHTML(lbl)}</text>`;
-      }).join('');
-      return `
-        <svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;overflow:visible;">
-          <defs>
-            <linearGradient id="oz-grad-${uid}" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="${color}" stop-opacity="0.95" />
-              <stop offset="100%" stop-color="${color}" stop-opacity="0.28" />
-            </linearGradient>
-          </defs>
-          ${gridLines}
-          ${bars}
-          ${barXLabels}
-        </svg>
-      `;
+      const barLabels = labels.map((l, i) => i % step ? '' : `<text x="${(padL + i * slotW + slotW / 2).toFixed(1)}" y="${h - 10}" text-anchor="middle" fill="var(--oz-text-subtle)" font-size="12">${escapeHTML(l)}</text>`).join('');
+      return `${svgOpen}<defs><linearGradient id="oz-grad-${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity="0.95" /><stop offset="100%" stop-color="${color}" stop-opacity="0.28" /></linearGradient></defs>${gridLines}${bars}${barLabels}</svg>`;
     }
-
-    const pts = values.map((v, i) => {
-      const x = values.length === 1 ? padX + plotW / 2 : padX + (i / (values.length - 1)) * plotW;
-      const y = padY + plotH - ((v - min) / span) * plotH;
-      return { x, y, v, label: labels[i] };
-    });
-
+    const px = (i: number) => values.length === 1 ? padL + plotW / 2 : padL + inset + (i / (values.length - 1)) * (plotW - inset * 2);
+    const pts = values.map((v, i) => ({ x: px(i), y: padY + plotH - ((v - min) / span) * plotH, v, label: labels[i] }));
     const linePath = pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
     const areaPath = `${linePath} L ${pts[pts.length - 1].x.toFixed(1)} ${(padY + plotH).toFixed(1)} L ${pts[0].x.toFixed(1)} ${(padY + plotH).toFixed(1)} Z`;
-
-    return `
-      <svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;overflow:visible;">
-        <defs>
-          <linearGradient id="oz-area-${uid}" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="${color}" stop-opacity="0.38" />
-            <stop offset="100%" stop-color="${color}" stop-opacity="0.01" />
-          </linearGradient>
-        </defs>
-        ${gridLines}
-        ${type === 'area' ? `<path d="${areaPath}" fill="url(#oz-area-${uid})" />` : ''}
-        <path d="${linePath}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 4px 10px ${color});" />
-        ${pts.map((p) => `
-          <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="5" fill="var(--oz-bg-elevated)" stroke="${color}" stroke-width="2.5" data-tip="${escapeHTML(p.label)}: ${p.v.toLocaleString()}" style="cursor:pointer;" />
-        `).join('')}
-        ${xLabels}
-      </svg>
-    `;
+    const xLabels = labels.map((l, i) => i % step ? '' : `<text x="${px(i).toFixed(1)}" y="${h - 10}" text-anchor="middle" fill="var(--oz-text-subtle)" font-size="12">${escapeHTML(l)}</text>`).join('');
+    const r = compact ? 4 : 5;
+    return `${svgOpen}<defs><linearGradient id="oz-area-${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity="0.38" /><stop offset="100%" stop-color="${color}" stop-opacity="0.01" /></linearGradient></defs>${gridLines}${type === 'area' ? `<path d="${areaPath}" fill="url(#oz-area-${uid})" />` : ''}<path d="${linePath}" fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 4px 10px ${color});" />${pts.map((p) => `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${r}" fill="var(--oz-bg-elevated)" stroke="${color}" stroke-width="2.5" data-tip="${escapeHTML(p.label)}: ${p.v.toLocaleString()}" style="cursor:pointer;" />`).join('')}${xLabels}</svg>`;
   }
 }
 

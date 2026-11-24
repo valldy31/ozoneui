@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Social Feed — OzoneUI Template</title>
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style>
+    body { margin: 0; }
+    .social-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 26px; align-items: start; }
+    @media (max-width: 900px) { .social-layout { grid-template-columns: minmax(0, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="oz-container" style="padding-top:14px;">
+    <oz-header variant="minimal" brand="Ozone Pulse" links="Home,Explore,Creators,Messages" cta="Post" icon="globe" mobile-menu="dropdown"></oz-header>
+  </div>
+  <main class="oz-container oz-stack" style="padding:28px 0 64px;">
+    <div class="oz-between">
+      <div>
+        <h1 style="font-size:1.6rem;font-weight:700;letter-spacing:-0.025em;margin:0 0 6px;">Creator &amp; AI Network</h1>
+        <p class="oz-text-sm oz-muted" style="margin:0;">Publish from the composer and watch it land in the live feed.</p>
+      </div>
+      <oz-badge variant="violet" pulse>1,420 Creators Online</oz-badge>
+    </div>
+    <div class="social-layout">
+      <div class="oz-stack" style="gap:22px;">
+        <oz-composer target="#feed" author="Alex Mercer" handle="@alex_architect" placeholder="Write a post and click Publish..."></oz-composer>
+        <div id="feed" class="oz-stack" style="gap:22px;">
+          <oz-post author="Elena Vance" handle="@elena_ai" verified status="streaming" time="4m ago" likes="1248" comments="94" shares="215" tags="OzoneUI,SpatialWeb,OKLCH" content="Replaced three UI libraries and 40KB of chart dependencies with one semantic tag. Our ops team got table, chart, cards and JSON views automatically."></oz-post>
+          <oz-post author="Marcus Chen" handle="@marcus_dev" verified status="online" time="22m ago" likes="842" comments="41" shares="112" tags="GenerativeUI,LLM" content="Fed llms.txt to our coding agent and it built a multi-tab billing backend on the first prompt. Zero broken imports."></oz-post>
+          <oz-post author="Aria Solis" handle="@aria_solis" status="online" time="1h ago" likes="519" comments="28" shares="64" tags="ThemeDNA" content="Pasted one preset into the URL and our whole brand theme synced across six apps."></oz-post>
+        </div>
+      </div>
+      <div class="oz-stack" style="gap:22px;">
+        <oz-stat title="Community Pulse" value="48.2K" delta="+18.9%" trend="up" sparkline="22,28,26,34,39,44,48" glow="violet"></oz-stat>
+        <oz-card title="Trending Topics" subtitle="Live network velocity">
+          <div class="oz-stack" style="gap:16px;">
+            <div class="oz-between oz-text-sm"><strong>#OzoneUI</strong><oz-badge variant="cyan">14.2k posts</oz-badge></div>
+            <div class="oz-between oz-text-sm"><strong>#GenerativeUI</strong><oz-badge variant="violet">9.8k posts</oz-badge></div>
+            <div class="oz-between oz-text-sm"><strong>#ThemeDNA</strong><oz-badge variant="emerald">6.1k posts</oz-badge></div>
+          </div>
+        </oz-card>
+      </div>
+    </div>
+  </main>
+  <script type="module">import '../../dist/ozone.js';</script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

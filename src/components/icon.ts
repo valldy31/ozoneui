@@ -223,6 +223,7 @@ function sanitizeSvg(svgMarkup: string, size: string): string {
 }
 
 async function resolveRemoteSvg(name: string, set: string): Promise<string | null> {
+  if (typeof document !== 'undefined' && document.documentElement.dataset.ozGdpr === 'strict') return null;
   const mappedName = PACK_NAME_MAP[set]?.[name] || name;
   const cacheKey = `${set}:${mappedName}`;
   if (remoteSvgCache.has(cacheKey)) return remoteSvgCache.get(cacheKey)!;

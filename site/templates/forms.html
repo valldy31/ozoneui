@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Form Controls, Calendar &amp; Pickers — OzoneUI Template</title>
+  <link rel="stylesheet" href="../../dist/ozone.css" />
+  <style>
+    body { margin: 0; }
+    .two { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 26px; }
+    @media (max-width: 820px) { .two { grid-template-columns: minmax(0,1fr); } }
+  </style>
+</head>
+<body>
+  <div class="oz-container" style="padding-top:14px;">
+    <oz-header variant="minimal" brand="Ozone Inputs" links="Calendar,Pickers,Sliders,Uploads" cta="Open Demo" icon="sliders" mobile-menu="dropdown" id="hdr"></oz-header>
+  </div>
+  <main class="oz-container oz-stack" style="padding:32px 0 72px;">
+    <div>
+      <h1 style="font-size:1.75rem;font-weight:700;letter-spacing:-0.03em;margin:0 0 8px;">Modern Calendar, Pickers, Sliders &amp; Upload Controls</h1>
+      <p class="oz-muted" style="margin:0;max-width:68ch;">Zero-dependency form components sharing <code>label</code>, <code>hint</code>, <code>error</code>, <code>disabled</code>, OKLCH theming, and <code>oz-change</code> events.</p>
+    </div>
+
+    <div class="two" id="sec-calendar">
+      <oz-calendar heading="Release &amp; Sprint Calendar" value="2026-11-24"
+        events='[{"date":"2026-11-20","title":"Design Freeze","color":"violet"},{"date":"2026-11-24","title":"OzoneUI v1.2 Release","color":"cyan"},{"date":"2026-11-28","title":"Edge Rollout","color":"emerald"}]'>
+      </oz-calendar>
+
+      <oz-card title="Glass Date Pickers &amp; Selects" subtitle="Floating calendar popover + quick date presets" id="sec-pickers">
+        <oz-date-picker label="Launch date" value="2026-11-24" hint="Click to open floating glass calendar with presets."
+          events='[{"date":"2026-11-24","title":"Release","color":"cyan"}]'>
+        </oz-date-picker>
+        <oz-date-picker label="Billing cycle range" range start="2026-11-20" end="2026-11-26" hint="Pick start and end dates across months."></oz-date-picker>
+        <oz-select label="Role" placeholder="Choose a role" hint="Controls workspace access." options='[{"value":"owner","label":"Owner","group":"Admin"},{"value":"admin","label":"Administrator","group":"Admin"},{"value":"editor","label":"Editor","group":"Team"},{"value":"viewer","label":"Viewer","group":"Team"}]'></oz-select>
+        <oz-input label="Invalid example" value="not-an-email" error="Enter a valid email address."></oz-input>
+      </oz-card>
+    </div>
+
+    <div class="two" id="sec-sliders">
+      <oz-card title="Single, Dual-Range Sliders &amp; Inputs" subtitle="Live numeric readout, ticks, color picker, stepper &amp; OTP">
+        <oz-slider label="Monthly budget" min="0" max="5000" step="50" value="1800" prefix="$" show-value ticks></oz-slider>
+        <oz-slider label="Latency SLA band (Dual Range)" range min="0" max="5000" step="100" min-value="900" max-value="3400" prefix="$" show-value ticks></oz-slider>
+        <div class="two" style="gap:18px;">
+          <oz-number-input label="Cluster nodes" min="1" max="64" value="8"></oz-number-input>
+          <oz-color-picker label="Accent brand color" value="#00b4d8"></oz-color-picker>
+        </div>
+        <oz-otp-input label="2FA Passkey Verification" length="6" hint="Type or paste a 6-character code."></oz-otp-input>
+      </oz-card>
+
+      <oz-card title="Choices, Combobox &amp; File Upload / Browse" subtitle="Drag-and-drop, Browse button, progress bars &amp; chips" id="sec-uploads">
+        <oz-file-upload label="Brand &amp; Asset Upload" multiple max-size="10" accept="PNG, JPG, JSON, PDF"
+          files='[{"name":"ozone-brand-kit.json","size":18432},{"name":"hero-backdrop.png","size":842100}]'>
+        </oz-file-upload>
+        <oz-combobox label="Skills" multiple creatable value="Design,Frontend" placeholder="Search or add a skill..." options="Design,Frontend,Backend,DevOps,Data,Security,Product"></oz-combobox>
+        <oz-combobox label="Country" placeholder="Search countries..." options="Bulgaria,Germany,France,Greece,Italy,Netherlands,Spain,Sweden"></oz-combobox>
+      </oz-card>
+    </div>
+
+    <div class="two">
+      <oz-card title="Plan Cards &amp; Checkboxes" subtitle="Rich card selection &amp; indeterminate state">
+        <oz-radio-group label="Plan" value="pro" variant="cards" options='[{"value":"free","label":"Free","desc":"For side projects"},{"value":"pro","label":"Pro","desc":"For growing teams"},{"value":"ent","label":"Enterprise","desc":"Custom contracts"}]'></oz-radio-group>
+        <div class="oz-stack" style="gap:14px;">
+          <oz-checkbox label="Weekly summary email" description="Every Monday at 9:00." checked></oz-checkbox>
+          <oz-checkbox label="Enable beta features" indeterminate></oz-checkbox>
+        </div>
+      </oz-card>
+      <oz-card title="Autosize Bio &amp; Inline Radios" subtitle="Live character counter">
+        <oz-radio-group label="Notifications" value="mentions" options="All activity,Mentions only,Nothing" inline></oz-radio-group>
+        <oz-textarea label="Bio" placeholder="Tell the team about yourself..." maxlength="240" rows="4" autosize></oz-textarea>
+      </oz-card>
+    </div>
+  </main>
+  <script type="module">
+    import '../../dist/ozone.js';
+    document.getElementById('hdr').addEventListener('click', (e) => {
+      const txt = (e.target.closest('a,button,.oz-header__cta')?.textContent || '').trim().toLowerCase();
+      if (txt === 'open demo') {
+        if (window.top !== window) window.top.location.href = '../demo.html';
+        else location.href = '../demo.html';
+      }
+      const map = { calendar: 'sec-calendar', pickers: 'sec-pickers', sliders: 'sec-sliders', uploads: 'sec-uploads' };
+      if (map[txt]) document.getElementById(map[txt])?.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+  <script>
+    (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+  </script>
+</body>
+</html>

@@ -50,7 +50,7 @@ class OzoneSoundEngine {
   private haptic(ms = 6) {
     if (!this.isEnabled()) return;
     if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
-      try { navigator.vibrate(ms); } catch {}
+      try { (!navigator.userActivation || navigator.userActivation.hasBeenActive) && navigator.vibrate(ms); } catch {}
     }
   }
 

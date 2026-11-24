@@ -1,0 +1,24 @@
+# Robots.txt for OzoneUI (https://ozoneui.nstudios.eu)
+# Welcome standard search engines & AI search / RAG crawlers
+
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://ozoneui.nstudios.eu/sitemap.xml
+LLMs-Txt: https://ozoneui.nstudios.eu/llms.txt
+LLMs-Full-Txt: https://ozoneui.nstudios.eu/llms-full.txt

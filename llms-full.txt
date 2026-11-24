@@ -1,0 +1,68 @@
+# OzoneUI Full AI Reference & Copy-Paste Recipes (v1.0.0 — 66 Web Components)
+# Canonical URL: https://ozoneui.nstudios.eu/
+# Quick Reference: https://ozoneui.nstudios.eu/llms.txt
+
+## 1. Zero-Build Single-File HTML Template (Run Immediately in Browser or AI Artifact)
+```html
+<!doctype html>
+<html lang="en" data-oz-mode="atmospheric" data-oz-theme="dark" data-oz-preset="emerald">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.css" />
+  <script type="module" src="https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/ozone.js"></script>
+</head>
+<body>
+  <oz-app-shell heading="Dashboard" subtitle="Live telemetry">
+    <oz-sidebar brand="Acme Cloud" icon="cpu" searchable active="Overview"
+      items='[{"title":"Main","items":[{"label":"Overview","icon":"layout"},{"label":"Billing","icon":"sliders"}]}]'></oz-sidebar>
+    <oz-grid cols="12" gap="24">
+      <oz-col span="4" span-md="6" span-sm="12"><oz-stat title="MRR" value="$128,400" delta="+32%" trend="up" sparkline="40,55,48,72,95,128"></oz-stat></oz-col>
+      <oz-col span="8" span-md="6" span-sm="12"><oz-chart type="area" title="Growth" labels="Mon,Tue,Wed,Thu,Fri" data="120,180,150,290,380" exportable></oz-chart></oz-col>
+    </oz-grid>
+  </oz-app-shell>
+</body>
+</html>
+```
+
+## 2. Mobile App / PWA Shell Recipe
+```html
+<oz-grid cols="12" gap="18">
+  <oz-col span="12"><oz-ai-chat heading="Assistant" model="Gemini 2.5 Pro"></oz-ai-chat></oz-col>
+</oz-grid>
+<oz-fab position="bottom-right" icon="plus" items='[{"id":"new","label":"New Item","icon":"plus"}]'></oz-fab>
+<oz-bottom-nav position="fixed" variant="floating" active="home"></oz-bottom-nav>
+```
+
+## 3. Forms, Calendars & Native FormData + AI Form Automation
+All OzoneUI inputs accept `name`, `label`, `hint`, `error`, `disabled`, emit `oz-change`, and sync hidden `<input name="...">` automatically for standard `<form>` / PHP POST submissions:
+```html
+<form id="signup">
+  <oz-input name="email" label="Work Email" icon="user"></oz-input>
+  <oz-select name="role" label="Role" options="Owner,Admin,Editor"></oz-select>
+  <oz-date-picker name="start" label="Start Date"></oz-date-picker>
+  <oz-slider name="budget" label="Budget" range min="0" max="5000" min-value="800" max-value="3600" prefix="$" ticks></oz-slider>
+  <oz-file-upload label="Brand Logo" accept="PNG, JPG, SVG" max-size="5"></oz-file-upload>
+  <oz-combobox name="skills" label="Skills" multiple creatable options="HTML,CSS,TypeScript,AI"></oz-combobox>
+  <oz-otp-input name="code" label="2FA Passkey" length="6"></oz-otp-input>
+</form>
+<script type="module">
+  // Read & populate forms in 1 call:
+  const data = Ozone.getFormData('#signup');
+  Ozone.fillForm({ role: 'Admin', code: '482910' }, '#signup');
+</script>
+```
+
+## 4. EU GDPR, Privacy, Accessibility & Security
+- Zero remote font fetches (system/geometric stack only — avoids Google Fonts GDPR IP leak).
+- Strict offline mode: `<html data-oz-gdpr="strict">` blocks optional remote Iconify icon CDN fetches.
+- Planet49 GDPR banner: `<oz-cookie-consent policy-url="legal.html"></oz-cookie-consent>` with `Ozone.gdpr.{getConsent,setConsent,clearStorage,exportData}()`.
+- Global Privacy Veil: `<html data-oz-privacy="true">` blurs sensitive `[mask="blur"]` and `mask-cols="email,mrr"` fields.
+- XSS-safe `<oz-renderer>`: blocks unknown HTML tags, strips `on*` attributes, rejects `javascript:` / `vbscript:` / `data:text/html` URIs.
+- Site URLs:
+  - Home: https://ozoneui.nstudios.eu/
+  - Live Demo (8 Templates): https://ozoneui.nstudios.eu/demo.html
+  - All 66 Components: https://ozoneui.nstudios.eu/components.html
+  - AI Streaming & Brand Studio: https://ozoneui.nstudios.eu/ai.html
+  - Developer Wiki & FAQ: https://ozoneui.nstudios.eu/wiki.html
+  - EU Impressum & GDPR Privacy: https://ozoneui.nstudios.eu/legal.html
