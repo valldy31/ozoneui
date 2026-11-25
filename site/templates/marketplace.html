@@ -9,38 +9,131 @@
 </head>
 <body>
   <div class="oz-container" style="padding-top:14px;">
-    <oz-header variant="floating" brand="Aether Market" badge="Beta" links="Browse,Sellers,Collections,Sell" cta="Sign In" icon="shopping-cart" mobile-menu="modal"></oz-header>
+    <oz-header variant="floating" brand="Aether Market" badge="16:9 HD · i18n" links="Browse,Sellers,Collections,Sell" cta="Sign In" icon="shopping-cart" mobile-menu="modal"></oz-header>
   </div>
   <main class="oz-container oz-stack" style="padding:28px 0 64px;">
     <div class="oz-between">
       <div>
-        <h1 style="font-size:1.6rem;font-weight:700;letter-spacing:-0.025em;margin:0 0 6px;">Digital Asset Marketplace</h1>
-        <p class="oz-text-sm oz-muted" style="margin:0;">Templates, shaders, agents and sound packs from independent creators.</p>
+        <h1 style="font-size:1.6rem;font-weight:700;letter-spacing:-0.025em;margin:0 0 6px;">Multilingual 16:9 Marketplace</h1>
+        <p class="oz-text-sm oz-muted" style="margin:0;">16:9 HD media, scarcity stock bars, unit pricing, custom Viber CTAs, sold-out notify, and live <code>Ozone.i18n</code> locale switching.</p>
       </div>
-      <oz-badge variant="cyan" icon="shopping-cart">Cart: 0 items</oz-badge>
+      <div class="oz-row" style="gap:10px;">
+        <div class="oz-row" style="gap:6px;" role="group" aria-label="Language switcher">
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-lang="en">EN</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-lang="bg">БГ (BG)</button>
+        </div>
+        <oz-badge variant="cyan" icon="shopping-cart" id="cart-badge">Cart: 0</oz-badge>
+      </div>
     </div>
+
     <oz-card>
       <div class="oz-between">
-        <div class="oz-row" style="gap:10px;">
-          <oz-badge variant="cyan">All Assets</oz-badge>
-          <oz-badge variant="violet">AI Agents</oz-badge>
-          <oz-badge variant="emerald">Shaders</oz-badge>
-          <oz-badge variant="amber">Templates</oz-badge>
+        <div class="oz-h-scroll" id="cat-strip" style="max-width:100%;">
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--primary" data-cat="all">All Products</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="Bakery">Artisan Bakery</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="Shaders">Shaders</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="AI Agents">AI Agents</button>
+          <button type="button" class="oz-btn oz-btn--sm oz-btn--glass" data-cat="Templates">Templates</button>
         </div>
-        <div style="width:min(260px,100%);"><oz-input placeholder="Search marketplace..." icon="search"></oz-input></div>
+        <div style="width:min(240px,100%);"><oz-input id="mkt-search" placeholder="Filter items..." icon="search"></oz-input></div>
       </div>
     </oz-card>
-    <div class="oz-grid-3">
-      <oz-product-card title="Neural Spatial UI Kit" category="Templates" price="$89" old-price="$149" rating="4.9" reviews="412" badge="Bestseller" seller="Elena Vance" gradient="cyan"></oz-product-card>
-      <oz-product-card title="Raymarched Glass Shaders" category="Shaders" price="$64" old-price="$99" rating="5.0" reviews="289" badge="4K Ready" seller="Kuro Labs" gradient="violet"></oz-product-card>
-      <oz-product-card title="Autonomous Co-Pilot SDK" category="AI Agents" price="$149" old-price="$220" rating="4.8" reviews="176" badge="Trending" seller="Hyperion AI" gradient="emerald"></oz-product-card>
-      <oz-product-card title="Procedural Synth Soundpack" category="Audio" price="$39" old-price="$59" rating="4.9" reviews="510" badge="Zero-Asset" seller="SonicForge" gradient="amber"></oz-product-card>
-      <oz-product-card title="Obsidian BI Dashboard Pro" category="Templates" price="$119" old-price="$179" rating="4.9" reviews="308" badge="Enterprise" seller="Nexus Cloud" gradient="rose"></oz-product-card>
-      <oz-product-card title="WebGPU Particle Engine" category="Shaders" price="$79" old-price="$119" rating="4.7" reviews="142" badge="120fps" seller="Aether Lab" gradient="cyan"></oz-product-card>
+
+    <div class="oz-grid-3" id="mkt-grid">
+      <oz-product-card
+        title="Wild Sourdough Einkorn"
+        category="Bakery"
+        price="4.90 €"
+        old-price="6.20 €"
+        unit="самун ~700г"
+        rating="4.9"
+        reviews="184"
+        badge="Fresh Bake"
+        seller="Presni Farm"
+        gradient="amber"
+        aspect="16/9"
+        no-tilt
+        secondary-label="Viber"
+        secondary-href="https://viber.com"
+        secondary-icon="message-circle"
+        stock-percent="22"
+        stock-label="Remaining today"
+        image="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'><defs><linearGradient id='g1' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23593310'/><stop offset='100%25' stop-color='%231d130a'/></linearGradient></defs><rect width='640' height='360' fill='url(%23g1)'/><ellipse cx='320' cy='190' rx='150' ry='85' fill='%23d4944a'/><path d='M235 155 Q320 120 405 155' stroke='%23f7d8a8' stroke-width='8' fill='none' stroke-linecap='round'/><text x='32' y='332' fill='%23f7d8a8' font-family='sans-serif' font-size='18' font-weight='700'>16:9 HD STUDIO PHOTO</text></svg>">
+      </oz-product-card>
+
+      <oz-product-card
+        title="Raw Mountain Meadow Honey"
+        category="Bakery"
+        price="12.50 €"
+        unit="jar 720g"
+        rating="5.0"
+        reviews="312"
+        badge="Harvest '26"
+        seller="Stara Planina Apiary"
+        gradient="emerald"
+        aspect="16/9"
+        stock-percent="68"
+        stock-label="In cellar"
+        image="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'><defs><linearGradient id='g2' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%230e3d35'/><stop offset='100%25' stop-color='%230a1e24'/></linearGradient></defs><rect width='640' height='360' fill='url(%23g2)'/><rect x='250' y='88' width='140' height='175' rx='24' fill='%23f59e0b' opacity='0.9'/><rect x='268' y='66' width='104' height='26' rx='8' fill='%23fef3c7'/><text x='32' y='332' fill='%236ee7b7' font-family='sans-serif' font-size='18' font-weight='700'>16:9 ORGANIC JAR</text></svg>">
+      </oz-product-card>
+
+      <oz-product-card
+        title="Limited Buffalo Yogurt Batch"
+        category="Bakery"
+        price="3.80 €"
+        unit="400g clay pot"
+        rating="4.8"
+        reviews="95"
+        seller="Balkan Valley Dairy"
+        gradient="rose"
+        aspect="16/9"
+        no-tilt
+        sold-out
+        stock-percent="0"
+        stock-label="Morning batch finished"
+        image="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'><defs><linearGradient id='g3' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%233d152a'/><stop offset='100%25' stop-color='%23160c18'/></linearGradient></defs><rect width='640' height='360' fill='url(%23g3)'/><circle cx='320' cy='180' r='82' fill='%23fda4af' opacity='0.28'/><text x='205' y='190' fill='%23fecdd3' font-family='sans-serif' font-size='26' font-weight='700'>SOLD OUT BATCH</text></svg>">
+      </oz-product-card>
+
+      <oz-product-card title="Raymarched Glass Shaders" category="Shaders" price="$64" old-price="$99" rating="5.0" reviews="289" badge="4K Ready" seller="Kuro Labs" gradient="violet" aspect="16/9"></oz-product-card>
+      <oz-product-card title="Autonomous Co-Pilot SDK" category="AI Agents" price="$149" old-price="$220" rating="4.8" reviews="176" badge="Trending" seller="Hyperion AI" gradient="emerald" aspect="16/9" stock-percent="42" stock-label="Licenses left"></oz-product-card>
+      <oz-product-card title="Obsidian BI Dashboard Pro" category="Templates" price="$119" old-price="$179" rating="4.9" reviews="308" badge="Enterprise" seller="Nexus Cloud" gradient="cyan" aspect="16/9" no-tilt></oz-product-card>
     </div>
   </main>
   <oz-footer variant="minimal" brand="Aether Market" status="99.99% Uptime" columns='[{"title":"Nav","links":["Privacy","Terms","Support"]}]'></oz-footer>
-  <script type="module">import '../../dist/ozone.js';</script>
+  <script type="module">
+    import Ozone from '../../dist/ozone.js';
+    let cartCount = 0;
+    document.getElementById('mkt-grid').addEventListener('oz-add-cart', () => {
+      cartCount++;
+      document.getElementById('cart-badge').setAttribute('label', `Cart: ${cartCount}`);
+    });
+    document.querySelectorAll('[data-lang]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        Ozone.i18n.setLocale(btn.dataset.lang);
+        document.querySelectorAll('[data-lang]').forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+      });
+    });
+    document.querySelectorAll('#cat-strip [data-cat]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cat = btn.dataset.cat;
+        document.querySelectorAll('#cat-strip [data-cat]').forEach((b) => {
+          b.className = `oz-btn oz-btn--sm ${b === btn ? 'oz-btn--primary' : 'oz-btn--glass'}`;
+        });
+        document.querySelectorAll('#mkt-grid oz-product-card').forEach((card) => {
+          card.style.display = (cat === 'all' || card.getAttribute('category') === cat) ? '' : 'none';
+        });
+      });
+    });
+    document.getElementById('mkt-search')?.addEventListener('oz-input', (e) => {
+      const q = e.detail.value.trim().toLowerCase();
+      document.querySelectorAll('#mkt-grid oz-product-card').forEach((card) => {
+        const txt = ((card.getAttribute('title') || '') + ' ' + (card.getAttribute('seller') || '')).toLowerCase();
+        card.style.display = !q || txt.includes(q) ? '' : 'none';
+      });
+    });
+  </script>
   <script>
     (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
     if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();

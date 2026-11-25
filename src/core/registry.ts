@@ -7,6 +7,7 @@ import { toast } from './toast.ts';
 import { agent } from './agent.ts';
 import { signal, computed, effect } from './signal.ts';
 import { icons } from '../components/icon.ts';
+import { i18n } from './i18n.ts';
 
 export interface ComponentSchemaEntry {
   tag: string;
@@ -17,7 +18,7 @@ export interface ComponentSchemaEntry {
 
 export const COMPONENT_MANIFEST: ComponentSchemaEntry[] = [
   { tag: 'oz-icon', domain: 'core', description: 'Universal 4-mode SVG vector icon (builtin/Iconify/custom/font)', props: ['name', 'set(builtin|lucide|ph|tabler|solar|heroicons)', 'size', 'stroke', 'src', 'icon-class', 'glow', 'spin'] },
-  { tag: 'oz-button', domain: 'core', description: 'Atmospheric action button', props: ['variant(primary|glow|glass|ghost|danger|success)', 'size(sm|md|lg)', 'icon', 'icon-right', 'pill', 'loading', 'label'] },
+  { tag: 'oz-button', domain: 'core', description: 'Atmospheric action button with native form submit/name/value forwarding', props: ['variant(primary|glow|glass|ghost|danger|success)', 'type(button|submit|reset)', 'name', 'value', 'form', 'size(sm|md|lg)', 'icon', 'icon-right', 'pill', 'loading', 'label'] },
   { tag: 'oz-card', domain: 'core', description: 'Glass surface card with optional 3D tilt & glow', props: ['title', 'subtitle', 'badge', 'tilt', 'glow(cyan|violet|emerald|amber|rose)', 'exportable'] },
   { tag: 'oz-badge', domain: 'core', description: 'Status pill with optional live pulse dot', props: ['variant(cyan|violet|emerald|amber|rose|neutral)', 'pulse', 'label'] },
   { tag: 'oz-input', domain: 'core', description: 'Glass input with privacy secret mask toggle', props: ['label', 'placeholder', 'value', 'type', 'mask(secret)', 'icon'] },
@@ -33,9 +34,9 @@ export const COMPONENT_MANIFEST: ComponentSchemaEntry[] = [
   { tag: 'oz-bento', domain: 'landing', description: 'Responsive drag-and-drop sortable bento grid', props: ['cols', 'sortable', 'persist-key'] },
   { tag: 'oz-pricing', domain: 'landing', description: 'Pricing tier card with popular aura ring', props: ['title', 'price', 'period', 'popular', 'features(csv)', 'cta'] },
   { tag: 'oz-marquee', domain: 'landing', description: 'Infinite smooth-scrolling horizontal ticker', props: ['speed'] },
-  { tag: 'oz-product-card', domain: 'marketplace', description: '3D tilt product showcase with wishlist & quick buy', props: ['title', 'price', 'old-price', 'rating', 'reviews', 'badge', 'category', 'seller', 'gradient'] },
+  { tag: 'oz-product-card', domain: 'marketplace', description: 'Product card with 16:9 media, custom i18n CTAs, scarcity bar, sold-out notify, and optional 3D tilt', props: ['title', 'price', 'old-price', 'unit', 'rating', 'reviews', 'badge', 'category', 'seller', 'by-label', 'gradient', 'image', 'aspect(16/9|4/3|1/1)', 'no-tilt', 'cta-label', 'cta-href', 'secondary-label', 'secondary-href', 'sold-out', 'sold-out-label', 'stock-percent', 'stock-label', 'wishlisted', 'no-toast'] },
   { tag: 'oz-rating', domain: 'marketplace', description: 'Interactive or static star rating', props: ['value', 'max', 'interactive'] },
-  { tag: 'oz-post', domain: 'social', description: 'Interactive social feed post with live reactions', props: ['author', 'handle', 'verified', 'status', 'time', 'likes', 'comments', 'shares', 'tags', 'content'] },
+  { tag: 'oz-post', domain: 'social', description: 'Interactive social feed post with 16:9 image, custom role badge, and live reactions', props: ['author', 'handle', 'avatar', 'verified', 'status', 'time', 'badge', 'badge-variant', 'image', 'aspect(16/9)', 'likes', 'comments', 'shares', 'tags', 'content', 'liked', 'bookmarked', 'save-label', 'saved-label', 'no-toast'] },
   { tag: 'oz-composer', domain: 'social', description: 'Post composer that publishes live <oz-post> items', props: ['placeholder', 'target'] },
   { tag: 'oz-renderer', domain: 'ai', description: 'Self-healing streaming JSON-to-UI renderer', props: ['schema(JSON)'] },
   { tag: 'oz-command', domain: 'os', description: 'Cmd+K auto-discovering command palette', props: ['auto-discover'] },
@@ -47,7 +48,7 @@ export const COMPONENT_MANIFEST: ComponentSchemaEntry[] = [
   { tag: 'oz-progress', domain: 'layout', description: 'Glowing progress bar with determinate & shimmer indeterminate modes', props: ['value', 'max', 'label', 'variant(cyan|violet|emerald|amber|rose)', 'show-value', 'indeterminate'] },
   { tag: 'oz-accordion', domain: 'layout', description: 'Expandable FAQ / settings accordion list', props: ['items(JSON)', 'multiple'] },
   { tag: 'oz-timeline', domain: 'layout', description: 'Vertical activity, audit, and roadmap timeline', props: ['items(JSON)'] },
-  { tag: 'oz-sidebar', domain: 'layout', description: 'Collapsible app sidebar: grouped nav, nested items, badges, search, user footer, mobile drawer', props: ['brand', 'icon', 'items(JSON groups|flat)', 'active', 'collapsed', 'side(left|right)', 'variant(glass|solid|floating)', 'searchable', 'user-name', 'user-email', 'width', 'persist-key'] },
+  { tag: 'oz-sidebar', domain: 'layout', description: 'Collapsible app sidebar: grouped nav, nested items with native href links, badges, search, user footer, mobile drawer', props: ['brand', 'icon', 'items(JSON groups|flat with href)', 'active', 'collapsed', 'side(left|right)', 'variant(glass|solid|floating)', 'searchable', 'user-name', 'user-email', 'width', 'persist-key'] },
   { tag: 'oz-app-shell', domain: 'layout', description: 'Admin app layout: sidebar + sticky topbar + content; put oz-sidebar, slot=actions and content as children', props: ['heading', 'subtitle', 'topbar', 'fill'] },
   { tag: 'oz-select', domain: 'forms', description: 'Styled native select with groups', props: ['label', 'hint', 'error', 'options(csv|JSON)', 'value', 'placeholder', 'disabled'] },
   { tag: 'oz-checkbox', domain: 'forms', description: 'Checkbox with description and indeterminate state', props: ['label', 'description', 'checked', 'indeterminate', 'hint', 'error', 'disabled'] },
@@ -71,7 +72,7 @@ export const COMPONENT_MANIFEST: ComponentSchemaEntry[] = [
   { tag: 'oz-otp-input', domain: 'forms', description: 'Segmented passkey / 2FA verification code input with auto-advance and paste support', props: ['label', 'length', 'value', 'hint', 'error', 'disabled'] },
   { tag: 'oz-grid', domain: 'layout', description: '12-column responsive CSS grid container or auto-fit min-width grid', props: ['cols', 'gap', 'min', 'align'] },
   { tag: 'oz-col', domain: 'layout', description: 'Responsive column child inside <oz-grid> with desktop/tablet/mobile spans', props: ['span(1..12)', 'span-md', 'span-sm'] },
-  { tag: 'oz-bottom-nav', domain: 'layout', description: 'Mobile app / PWA bottom tab navigation bar with badges and safe-area padding', props: ['items(JSON)', 'active', 'variant(floating|docked)', 'position(inline|fixed)'] },
+  { tag: 'oz-bottom-nav', domain: 'layout', description: 'Mobile app / PWA bottom tab navigation bar with native href links, badges, and safe-area padding', props: ['items(JSON with optional href)', 'active', 'variant(floating|docked)', 'position(inline|fixed)'] },
   { tag: 'oz-fab', domain: 'core', description: 'Mobile Floating Action Button with expandable speed-dial actions', props: ['icon', 'label', 'items(JSON)', 'position(inline|bottom-right|bottom-left)'] },
   { tag: 'oz-ai-chat', domain: 'ai', description: 'Interactive AI chat feed with model switcher, prompt chips, and streaming reply support', props: ['heading', 'model', 'models(csv)', 'suggestions(csv)', 'messages(JSON)', 'placeholder'] },
   { tag: 'oz-code-block', domain: 'core', description: 'Syntax container with language badge, filename header, line numbers, and copy button', props: ['title', 'lang', 'code', 'line-numbers'] },
@@ -179,6 +180,7 @@ export const Ozone = {
   toast,
   agent,
   icons,
+  i18n,
   morph,
   setMode,
   setTheme,

@@ -127,9 +127,9 @@
       },
       {
         tag: 'oz-button', cat: 'core', catLabel: 'Core Primitives',
-        desc: 'Spring-interactive button with Hallucination-Proof variant aliasing (variant/type/color), icon slots, loading spinner, and toast shorthand.',
-        props: ['variant', 'size', 'icon', 'icon-right', 'pill', 'loading', 'toast'],
-        code: `<oz-button variant="glow" icon="zap" pill toast="Triggered!">Execute</oz-button>`,
+        desc: 'Spring-interactive button with Hallucination-Proof variant aliasing, icon slots, loading spinner, toast shorthand, and native form submit/name/value forwarding.',
+        props: ['variant', 'type(button|submit|reset)', 'name', 'value', 'form', 'size', 'icon', 'icon-right', 'pill', 'loading', 'toast'],
+        code: `<oz-button variant="primary" type="submit" name="action" value="favorite" icon="heart">Submit</oz-button>`,
         preview: `<div class="oz-row" style="gap:8px;"><oz-button variant="glow" size="sm" icon="zap" pill toast="Glow clicked!">Glow</oz-button><oz-button variant="primary" size="sm" icon="check">Primary</oz-button><oz-button variant="glass" size="sm" loading>Loading</oz-button><oz-button variant="danger" size="sm">Danger</oz-button></div>`
       },
       {
@@ -176,10 +176,10 @@
       },
       {
         tag: 'oz-sidebar', cat: 'layout', catLabel: 'Layout & Headers',
-        desc: 'Collapsible app sidebar with grouped nav, nested submenus, search filter, badges, glass/solid/floating variants, icon rail & mobile drawer.',
-        props: ['brand', 'items(JSON)', 'collapsed', 'side(left|right)', 'variant(glass|solid|floating)', 'searchable', 'persist-key'],
-        code: `<oz-sidebar brand="Nexus" icon="cpu" searchable active="Overview" items='[{"label":"Overview","icon":"layout"},{"label":"Settings","icon":"settings"}]'></oz-sidebar>`,
-        preview: `<div class="oz-row" style="gap:10px;"><a class="oz-btn oz-btn--sm oz-btn--primary" href="./site/demo.html#template=app">Open Live Sidebar App</a><span class="oz-text-xs oz-muted">Supports Glass, Solid, Floating, Left/Right &amp; Icon Rail.</span></div>`
+        desc: 'Collapsible app sidebar with grouped nav, nested submenus with native href SSR links, search filter, badges, glass/solid/floating variants, icon rail & mobile drawer.',
+        props: ['brand', 'items(JSON with href)', 'collapsed', 'side(left|right)', 'variant(glass|solid|floating)', 'searchable', 'persist-key'],
+        code: `<oz-sidebar brand="Nexus" icon="cpu" searchable active="Overview" items='[{"label":"Overview","href":"?view=overview","icon":"layout"},{"label":"Settings","href":"?view=settings","icon":"settings"}]'></oz-sidebar>`,
+        preview: `<div class="oz-row" style="gap:10px;"><a class="oz-btn oz-btn--sm oz-btn--primary" href="./demo.html#template=app">Open Live Sidebar App</a><span class="oz-text-xs oz-muted">Supports Glass, Solid, Floating &amp; native href links.</span></div>`
       },
       {
         tag: 'oz-app-shell', cat: 'layout', catLabel: 'Layout & Headers',
@@ -351,9 +351,9 @@
       },
       {
         tag: 'oz-bottom-nav', cat: 'layout', catLabel: 'Layout & Headers',
-        desc: 'Mobile app & PWA glass bottom navigation bar with active indicator pills, notification badges, and iOS/Android safe-area support.',
-        props: ['items(JSON)', 'active', 'variant(floating|docked)', 'position(inline|fixed)'],
-        code: `<oz-bottom-nav variant="floating" active="home"></oz-bottom-nav>`,
+        desc: 'Mobile app & PWA glass bottom navigation bar supporting native href links (PHP/SSR), active indicator pills, notification badges, and iOS/Android safe-area padding.',
+        props: ['items(JSON with href)', 'active', 'variant(floating|docked)', 'position(inline|fixed)'],
+        code: `<oz-bottom-nav variant="floating" items='[{"id":"home","label":"Home","href":"?view=feed","icon":"layout"},{"id":"shop","label":"Shop","href":"?view=shop","icon":"shopping-bag"}]'></oz-bottom-nav>`,
         preview: `<oz-bottom-nav variant="floating" active="explore"></oz-bottom-nav>`
       },
       {
@@ -477,10 +477,10 @@
       },
       {
         tag: 'oz-product-card', cat: 'social', catLabel: 'Marketplace & Social',
-        desc: '3D tilt-enabled digital/e-commerce product card with category-mapped vector artwork, wishlist heart toggle, rating, and quick inspect.',
-        props: ['title', 'price', 'old-price', 'rating', 'reviews', 'badge', 'category', 'seller', 'gradient'],
-        code: `<oz-product-card title="Neural Synth" category="Audio" price="$49" old-price="$89" rating="4.9" badge="Hot" gradient="violet"></oz-product-card>`,
-        preview: `<oz-product-card title="Neural Audio Synth" category="Audio" price="$49" old-price="$89" rating="4.9" reviews="214" badge="Hot" seller="SonicForge" gradient="violet"></oz-product-card>`
+        desc: 'Product showcase supporting strict 16:9 HD images, optional tilt (no-tilt), scarcity stock bar, unit label, sold-out notify, custom i18n CTAs & secondary href links.',
+        props: ['title', 'price', 'old-price', 'unit', 'aspect(16/9)', 'no-tilt', 'cta-label', 'secondary-href', 'sold-out', 'stock-percent'],
+        code: `<oz-product-card title="Sourdough" category="Bakery" price="4.90 €" unit="loaf ~700g" aspect="16/9" no-tilt stock-percent="25" cta-label="Order" secondary-label="Viber"></oz-product-card>`,
+        preview: `<oz-product-card title="Wild Sourdough Loaf" category="Artisan" price="4.90 €" old-price="6.20 €" unit="loaf ~700g" rating="4.9" reviews="214" badge="Fresh" seller="Presni Farm" gradient="amber" aspect="16/9" no-tilt stock-percent="25" stock-label="Small batch" cta-label="Order" secondary-label="Details"></oz-product-card>`
       },
       {
         tag: 'oz-rating', cat: 'social', catLabel: 'Marketplace & Social',
@@ -498,10 +498,10 @@
       },
       {
         tag: 'oz-post', cat: 'social', catLabel: 'Marketplace & Social',
-        desc: 'Interactive social feed post card with verified avatar, hashtag pills, and animated Like, Comment, Repost, and Bookmark reactions.',
-        props: ['author', 'handle', 'verified', 'status', 'time', 'likes', 'comments', 'shares', 'tags', 'content'],
-        code: `<oz-post author="Elena Vance" handle="@elena" verified status="streaming" time="2m" likes="420" tags="OzoneUI" content="Shipped our new UI today!"></oz-post>`,
-        preview: `<oz-post author="Elena Vance" handle="@elena_ai" verified status="streaming" time="2m ago" likes="420" comments="18" shares="12" tags="OzoneUI,VectorSVG" content="Every icon, chart, and glass card here runs on zero-dependency Web Standards!"></oz-post>`
+        desc: 'Interactive social feed post card with optional 16:9 HD image, custom role badge, avatar photo, hashtag pills, and animated reactions.',
+        props: ['author', 'handle', 'avatar', 'badge', 'badge-variant', 'image', 'aspect(16/9)', 'likes', 'comments', 'shares', 'tags', 'content', 'liked', 'bookmarked'],
+        code: `<oz-post author="Elena Vance" badge="Recipe" badge-variant="emerald" image="..." aspect="16/9" likes="420" tags="OzoneUI" content="Fresh out of the oven!"></oz-post>`,
+        preview: `<oz-post author="Elena Vance" handle="@elena_ai" verified status="streaming" badge="Story" badge-variant="cyan" time="2m ago" likes="420" comments="18" shares="12" tags="OzoneUI,16by9" content="Every icon, 16:9 post media, badge, and reaction runs on zero-dependency Web Standards!"></oz-post>`
       },
       {
         tag: 'oz-composer', cat: 'social', catLabel: 'Marketplace & Social',

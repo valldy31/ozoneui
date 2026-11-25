@@ -8,6 +8,10 @@
   <style>
     body { margin: 0; }
     .social-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 26px; align-items: start; }
+    .story-pill {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--oz-radius-md);
+      background: var(--oz-surface); border: 1px solid var(--oz-border-strong); cursor: pointer;
+    }
     @media (max-width: 900px) { .social-layout { grid-template-columns: minmax(0, 1fr); } }
   </style>
 </head>
@@ -18,18 +22,56 @@
   <main class="oz-container oz-stack" style="padding:28px 0 64px;">
     <div class="oz-between">
       <div>
-        <h1 style="font-size:1.6rem;font-weight:700;letter-spacing:-0.025em;margin:0 0 6px;">Creator &amp; AI Network</h1>
-        <p class="oz-text-sm oz-muted" style="margin:0;">Publish from the composer and watch it land in the live feed.</p>
+        <h1 style="font-size:1.6rem;font-weight:700;letter-spacing:-0.025em;margin:0 0 6px;">Community Stories &amp; HD Feed</h1>
+        <p class="oz-text-sm oz-muted" style="margin:0;">Horizontal <code>.oz-h-scroll</code> story strip + <code>&lt;oz-post&gt;</code> 16:9 HD image posts and custom role badges.</p>
       </div>
       <oz-badge variant="violet" pulse>1,420 Creators Online</oz-badge>
     </div>
+
+    <div class="oz-h-scroll oz-h-scroll--snap" aria-label="Live Stories">
+      <div class="story-pill"><oz-avatar name="Presni Farm" status="streaming" verified size="34"></oz-avatar><div><div style="font-weight:600;font-size:0.84rem;">Morning Bake</div><div class="oz-text-xs oz-muted">Live · Oven 220°C</div></div></div>
+      <div class="story-pill"><oz-avatar name="Elena Vance" status="online" verified size="34"></oz-avatar><div><div style="font-weight:600;font-size:0.84rem;">OKLCH Tips</div><div class="oz-text-xs oz-muted">4m ago</div></div></div>
+      <div class="story-pill"><oz-avatar name="Mountain Apiary" status="online" verified size="34"></oz-avatar><div><div style="font-weight:600;font-size:0.84rem;">Spring Honey</div><div class="oz-text-xs oz-muted">18m ago</div></div></div>
+      <div class="story-pill"><oz-avatar name="Marcus Chen" status="online" size="34"></oz-avatar><div><div style="font-weight:600;font-size:0.84rem;">PHP SSR Forms</div><div class="oz-text-xs oz-muted">35m ago</div></div></div>
+      <div class="story-pill"><oz-avatar name="Aria Solis" status="busy" size="34"></oz-avatar><div><div style="font-weight:600;font-size:0.84rem;">A4 Print Slips</div><div class="oz-text-xs oz-muted">1h ago</div></div></div>
+    </div>
+
     <div class="social-layout">
       <div class="oz-stack" style="gap:22px;">
         <oz-composer target="#feed" author="Alex Mercer" handle="@alex_architect" placeholder="Write a post and click Publish..."></oz-composer>
         <div id="feed" class="oz-stack" style="gap:22px;">
-          <oz-post author="Elena Vance" handle="@elena_ai" verified status="streaming" time="4m ago" likes="1248" comments="94" shares="215" tags="OzoneUI,SpatialWeb,OKLCH" content="Replaced three UI libraries and 40KB of chart dependencies with one semantic tag. Our ops team got table, chart, cards and JSON views automatically."></oz-post>
-          <oz-post author="Marcus Chen" handle="@marcus_dev" verified status="online" time="22m ago" likes="842" comments="41" shares="112" tags="GenerativeUI,LLM" content="Fed llms.txt to our coding agent and it built a multi-tab billing backend on the first prompt. Zero broken imports."></oz-post>
-          <oz-post author="Aria Solis" handle="@aria_solis" status="online" time="1h ago" likes="519" comments="28" shares="64" tags="ThemeDNA" content="Pasted one preset into the URL and our whole brand theme synced across six apps."></oz-post>
+          <oz-post
+            author="Presni Kitchen"
+            handle="@presni_farm"
+            verified
+            status="streaming"
+            badge="Recipe"
+            badge-variant="emerald"
+            time="6m ago"
+            likes="1248"
+            comments="94"
+            shares="215"
+            liked
+            bookmarked
+            tags="Sourdough,FarmToTable,16by9"
+            image="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'><defs><linearGradient id='s1' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%23103b31'/><stop offset='100%25' stop-color='%230c1824'/></linearGradient></defs><rect width='640' height='360' fill='url(%23s1)'/><circle cx='320' cy='180' r='92' fill='%2310b981' opacity='0.22'/><ellipse cx='320' cy='195' rx='145' ry='78' fill='%23e0a458'/><text x='32' y='46' fill='%23a7f3d0' font-family='sans-serif' font-size='20' font-weight='700'>RECIPE · 16:9 HD STORY IMAGE</text></svg>"
+            content="Wild einkorn sourdough recipe: 74% hydration, 18-hour cold ferment, stone-baked at dawn. Click Save to bookmark for the weekend!">
+          </oz-post>
+          <oz-post
+            author="Marcus Chen"
+            handle="@marcus_dev"
+            verified
+            status="online"
+            badge="Campaign"
+            badge-variant="amber"
+            time="22m ago"
+            likes="842"
+            comments="41"
+            shares="112"
+            tags="OzoneUI,i18n,PHP_SSR"
+            content="Switched our PHP backend buttons directly to &lt;oz-button type='submit' name='action' value='favorite'&gt; + native href links in &lt;oz-bottom-nav&gt;. Zero JS boilerplate needed.">
+          </oz-post>
+          <oz-post author="Aria Solis" handle="@aria_solis" status="online" badge="Event" badge-variant="cyan" time="1h ago" likes="519" comments="28" shares="64" tags="FarmersMarket" content="Saturday pop-up tasting table from 09:00 to 14:00 — bring reusable glass jars for zero-waste refills."></oz-post>
         </div>
       </div>
       <div class="oz-stack" style="gap:22px;">
@@ -37,8 +79,8 @@
         <oz-card title="Trending Topics" subtitle="Live network velocity">
           <div class="oz-stack" style="gap:16px;">
             <div class="oz-between oz-text-sm"><strong>#OzoneUI</strong><oz-badge variant="cyan">14.2k posts</oz-badge></div>
-            <div class="oz-between oz-text-sm"><strong>#GenerativeUI</strong><oz-badge variant="violet">9.8k posts</oz-badge></div>
-            <div class="oz-between oz-text-sm"><strong>#ThemeDNA</strong><oz-badge variant="emerald">6.1k posts</oz-badge></div>
+            <div class="oz-between oz-text-sm"><strong>#FarmToTable</strong><oz-badge variant="emerald">9.8k posts</oz-badge></div>
+            <div class="oz-between oz-text-sm"><strong>#NativeSSR</strong><oz-badge variant="violet">6.1k posts</oz-badge></div>
           </div>
         </oz-card>
       </div>

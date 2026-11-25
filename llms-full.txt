@@ -53,7 +53,16 @@ All OzoneUI inputs accept `name`, `label`, `hint`, `error`, `disabled`, emit `oz
 </script>
 ```
 
-## 4. EU GDPR, Privacy, Accessibility & Security
+## 4. Multilingual (`Ozone.i18n`), PHP SSR Navigation & Print Utilities
+- **i18n Dictionary**: Call `Ozone.i18n.setLocale('bg')` (built-in English & Bulgarian presets) or `Ozone.i18n.extend({ add: 'Order', inspect: 'Details', save: 'Save' })` to localize all product cards, social posts, composers, sidebars, and calendars automatically.
+- **PHP / SSR Native Controls**:
+  - `<oz-button variant="primary" type="submit" name="interaction_type" value="favorite">Favorite</oz-button>` submits its parent `<form>` natively (`FormData` + `SubmitEvent.submitter`).
+  - `<oz-sidebar>` and `<oz-bottom-nav>` items with `"href": "?view=feed"` render real `<a href="...">` links supporting right-click/Ctrl-click open-in-new-tab and cancelable `oz-navigate`.
+  - `<oz-product-card>` supports `aspect="16/9"`, `no-tilt`, `unit`, `stock-percent`, `stock-label`, `cta-label`/`cta-href`, `secondary-label`/`secondary-href`, `sold-out`/`sold-out-label`.
+  - `<oz-post>` supports 16:9 HD `image="..."`, custom `badge="..."` + `badge-variant`, `avatar="..."`, and initial `liked`/`bookmarked`.
+- **Layout & Print Utilities**: `.oz-aspect-16-9`, `.oz-h-scroll` (touch horizontal scroll strip without visible scrollbar), and `.oz-no-print` / `.oz-print-only` (`@media print` automatically hides floating overlays & topbars).
+
+## 5. EU GDPR, Privacy, Accessibility & Security
 - Zero remote font fetches (system/geometric stack only — avoids Google Fonts GDPR IP leak).
 - Strict offline mode: `<html data-oz-gdpr="strict">` blocks optional remote Iconify icon CDN fetches.
 - Planet49 GDPR banner: `<oz-cookie-consent policy-url="legal.html"></oz-cookie-consent>` with `Ozone.gdpr.{getConsent,setConsent,clearStorage,exportData}()`.

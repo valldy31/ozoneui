@@ -9,6 +9,7 @@ export interface OzoneAPI {
   getFormData(root?: Element | Document): Record<string, unknown>;
   fillForm(data: Record<string, unknown>, root?: Element | Document): Record<string, unknown>;
   gdpr: { getConsent(): any; setConsent(p: any): any; clearStorage(): string[]; exportData(): Record<string, string | null> };
+  i18n: { dict: Record<string, string>; getLocale(): string; t(key: string, vars?: Record<string, string | number>): string; setLocale(locale: string, overrides?: Record<string, string>): Record<string, string>; extend(overrides: Record<string, string>): Record<string, string>; reset(): Record<string, string> };
   getSchemaManifest(): { framework: string; version: string; totalComponents: number; components: unknown[] };
   getAIPrompt(): string;
   dna: Record<string, any>; toast: (opts: { title: string; message?: string; variant?: string }) => void;
@@ -19,7 +20,7 @@ export declare const Ozone: OzoneAPI;
 export default Ozone;
 declare global { namespace JSX { interface IntrinsicElements {
   'oz-icon': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'name'?: any; 'set'?: any; 'size'?: any; 'stroke'?: any; 'src'?: any; 'icon-class'?: any; 'glow'?: any; 'spin'?: any; [key: string]: any };
-  'oz-button': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'variant'?: any; 'size'?: any; 'icon'?: any; 'icon-right'?: any; 'pill'?: any; 'loading'?: any; 'label'?: any; [key: string]: any };
+  'oz-button': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'variant'?: any; 'type'?: 'button' | 'submit' | 'reset' | string; 'value'?: any; 'form'?: any; 'formaction'?: any; 'formmethod'?: any; 'formnovalidate'?: any; 'size'?: any; 'icon'?: any; 'icon-right'?: any; 'pill'?: any; 'loading'?: any; 'label'?: any; [key: string]: any };
   'oz-card': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'title'?: any; 'subtitle'?: any; 'badge'?: any; 'tilt'?: any; 'glow'?: any; 'exportable'?: any; [key: string]: any };
   'oz-badge': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'variant'?: any; 'pulse'?: any; 'label'?: any; [key: string]: any };
   'oz-input': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'label'?: any; 'placeholder'?: any; 'value'?: any; 'type'?: any; 'mask'?: any; 'icon'?: any; [key: string]: any };
@@ -35,9 +36,9 @@ declare global { namespace JSX { interface IntrinsicElements {
   'oz-bento': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'cols'?: any; 'sortable'?: any; 'persist-key'?: any; [key: string]: any };
   'oz-pricing': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'title'?: any; 'price'?: any; 'period'?: any; 'popular'?: any; 'features'?: any; 'cta'?: any; [key: string]: any };
   'oz-marquee': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'speed'?: any; [key: string]: any };
-  'oz-product-card': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'title'?: any; 'price'?: any; 'old-price'?: any; 'rating'?: any; 'reviews'?: any; 'badge'?: any; 'category'?: any; 'seller'?: any; 'gradient'?: any; [key: string]: any };
+  'oz-product-card': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'title'?: any; 'price'?: any; 'old-price'?: any; 'unit'?: any; 'rating'?: any; 'reviews'?: any; 'badge'?: any; 'category'?: any; 'seller'?: any; 'by-label'?: any; 'gradient'?: any; 'image'?: any; 'aspect'?: any; 'no-tilt'?: any; 'cta-label'?: any; 'cta-href'?: any; 'secondary-label'?: any; 'secondary-href'?: any; 'secondary-icon'?: any; 'sold-out'?: any; 'sold-out-label'?: any; 'stock-percent'?: any; 'stock-label'?: any; 'wishlisted'?: any; 'no-toast'?: any; [key: string]: any };
   'oz-rating': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'value'?: any; 'max'?: any; 'interactive'?: any; [key: string]: any };
-  'oz-post': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'author'?: any; 'handle'?: any; 'verified'?: any; 'status'?: any; 'time'?: any; 'likes'?: any; 'comments'?: any; 'shares'?: any; 'tags'?: any; 'content'?: any; [key: string]: any };
+  'oz-post': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'author'?: any; 'handle'?: any; 'avatar'?: any; 'verified'?: any; 'status'?: any; 'time'?: any; 'badge'?: any; 'badge-variant'?: any; 'image'?: any; 'image-alt'?: any; 'aspect'?: any; 'likes'?: any; 'comments'?: any; 'shares'?: any; 'tags'?: any; 'content'?: any; 'liked'?: any; 'bookmarked'?: any; 'save-label'?: any; 'saved-label'?: any; 'no-toast'?: any; [key: string]: any };
   'oz-composer': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'placeholder'?: any; 'target'?: any; [key: string]: any };
   'oz-renderer': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'schema'?: any; [key: string]: any };
   'oz-command': { class?: string; style?: any; children?: any; name?: string; id?: string; slot?: string; 'auto-discover'?: any; [key: string]: any };

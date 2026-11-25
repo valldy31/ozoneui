@@ -2,6 +2,7 @@
 // Pack E: mirrored 1:1 in dist/ozone.js
 import { OzoneElement, escapeHTML } from '../core/element.ts';
 import { sound } from '../core/sound.ts';
+import { i18n, safeHref } from '../core/i18n.ts';
 
 // ============================================================================
 // OzoneUI Pack E: App Shell, Sidebar & Form Controls
@@ -68,13 +69,15 @@ class OzFormElement extends OzoneElement {
     if (val === null || val === false) this.removeAttribute(name);
     else this.setAttribute(name, val === true ? '' : String(val));
     this._silent = false;
+    if ((name === 'value' || name === 'checked') && this.hasAttribute('name')) syncHiddenField(this, val);
   }
   emit(name, detail) { this.dispatchEvent(new CustomEvent(name, { detail, bubbles: true })); }
+  safeRender() { super.safeRender(); if (this.hasAttribute('name') && !this.querySelector('input[name]:not([data-oz-form-val]), select[name], textarea[name]')) syncHiddenField(this, this.value ?? ''); }
 }
 
 // 32. <oz-select>
 export class OzSelect extends OzFormElement {
-  static get observedAttributes() { return ['label', 'hint', 'error', 'disabled', 'required', 'value', 'options', 'placeholder']; }
+  static get observedAttributes() { return ['label', 'hint', 'error', 'disabled', 'required', 'value', 'options', 'placeholder', 'name']; }
   get value() { const s = this.querySelector('select'); return s ? s.value : this.getAttribute('value') || ''; }
   set value(v) { const s = this.querySelector('select'); if (s) s.value = v; this.silentSet('value', v); }
   render() {
@@ -87,7 +90,7 @@ export class OzSelect extends OzFormElement {
     const optHTML = (o) => `<option value="${escapeHTML(o.value)}"${o.value === value ? ' selected' : ''}>${escapeHTML(o.label)}</option>`;
     const body = Object.keys(groups).map((g) => g ? `<optgroup label="${escapeHTML(g)}">${groups[g].map(optHTML).join('')}</optgroup>` : groups[g].map(optHTML).join('')).join('');
     const ph = placeholder ? `<option value="" disabled${value ? '' : ' selected'}>${escapeHTML(placeholder)}</option>` : '';
-    this.innerHTML = ozFieldHTML(this, `<div class="oz-control"><select class="oz-select__el" id="${id}"${this.boolProp('disabled') ? ' disabled' : ''}>${ph}${body}</select><span class="oz-control__icon">${OZ_SVG.chevron}</span></div>`, id);
+    const selName = this.prop('name'); this.innerHTML = ozFieldHTML(this, `<div class="oz-control"><select class="oz-select__el" id="${id}"${selName ? ` name="${escapeHTML(selName)}"` : ''}${this.boolProp('required') ? ' required' : ''}${this.boolProp('disabled') ? ' disabled' : ''}>${ph}${body}</select><span class="oz-control__icon">${OZ_SVG.chevron}</span></div>`, id);
     const sel = this.querySelector('select');
     sel.addEventListener('change', () => { this.silentSet('value', sel.value); sound.click(); this.emit('oz-change', { value: sel.value }); });
   }
@@ -95,7 +98,7 @@ export class OzSelect extends OzFormElement {
 
 // 33. <oz-checkbox>
 export class OzCheckbox extends OzFormElement {
-  static get observedAttributes() { return ['label', 'hint', 'error', 'disabled', 'checked', 'indeterminate', 'description']; }
+  static get observedAttributes() { return ['label', 'hint', 'error', 'disabled', 'checked', 'indeterminate', 'description', 'name', 'value']; }
   get checked() { const i = this.querySelector('input'); return i ? i.checked : this.boolProp('checked'); }
   set checked(v) { const i = this.querySelector('input'); if (i) { i.checked = !!v; i.indeterminate = false; } this.silentSet('checked', !!v); }
   render() {
@@ -106,7 +109,7 @@ export class OzCheckbox extends OzFormElement {
     const checked = this.boolProp('checked');
     const indet = this.boolProp('indeterminate');
     const dis = this.boolProp('disabled');
-    this.innerHTML = `<div class="oz-field${error ? ' oz-field--error' : ''}${dis ? ' oz-field--disabled' : ''}"><label class="oz-check"><input type="checkbox" class="oz-check__input"${checked ? ' checked' : ''}${dis ? ' disabled' : ''} /><span class="oz-check__box"><span class="oz-check__tick">${OZ_SVG.check}</span><span class="oz-check__dash">${OZ_SVG.minus}</span></span><span class="oz-check__text">${label ? `<span class="oz-check__label">${escapeHTML(label)}</span>` : ''}${desc ? `<span class="oz-check__desc">${escapeHTML(desc)}</span>` : ''}</span></label>${error ? `<div class="oz-field__msg oz-field__msg--error">${escapeHTML(error)}</div>` : hint ? `<div class="oz-field__msg">${escapeHTML(hint)}</div>` : ''}</div>`;
+    const cbName = this.prop('name'), cbVal = this.prop('value'); this.innerHTML = `<div class="oz-field${error ? ' oz-field--error' : ''}${dis ? ' oz-field--disabled' : ''}"><label class="oz-check"><input type="checkbox" class="oz-check__input"${cbName ? ` name="${escapeHTML(cbName)}"` : ''}${cbVal ? ` value="${escapeHTML(cbVal)}"` : ''}${checked ? ' checked' : ''}${dis ? ' disabled' : ''} /><span class="oz-check__box"><span class="oz-check__tick">${OZ_SVG.check}</span><span class="oz-check__dash">${OZ_SVG.minus}</span></span><span class="oz-check__text">${label ? `<span class="oz-check__label">${escapeHTML(label)}</span>` : ''}${desc ? `<span class="oz-check__desc">${escapeHTML(desc)}</span>` : ''}</span></label>${error ? `<div class="oz-field__msg oz-field__msg--error">${escapeHTML(error)}</div>` : hint ? `<div class="oz-field__msg">${escapeHTML(hint)}</div>` : ''}</div>`;
     const input = this.querySelector('input');
     input.indeterminate = indet;
     input.addEventListener('change', () => {
@@ -142,7 +145,7 @@ export class OzRadioGroup extends OzFormElement {
 
 // 35. <oz-textarea>
 export class OzTextarea extends OzFormElement {
-  static get observedAttributes() { return ['label', 'hint', 'error', 'disabled', 'required', 'placeholder', 'rows', 'maxlength', 'autosize']; }
+  static get observedAttributes() { return ['label', 'hint', 'error', 'disabled', 'required', 'placeholder', 'rows', 'maxlength', 'autosize', 'name']; }
   get value() { const t = this.querySelector('textarea'); return t ? t.value : this._initial || ''; }
   set value(v) { const t = this.querySelector('textarea'); if (t) { t.value = v; this.sync(); } else this._initial = v; }
   render() {
@@ -150,7 +153,7 @@ export class OzTextarea extends OzFormElement {
     const current = this.querySelector('textarea') ? this.querySelector('textarea').value : this._initial;
     const id = this._id || (this._id = 'oz-ta-' + ozUid());
     const max = this.numProp('maxlength', [], 0);
-    this.innerHTML = ozFieldHTML(this, `<div class="oz-control oz-control--area"><textarea class="oz-textarea__el" id="${id}" rows="${this.numProp('rows', [], 4)}" placeholder="${escapeHTML(this.prop('placeholder'))}"${max ? ` maxlength="${max}"` : ''}${this.boolProp('disabled') ? ' disabled' : ''}>${escapeHTML(current)}</textarea>${max ? `<span class="oz-textarea__count"></span>` : ''}</div>`, id);
+    const taName = this.prop('name'); this.innerHTML = ozFieldHTML(this, `<div class="oz-control oz-control--area"><textarea class="oz-textarea__el" id="${id}"${taName ? ` name="${escapeHTML(taName)}"` : ''} rows="${this.numProp('rows', [], 4)}" placeholder="${escapeHTML(this.prop('placeholder'))}"${max ? ` maxlength="${max}"` : ''}${this.boolProp('required') ? ' required' : ''}${this.boolProp('disabled') ? ' disabled' : ''}>${escapeHTML(current)}</textarea>${max ? `<span class="oz-textarea__count"></span>` : ''}</div>`, id);
     const ta = this.querySelector('textarea');
     ta.addEventListener('input', () => { this.sync(); this.emit('oz-input', { value: ta.value }); });
     ta.addEventListener('change', () => this.emit('oz-change', { value: ta.value }));
@@ -181,7 +184,7 @@ function ozParseYMD(s) {
 function ozPrettyYMD(s) {
   const p = ozParseYMD(s);
   if (!p) return '';
-  return new Date(p.y, p.m, p.d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  try { return new Date(p.y, p.m, p.d).toLocaleDateString(i18n.getLocale(), { month: 'short', day: 'numeric', year: 'numeric' }); } catch { return new Date(p.y, p.m, p.d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }); }
 }
 function ozAddDaysYMD(s, days) {
   const p = ozParseYMD(s) || ozParseYMD(ozTodayYMD());
@@ -189,7 +192,7 @@ function ozAddDaysYMD(s, days) {
   return ozFmtYMD(dt.getFullYear(), dt.getMonth(), dt.getDate());
 }
 function ozCalMonthHTML(viewY, viewM, selStart, selEnd, events, minDate, maxDate) {
-  const monthLabel = new Date(viewY, viewM, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const loc = i18n.getLocale(); let monthLabel = ''; try { monthLabel = new Date(viewY, viewM, 1).toLocaleDateString(loc, { month: 'long', year: 'numeric' }); } catch { monthLabel = new Date(viewY, viewM, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }); }
   const today = ozTodayYMD();
   const firstDow = (new Date(viewY, viewM, 1).getDay() + 6) % 7; // Mon = 0
   const daysInMonth = new Date(viewY, viewM + 1, 0).getDate();
@@ -213,8 +216,8 @@ function ozCalMonthHTML(viewY, viewM, selStart, selEnd, events, minDate, maxDate
     const dots = (evMap[ymd] || []).slice(0, 3).map((e) => `<i class="oz-cal__dot oz-cal__dot--${escapeHTML(e.color || 'cyan')}"></i>`).join('');
     cells.push(`<button type="button" class="${cls}" data-ymd="${ymd}"${disabled ? ' disabled' : ''} aria-label="${ymd}">${cd}<span class="oz-cal__dots">${dots}</span></button>`);
   }
-  const wds = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'].map((w) => `<div class="oz-cal__wd">${w}</div>`).join('');
-  return `<div class="oz-cal__head"><span class="oz-cal__month">${escapeHTML(monthLabel)}</span><div class="oz-cal__nav"><button type="button" class="oz-cal__btn" data-cal-prev aria-label="Previous month">&#8249;</button><button type="button" class="oz-cal__today" data-cal-today>Today</button><button type="button" class="oz-cal__btn" data-cal-next aria-label="Next month">&#8250;</button></div></div><div class="oz-cal__grid">${wds}${cells.join('')}</div>`;
+  const wds = Array.from({ length: 7 }, (_, idx) => { try { return new Date(2024, 0, 1 + idx).toLocaleDateString(loc, { weekday: 'short' }).slice(0, 2); } catch { return ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'][idx]; } }).map((w) => `<div class="oz-cal__wd">${escapeHTML(w)}</div>`).join('');
+  return `<div class="oz-cal__head"><span class="oz-cal__month">${escapeHTML(monthLabel)}</span><div class="oz-cal__nav"><button type="button" class="oz-cal__btn" data-cal-prev aria-label="Previous month">&#8249;</button><button type="button" class="oz-cal__today" data-cal-today>${escapeHTML(i18n.t('today'))}</button><button type="button" class="oz-cal__btn" data-cal-next aria-label="Next month">&#8250;</button></div></div><div class="oz-cal__grid">${wds}${cells.join('')}</div>`;
 }
 
 // 36. <oz-slider> (single or dual-thumb range + optional ticks)
@@ -667,23 +670,25 @@ export class OzSidebar extends OzoneElement {
       const has = kids.length > 0;
       const open = has && (this._openSet.has(idOf(it)) || !!q || kids.some(isActive));
       const cls = 'oz-sb__item' + (isActive(it) || (has && !open && kids.some(isActive)) ? ' is-active' : '') + (it.disabled ? ' is-disabled' : '');
-      const tag = has ? 'button type="button"' : `a href="${escapeHTML(it.href || '#')}"`;
+      const cleanHref = it.href ? safeHref(it.href) : '#';
+      const targetAttr = it.target ? ` target="${escapeHTML(it.target)}"${it.target === '_blank' ? ' rel="noopener noreferrer"' : ''}` : '';
+      const tag = has ? 'button type="button"' : `a href="${escapeHTML(cleanHref)}"${targetAttr}`;
       const close = has ? 'button' : 'a';
-      const sub = has ? `<div class="oz-sb__sub" data-open="${open}"><div class="oz-sb__sub-inner">${kids.map((c) => `<a class="oz-sb__item oz-sb__item--child${isActive(c) ? ' is-active' : ''}" href="${escapeHTML(c.href || '#')}" data-id="${escapeHTML(idOf(c))}" data-label="${escapeHTML(c.label)}"><span class="oz-sb__label">${escapeHTML(c.label)}</span>${badge(c)}</a>`).join('')}</div></div>` : '';
+      const sub = has ? `<div class="oz-sb__sub" data-open="${open}"><div class="oz-sb__sub-inner">${kids.map((c) => `<a class="oz-sb__item oz-sb__item--child${isActive(c) ? ' is-active' : ''}" href="${escapeHTML(safeHref(c.href || '#'))}"${c.target ? ` target="${escapeHTML(c.target)}"${c.target === '_blank' ? ' rel="noopener noreferrer"' : ''}` : ''} data-id="${escapeHTML(idOf(c))}" data-label="${escapeHTML(c.label)}"><span class="oz-sb__label">${escapeHTML(c.label)}</span>${badge(c)}</a>`).join('')}</div></div>` : '';
       return `<div class="oz-sb__node"><${tag} class="${cls}" data-id="${escapeHTML(idOf(it))}" data-label="${escapeHTML(it.label)}" data-has-kids="${has}" data-tip="${escapeHTML(it.label)}"${it.disabled ? ' aria-disabled="true"' : ''}${has ? ` aria-expanded="${open}"` : ''}>${iconHTML(it)}<span class="oz-sb__label">${escapeHTML(it.label)}</span>${badge(it)}${has ? `<span class="oz-sb__caret" data-open="${open}">${OZ_SVG.chevron}</span>` : ''}</${close}>${sub}</div>`;
     };
     const nav = groups.map((g) => {
       const its = (g.items || []).filter((it) => matches(it) || (it.children || []).some(matches));
       if (!its.length) return '';
       return `<div class="oz-sb__group">${g.title ? `<div class="oz-sb__title">${escapeHTML(g.title)}</div>` : ''}${its.map(itemHTML).join('')}</div>`;
-    }).join('') || '<div class="oz-sb__empty">No results</div>';
+    }).join('') || `<div class="oz-sb__empty">${escapeHTML(i18n.t('noResults'))}</div>`;
     const uname = this.prop('user-name');
     const user = uname ? `<div class="oz-sb__user"><oz-avatar name="${escapeHTML(uname)}" size="36" status="online"></oz-avatar><div class="oz-sb__user-text"><div class="oz-sb__user-name">${escapeHTML(uname)}</div>${this.prop('user-email') ? `<div class="oz-sb__user-mail">${escapeHTML(this.prop('user-email'))}</div>` : ''}</div></div>` : '';
     const side = this.prop('side', [], 'left') === 'right' ? 'right' : 'left';
     this.dataset.side = side;
     this.dataset.variant = this.prop('variant', [], 'glass');
     this.style.setProperty('--oz-sb-w', this.prop('width', [], '264px'));
-    this.innerHTML = `<div class="oz-sb__backdrop" data-sb-backdrop></div><aside class="oz-sb" role="navigation" aria-label="${escapeHTML(brand || 'Sidebar')}"><div class="oz-sb__head">${brand ? `<div class="oz-sb__brand"><span class="oz-sb__logo"><oz-icon name="${escapeHTML(icon)}" size="18"></oz-icon></span><span class="oz-sb__brand-name">${escapeHTML(brand)}</span></div>` : ''}<button type="button" class="oz-sb__collapse" data-sb-collapse title="Collapse sidebar" aria-label="Toggle sidebar">${OZ_SVG.panel}</button></div>${this.boolProp('searchable') ? `<div class="oz-sb__search"><oz-icon name="search" size="15"></oz-icon><input type="search" placeholder="Search..." value="${escapeHTML(this._query)}" data-sb-search /></div>` : ''}<nav class="oz-sb__nav">${nav}</nav><div class="oz-sb__foot">${user}<div class="oz-sb__foot-slot"></div></div></aside>`;
+    this.innerHTML = `<div class="oz-sb__backdrop" data-sb-backdrop></div><aside class="oz-sb" role="navigation" aria-label="${escapeHTML(brand || 'Sidebar')}"><div class="oz-sb__head">${brand ? `<div class="oz-sb__brand"><span class="oz-sb__logo"><oz-icon name="${escapeHTML(icon)}" size="18"></oz-icon></span><span class="oz-sb__brand-name">${escapeHTML(brand)}</span></div>` : ''}<button type="button" class="oz-sb__collapse" data-sb-collapse title="Collapse sidebar" aria-label="Toggle sidebar">${OZ_SVG.panel}</button></div>${this.boolProp('searchable') ? `<div class="oz-sb__search"><oz-icon name="search" size="15"></oz-icon><input type="search" placeholder="${escapeHTML(i18n.t('searchPlaceholder'))}" value="${escapeHTML(this._query)}" data-sb-search /></div>` : ''}<nav class="oz-sb__nav">${nav}</nav><div class="oz-sb__foot">${user}<div class="oz-sb__foot-slot"></div></div></aside>`;
     const slot = this.querySelector('.oz-sb__foot-slot');
     footerNodes.forEach((n) => slot.appendChild(n));
     if (!slot.childNodes.length) slot.remove();
@@ -704,10 +709,19 @@ export class OzSidebar extends OzoneElement {
         this.render();
         return;
       }
-      const ev = new CustomEvent('oz-navigate', { detail: { id, label: el.dataset.label, href: el.getAttribute('href') }, bubbles: true, cancelable: true });
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0 || el.getAttribute('target') === '_blank') {
+        return;
+      }
+      const href = el.getAttribute('href') || '#';
+      const isRealHref = href !== '#';
+      const ev = new CustomEvent('oz-navigate', { detail: { id, label: el.dataset.label, href }, bubbles: true, cancelable: true });
       this.dispatchEvent(ev);
-      if (ev.defaultPrevented || (el.getAttribute('href') || '#') === '#') e.preventDefault();
       sound.click();
+      if (isRealHref && !ev.defaultPrevented) {
+        if (this.dataset.mobile === 'true') this.close();
+        return;
+      }
+      e.preventDefault();
       this._activeKey = id;
       this.removeAttribute('active');
       this.render();
@@ -1460,7 +1474,7 @@ export class OzOtpInput extends OzFormElement {
 // Native Form Sync Helper + Global Agent Form Bridge
 function syncHiddenField(host, value) {
   const name = host.getAttribute('name');
-  if (!name) return;
+  if (!name || host.querySelector('input[name]:not([data-oz-form-val]), select[name], textarea[name]')) return;
   let hidden = host.querySelector('input[data-oz-form-val]');
   if (!hidden) {
     hidden = document.createElement('input');
@@ -1535,16 +1549,29 @@ export class OzBottomNav extends OzoneElement {
     ]);
     const active = this.prop('active', [], this._active || (items[0] && (items[0].id || items[0].label)) || '');
     this._active = active;
-    this.innerHTML = `<nav class="oz-bnav" role="tablist" aria-label="Bottom Navigation">${items.map((it) => {
+    const hasLinks = items.some((it) => it.href && safeHref(it.href) !== '#');
+    this.innerHTML = `<nav class="oz-bnav"${hasLinks ? '' : ' role="tablist"'} aria-label="Bottom Navigation">${items.map((it) => {
       const id = String(it.id || it.label);
-      const isOn = id === active;
-      return `<button type="button" class="oz-bnav__btn${isOn ? ' is-active' : ''}" role="tab" aria-selected="${isOn}" data-id="${escapeHTML(id)}">${it.badge ? `<span class="oz-bnav__badge">${escapeHTML(it.badge)}</span>` : ''}<oz-icon name="${escapeHTML(it.icon || 'diamond')}" size="20"></oz-icon><span>${escapeHTML(it.label)}</span></button>`;
+      const isOn = id === active || it.active === true;
+      const cleanHref = it.href ? safeHref(it.href) : '';
+      const inner = `${it.badge ? `<span class="oz-bnav__badge">${escapeHTML(it.badge)}</span>` : ''}<oz-icon name="${escapeHTML(it.icon || 'diamond')}" size="20"></oz-icon><span>${escapeHTML(it.label)}</span>`;
+      if (cleanHref && cleanHref !== '#') {
+        const tgt = it.target ? ` target="${escapeHTML(it.target)}"${it.target === '_blank' ? ' rel="noopener noreferrer"' : ''}` : '';
+        return `<a href="${escapeHTML(cleanHref)}" class="oz-bnav__btn${isOn ? ' is-active' : ''}"${isOn ? ' aria-current="page"' : ''}${tgt} data-id="${escapeHTML(id)}">${inner}</a>`;
+      }
+      return `<button type="button" class="oz-bnav__btn${isOn ? ' is-active' : ''}" role="tab" aria-selected="${isOn}" data-id="${escapeHTML(id)}">${inner}</button>`;
     }).join('')}</nav>`;
-    this.querySelectorAll('.oz-bnav__btn').forEach((b) => b.addEventListener('click', () => {
+    this.querySelectorAll('.oz-bnav__btn').forEach((b) => b.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0 || b.getAttribute('target') === '_blank') return;
+      const isLink = b.tagName === 'A';
+      const href = b.getAttribute('href') || '';
+      const ev = new CustomEvent('oz-navigate', { detail: { id: b.dataset.id, href }, bubbles: true, cancelable: true });
+      this.dispatchEvent(ev);
+      if (ev.defaultPrevented) { e.preventDefault(); sound.click(); return; }
+      sound.click();
+      if (isLink) return;
       this._active = b.dataset.id;
       this.setAttribute('active', b.dataset.id);
-      sound.click();
-      this.dispatchEvent(new CustomEvent('oz-navigate', { detail: { id: b.dataset.id }, bubbles: true }));
     }));
   }
 }

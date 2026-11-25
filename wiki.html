@@ -88,6 +88,13 @@
             ]'></oz-accordion>
           </oz-card>
 
+          <oz-card id="sec-i18n" data-wiki="i18n multilingual bulgarian php ssr href form submit print oz-no-print oz-h-scroll 16/9" title="8. Multilingual (Ozone.i18n), PHP SSR &amp; Print Utilities" subtitle="Custom labels, native links, form submit forwarding &amp; A4 print stylesheets">
+            <p class="oz-text-sm oz-muted">Switch built-in component UI labels dynamically with <code>Ozone.i18n.setLocale('bg')</code> or override any phrase via <code>Ozone.i18n.extend({...})</code> and per-card attributes (<code>cta-label</code>, <code>unit</code>, <code>aspect="16/9"</code>, <code>no-tilt</code>). In PHP SSR apps, pass <code>"href": "?view=feed"</code> on <code>&lt;oz-sidebar&gt;</code> / <code>&lt;oz-bottom-nav&gt;</code> items and use <code>&lt;oz-button type="submit" name="action" value="save"&gt;</code> for zero-JS forms, plus <code>.oz-h-scroll</code> and <code>.oz-no-print</code> utilities.</p>
+            <oz-code-block title="php-ssr-i18n.html" lang="html"
+              code="&lt;script type=&quot;module&quot;&gt;&#10;  import Ozone from './dist/ozone.js';&#10;  Ozone.i18n.setLocale('bg', { add: 'Поръчай', by: 'от' });&#10;&lt;/script&gt;&#10;&#10;&lt;oz-product-card title=&quot;Спелта&quot; price=&quot;4.90 €&quot; unit=&quot;самун ~700г&quot; aspect=&quot;16/9&quot; no-tilt stock-percent=&quot;25&quot; secondary-label=&quot;Viber&quot; secondary-href=&quot;viber://chat&quot;&gt;&lt;/oz-product-card&gt;&#10;&lt;form method=&quot;post&quot;&gt;&#10;  &lt;oz-button variant=&quot;primary&quot; type=&quot;submit&quot; name=&quot;interaction&quot; value=&quot;favorite&quot;&gt;Save&lt;/oz-button&gt;&#10;&lt;/form&gt;&#10;&lt;nav class=&quot;oz-no-print oz-h-scroll&quot;&gt;...&lt;/nav&gt;">
+            </oz-code-block>
+          </oz-card>
+
         </div>
       </oz-col>
     </oz-grid>
@@ -106,7 +113,8 @@
       { id: 'forms',      label: '4. Forms & Fill API', icon: 'sliders' },
       { id: 'ai',         label: '5. AI & IDE Setup', icon: 'sparkles' },
       { id: 'security',   label: '6. EU, GDPR & Security', icon: 'shield' },
-      { id: 'faq',        label: '7. FAQ', icon: 'info' }
+      { id: 'faq',        label: '7. FAQ', icon: 'info' },
+      { id: 'i18n',       label: '8. i18n, PHP SSR & Print', icon: 'globe' }
     ]));
     tree.addEventListener('oz-select', (e) => {
       document.getElementById('sec-' + e.detail.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });

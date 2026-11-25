@@ -62,6 +62,12 @@
                     <oz-badge variant="cyan" style="cursor:pointer;">Hover Author</oz-badge>
                   </oz-hover-card>
                 </div>
+                <div class="oz-h-scroll" aria-label="Quick categories">
+                  <oz-badge variant="cyan">Fresh</oz-badge>
+                  <oz-badge variant="emerald">Farm Stories</oz-badge>
+                  <oz-badge variant="violet">Recipes</oz-badge>
+                  <oz-badge variant="amber">Near You</oz-badge>
+                </div>
                 <oz-stat title="Mobile Active Users" value="28.4K" delta="+19%" trend="up" sparkline="14,18,21,24,28" glow="cyan"></oz-stat>
                 <div class="phone-fab-row">
                   <oz-fab id="demo-fab" icon="plus" items='[{"id":"post","label":"New Post","icon":"message-circle"},{"id":"ai","label":"Ask AI","icon":"sparkles"},{"id":"upload","label":"Upload File","icon":"plus"}]'></oz-fab>
@@ -90,7 +96,7 @@
       <oz-split-pane ratio="32">
         <oz-tree id="dev-tree" active="grid"></oz-tree>
         <oz-code-block id="dev-code" title="12-column-layout.html" lang="html" line-numbers
-          code="<oz-grid cols=&quot;12&quot; gap=&quot;24&quot;>&#10;  <oz-col span=&quot;8&quot; span-md=&quot;12&quot;>Main Workspace</oz-col>&#10;  <oz-col span=&quot;4&quot; span-md=&quot;12&quot;>Sidebar Panel</oz-col>&#10;</oz-grid>&#10;<oz-bottom-nav position=&quot;fixed&quot; variant=&quot;floating&quot;></oz-bottom-nav>">
+          code="<oz-grid cols=&quot;12&quot; gap=&quot;24&quot;>&#10;  <oz-col span=&quot;8&quot; span-md=&quot;12&quot;>Main Workspace</oz-col>&#10;  <oz-col span=&quot;4&quot; span-md=&quot;12&quot;>Sidebar Panel</oz-col>&#10;</oz-grid>&#10;&lt;oz-bottom-nav position=&quot;fixed&quot; variant=&quot;floating&quot; items='[{&quot;id&quot;:&quot;home&quot;,&quot;label&quot;:&quot;Home&quot;,&quot;href&quot;:&quot;?view=feed&quot;,&quot;icon&quot;:&quot;layout&quot;}]'&gt;&lt;/oz-bottom-nav&gt;">
         </oz-code-block>
       </oz-split-pane>
     </section>

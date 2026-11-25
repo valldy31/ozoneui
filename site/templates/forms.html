@@ -64,14 +64,34 @@
           <oz-checkbox label="Enable beta features" indeterminate></oz-checkbox>
         </div>
       </oz-card>
-      <oz-card title="Autosize Bio &amp; Inline Radios" subtitle="Live character counter">
+      <oz-card title="Autosize Bio, Inline Radios &amp; Native Form Submit" subtitle="Native <form> submission with <oz-button type='submit' name='...' value='...'>">
         <oz-radio-group label="Notifications" value="mentions" options="All activity,Mentions only,Nothing" inline></oz-radio-group>
-        <oz-textarea label="Bio" placeholder="Tell the team about yourself..." maxlength="240" rows="4" autosize></oz-textarea>
+        <oz-textarea label="Bio" placeholder="Tell the team about yourself..." maxlength="240" rows="3" autosize></oz-textarea>
+        <form id="ssr-submit-form" class="oz-stack" style="gap:12px;margin-top:8px;padding-top:14px;border-top:1px solid var(--oz-border);">
+          <div class="oz-text-xs oz-muted" style="font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">PHP / SSR Native Submit Forwarding Demo</div>
+          <div class="two" style="gap:12px;">
+            <oz-input name="item_slug" label="Item Slug" value="einkorn-sourdough-700g"></oz-input>
+            <oz-select name="channel" label="Channel" value="web" options="web,viber,pickup"></oz-select>
+          </div>
+          <div class="oz-row" style="gap:10px;">
+            <oz-button variant="primary" type="submit" name="interaction_type" value="favorite" icon="heart" size="sm">Favorite (submit)</oz-button>
+            <oz-button variant="glass" type="submit" name="interaction_type" value="save_draft" icon="bookmark" size="sm">Save Draft (submit)</oz-button>
+          </div>
+          <div id="ssr-submit-out" class="oz-text-xs oz-muted" style="font-family:var(--oz-font-mono);">Click either button above to inspect FormData + submitter payload.</div>
+        </form>
       </oz-card>
     </div>
   </main>
   <script type="module">
     import '../../dist/ozone.js';
+    document.getElementById('ssr-submit-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const fd = new FormData(form);
+      if (e.submitter && e.submitter.name) fd.append(e.submitter.name, e.submitter.value);
+      const out = document.getElementById('ssr-submit-out');
+      if (out) out.textContent = 'Submitted payload: ' + JSON.stringify(Object.fromEntries(fd.entries()));
+    });
     document.getElementById('hdr').addEventListener('click', (e) => {
       const txt = (e.target.closest('a,button,.oz-header__cta')?.textContent || '').trim().toLowerCase();
       if (txt === 'open demo') {

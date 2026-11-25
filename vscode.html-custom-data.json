@@ -52,7 +52,7 @@
                                     ]
                  },
                  {
-                     "description":  "[core] Atmospheric action button",
+                     "description":  "[core] Atmospheric action button with native form submit/name/value forwarding",
                      "name":  "oz-button",
                      "attributes":  [
                                         {
@@ -77,6 +77,29 @@
                                                                "name":  "success"
                                                            }
                                                        ]
+                                        },
+                                        {
+                                            "name":  "type",
+                                            "values":  [
+                                                           {
+                                                               "name":  "button"
+                                                           },
+                                                           {
+                                                               "name":  "submit"
+                                                           },
+                                                           {
+                                                               "name":  "reset"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "name"
+                                        },
+                                        {
+                                            "name":  "value"
+                                        },
+                                        {
+                                            "name":  "form"
                                         },
                                         {
                                             "name":  "size",
@@ -138,6 +161,9 @@
                                                                "name":  "emerald"
                                                            },
                                                            {
+                                                               "name":  "amber"
+                                                           },
+                                                           {
                                                                "name":  "rose"
                                                            }
                                                        ]
@@ -162,6 +188,9 @@
                                                            },
                                                            {
                                                                "name":  "emerald"
+                                                           },
+                                                           {
+                                                               "name":  "amber"
                                                            },
                                                            {
                                                                "name":  "rose"
@@ -196,8 +225,7 @@
                                             "name":  "type"
                                         },
                                         {
-                                            "name":  "mask",
-                                            "description":  "mask(secret)"
+                                            "name":  "mask"
                                         },
                                         {
                                             "name":  "icon"
@@ -224,8 +252,7 @@
                                             "name":  "active"
                                         },
                                         {
-                                            "name":  "tabs",
-                                            "description":  "tabs(comma-separated)"
+                                            "name":  "tabs"
                                         }
                                     ]
                  },
@@ -307,8 +334,7 @@
                                             "name":  "sparkline"
                                         },
                                         {
-                                            "name":  "mask",
-                                            "description":  "mask(blur)"
+                                            "name":  "mask"
                                         },
                                         {
                                             "name":  "src"
@@ -370,8 +396,7 @@
                                             "name":  "title"
                                         },
                                         {
-                                            "name":  "rows",
-                                            "description":  "rows(JSON)"
+                                            "name":  "rows"
                                         },
                                         {
                                             "name":  "searchable"
@@ -398,8 +423,7 @@
                                             "name":  "title"
                                         },
                                         {
-                                            "name":  "data",
-                                            "description":  "data(JSON)"
+                                            "name":  "data"
                                         },
                                         {
                                             "name":  "view",
@@ -412,6 +436,9 @@
                                                            },
                                                            {
                                                                "name":  "cards"
+                                                           },
+                                                           {
+                                                               "name":  "json"
                                                            }
                                                        ]
                                         },
@@ -467,8 +494,7 @@
                                             "name":  "popular"
                                         },
                                         {
-                                            "name":  "features",
-                                            "description":  "features(csv)"
+                                            "name":  "features"
                                         },
                                         {
                                             "name":  "cta"
@@ -478,12 +504,14 @@
                  {
                      "description":  "[landing] Infinite smooth-scrolling horizontal ticker",
                      "name":  "oz-marquee",
-                     "attributes":  {
-                                        "name":  "speed"
-                                    }
+                     "attributes":  [
+                                        {
+                                            "name":  "speed"
+                                        }
+                                    ]
                  },
                  {
-                     "description":  "[marketplace] 3D tilt product showcase with wishlist \u0026 quick buy",
+                     "description":  "[marketplace] Product card with 16:9 media, custom i18n CTAs, scarcity bar, sold-out notify, and optional 3D tilt",
                      "name":  "oz-product-card",
                      "attributes":  [
                                         {
@@ -494,6 +522,9 @@
                                         },
                                         {
                                             "name":  "old-price"
+                                        },
+                                        {
+                                            "name":  "unit"
                                         },
                                         {
                                             "name":  "rating"
@@ -511,7 +542,60 @@
                                             "name":  "seller"
                                         },
                                         {
+                                            "name":  "by-label"
+                                        },
+                                        {
                                             "name":  "gradient"
+                                        },
+                                        {
+                                            "name":  "image"
+                                        },
+                                        {
+                                            "name":  "aspect",
+                                            "values":  [
+                                                           {
+                                                               "name":  "16/9"
+                                                           },
+                                                           {
+                                                               "name":  "4/3"
+                                                           },
+                                                           {
+                                                               "name":  "1/1"
+                                                           }
+                                                       ]
+                                        },
+                                        {
+                                            "name":  "no-tilt"
+                                        },
+                                        {
+                                            "name":  "cta-label"
+                                        },
+                                        {
+                                            "name":  "cta-href"
+                                        },
+                                        {
+                                            "name":  "secondary-label"
+                                        },
+                                        {
+                                            "name":  "secondary-href"
+                                        },
+                                        {
+                                            "name":  "sold-out"
+                                        },
+                                        {
+                                            "name":  "sold-out-label"
+                                        },
+                                        {
+                                            "name":  "stock-percent"
+                                        },
+                                        {
+                                            "name":  "stock-label"
+                                        },
+                                        {
+                                            "name":  "wishlisted"
+                                        },
+                                        {
+                                            "name":  "no-toast"
                                         }
                                     ]
                  },
@@ -531,7 +615,7 @@
                                     ]
                  },
                  {
-                     "description":  "[social] Interactive social feed post with live reactions",
+                     "description":  "[social] Interactive social feed post with 16:9 image, custom role badge, and live reactions",
                      "name":  "oz-post",
                      "attributes":  [
                                         {
@@ -541,6 +625,9 @@
                                             "name":  "handle"
                                         },
                                         {
+                                            "name":  "avatar"
+                                        },
+                                        {
                                             "name":  "verified"
                                         },
                                         {
@@ -548,6 +635,18 @@
                                         },
                                         {
                                             "name":  "time"
+                                        },
+                                        {
+                                            "name":  "badge"
+                                        },
+                                        {
+                                            "name":  "badge-variant"
+                                        },
+                                        {
+                                            "name":  "image"
+                                        },
+                                        {
+                                            "name":  "aspect"
                                         },
                                         {
                                             "name":  "likes"
@@ -563,6 +662,21 @@
                                         },
                                         {
                                             "name":  "content"
+                                        },
+                                        {
+                                            "name":  "liked"
+                                        },
+                                        {
+                                            "name":  "bookmarked"
+                                        },
+                                        {
+                                            "name":  "save-label"
+                                        },
+                                        {
+                                            "name":  "saved-label"
+                                        },
+                                        {
+                                            "name":  "no-toast"
                                         }
                                     ]
                  },
@@ -581,24 +695,29 @@
                  {
                      "description":  "[ai] Self-healing streaming JSON-to-UI renderer",
                      "name":  "oz-renderer",
-                     "attributes":  {
-                                        "name":  "schema",
-                                        "description":  "schema(JSON)"
-                                    }
+                     "attributes":  [
+                                        {
+                                            "name":  "schema"
+                                        }
+                                    ]
                  },
                  {
                      "description":  "[os] Cmd+K auto-discovering command palette",
                      "name":  "oz-command",
-                     "attributes":  {
-                                        "name":  "auto-discover"
-                                    }
+                     "attributes":  [
+                                        {
+                                            "name":  "auto-discover"
+                                        }
+                                    ]
                  },
                  {
                      "description":  "[os] Alt+O floating Theme DNA visual studio",
                      "name":  "oz-inspector",
-                     "attributes":  {
-                                        "name":  "open"
-                                    }
+                     "attributes":  [
+                                        {
+                                            "name":  "open"
+                                        }
+                                    ]
                  },
                  {
                      "description":  "[layout] Navigation bar header in glass, floating, minimal, or enterprise style",
@@ -628,8 +747,7 @@
                                             "name":  "badge"
                                         },
                                         {
-                                            "name":  "links",
-                                            "description":  "links(csv)"
+                                            "name":  "links"
                                         },
                                         {
                                             "name":  "max-links"
@@ -687,8 +805,7 @@
                                             "name":  "tagline"
                                         },
                                         {
-                                            "name":  "columns",
-                                            "description":  "columns(JSON)"
+                                            "name":  "columns"
                                         },
                                         {
                                             "name":  "status"
@@ -707,7 +824,14 @@
                      "attributes":  [
                                         {
                                             "name":  "items",
-                                            "description":  "items(csv|JSON)"
+                                            "values":  [
+                                                           {
+                                                               "name":  "csv"
+                                                           },
+                                                           {
+                                                               "name":  "JSON"
+                                                           }
+                                                       ]
                                         },
                                         {
                                             "name":  "separator",
@@ -737,6 +861,9 @@
                                                            },
                                                            {
                                                                "name":  "emerald"
+                                                           },
+                                                           {
+                                                               "name":  "amber"
                                                            },
                                                            {
                                                                "name":  "rose"
@@ -786,6 +913,9 @@
                                                                "name":  "emerald"
                                                            },
                                                            {
+                                                               "name":  "amber"
+                                                           },
+                                                           {
                                                                "name":  "rose"
                                                            }
                                                        ]
@@ -803,8 +933,7 @@
                      "name":  "oz-accordion",
                      "attributes":  [
                                         {
-                                            "name":  "items",
-                                            "description":  "items(JSON)"
+                                            "name":  "items"
                                         },
                                         {
                                             "name":  "multiple"
@@ -814,13 +943,14 @@
                  {
                      "description":  "[layout] Vertical activity, audit, and roadmap timeline",
                      "name":  "oz-timeline",
-                     "attributes":  {
-                                        "name":  "items",
-                                        "description":  "items(JSON)"
-                                    }
+                     "attributes":  [
+                                        {
+                                            "name":  "items"
+                                        }
+                                    ]
                  },
                  {
-                     "description":  "[layout] Collapsible app sidebar: grouped nav, nested items, badges, search, user footer, mobile drawer",
+                     "description":  "[layout] Collapsible app sidebar: grouped nav, nested items with native href links, badges, search, user footer, mobile drawer",
                      "name":  "oz-sidebar",
                      "attributes":  [
                                         {
@@ -830,8 +960,7 @@
                                             "name":  "icon"
                                         },
                                         {
-                                            "name":  "items",
-                                            "description":  "items(JSON groups|flat)"
+                                            "name":  "items"
                                         },
                                         {
                                             "name":  "active"
@@ -914,7 +1043,14 @@
                                         },
                                         {
                                             "name":  "options",
-                                            "description":  "options(csv|JSON)"
+                                            "values":  [
+                                                           {
+                                                               "name":  "csv"
+                                                           },
+                                                           {
+                                                               "name":  "JSON"
+                                                           }
+                                                       ]
                                         },
                                         {
                                             "name":  "value"
@@ -963,7 +1099,14 @@
                                         },
                                         {
                                             "name":  "options",
-                                            "description":  "options(csv|JSON)"
+                                            "values":  [
+                                                           {
+                                                               "name":  "csv"
+                                                           },
+                                                           {
+                                                               "name":  "JSON"
+                                                           }
+                                                       ]
                                         },
                                         {
                                             "name":  "value"
@@ -1099,8 +1242,7 @@
                                             "name":  "multiple"
                                         },
                                         {
-                                            "name":  "max-size",
-                                            "description":  "max-size(MB)"
+                                            "name":  "max-size"
                                         },
                                         {
                                             "name":  "prompt"
@@ -1119,11 +1261,17 @@
                                         },
                                         {
                                             "name":  "options",
-                                            "description":  "options(csv|JSON)"
+                                            "values":  [
+                                                           {
+                                                               "name":  "csv"
+                                                           },
+                                                           {
+                                                               "name":  "JSON"
+                                                           }
+                                                       ]
                                         },
                                         {
-                                            "name":  "value",
-                                            "description":  "value(csv)"
+                                            "name":  "value"
                                         },
                                         {
                                             "name":  "multiple"
@@ -1238,6 +1386,9 @@
                                                                "name":  "emerald"
                                                            },
                                                            {
+                                                               "name":  "amber"
+                                                           },
+                                                           {
                                                                "name":  "rose"
                                                            }
                                                        ]
@@ -1335,8 +1486,7 @@
                                                        ]
                                         },
                                         {
-                                            "name":  "items",
-                                            "description":  "items(JSON)"
+                                            "name":  "items"
                                         }
                                     ]
                  },
@@ -1375,7 +1525,14 @@
                      "attributes":  [
                                         {
                                             "name":  "steps",
-                                            "description":  "steps(csv|JSON)"
+                                            "values":  [
+                                                           {
+                                                               "name":  "csv"
+                                                           },
+                                                           {
+                                                               "name":  "JSON"
+                                                           }
+                                                       ]
                                         },
                                         {
                                             "name":  "active"
@@ -1401,8 +1558,7 @@
                      "name":  "oz-kanban",
                      "attributes":  [
                                         {
-                                            "name":  "columns",
-                                            "description":  "columns(JSON)"
+                                            "name":  "columns"
                                         },
                                         {
                                             "name":  "persist-key"
@@ -1420,8 +1576,7 @@
                                             "name":  "heading"
                                         },
                                         {
-                                            "name":  "value",
-                                            "description":  "value(YYYY-MM-DD)"
+                                            "name":  "value"
                                         },
                                         {
                                             "name":  "start"
@@ -1439,8 +1594,7 @@
                                             "name":  "max"
                                         },
                                         {
-                                            "name":  "events",
-                                            "description":  "events(JSON)"
+                                            "name":  "events"
                                         }
                                     ]
                  },
@@ -1452,12 +1606,10 @@
                                             "name":  "label"
                                         },
                                         {
-                                            "name":  "value",
-                                            "description":  "value(hex)"
+                                            "name":  "value"
                                         },
                                         {
-                                            "name":  "presets",
-                                            "description":  "presets(csv)"
+                                            "name":  "presets"
                                         },
                                         {
                                             "name":  "hint"
@@ -1547,8 +1699,7 @@
                      "name":  "oz-col",
                      "attributes":  [
                                         {
-                                            "name":  "span",
-                                            "description":  "span(1..12)"
+                                            "name":  "span"
                                         },
                                         {
                                             "name":  "span-md"
@@ -1559,12 +1710,11 @@
                                     ]
                  },
                  {
-                     "description":  "[layout] Mobile app / PWA bottom tab navigation bar with badges and safe-area padding",
+                     "description":  "[layout] Mobile app / PWA bottom tab navigation bar with native href links, badges, and safe-area padding",
                      "name":  "oz-bottom-nav",
                      "attributes":  [
                                         {
-                                            "name":  "items",
-                                            "description":  "items(JSON)"
+                                            "name":  "items"
                                         },
                                         {
                                             "name":  "active"
@@ -1604,8 +1754,7 @@
                                             "name":  "label"
                                         },
                                         {
-                                            "name":  "items",
-                                            "description":  "items(JSON)"
+                                            "name":  "items"
                                         },
                                         {
                                             "name":  "position",
@@ -1634,16 +1783,13 @@
                                             "name":  "model"
                                         },
                                         {
-                                            "name":  "models",
-                                            "description":  "models(csv)"
+                                            "name":  "models"
                                         },
                                         {
-                                            "name":  "suggestions",
-                                            "description":  "suggestions(csv)"
+                                            "name":  "suggestions"
                                         },
                                         {
-                                            "name":  "messages",
-                                            "description":  "messages(JSON)"
+                                            "name":  "messages"
                                         },
                                         {
                                             "name":  "placeholder"
@@ -1671,18 +1817,18 @@
                  {
                      "description":  "[layout] Resizable two-pane split container with draggable divider handle",
                      "name":  "oz-split-pane",
-                     "attributes":  {
-                                        "name":  "ratio",
-                                        "description":  "ratio(percent)"
-                                    }
+                     "attributes":  [
+                                        {
+                                            "name":  "ratio"
+                                        }
+                                    ]
                  },
                  {
                      "description":  "[layout] Collapsible hierarchical folder and file tree with oz-select events",
                      "name":  "oz-tree",
                      "attributes":  [
                                         {
-                                            "name":  "items",
-                                            "description":  "items(JSON)"
+                                            "name":  "items"
                                         },
                                         {
                                             "name":  "active"

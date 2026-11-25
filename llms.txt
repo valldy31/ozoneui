@@ -34,7 +34,7 @@ All `<oz-*>` tags accept natural aliases automatically:
 
 ### 1. Core Foundation
 - `<oz-icon name="sparkles|chart-bar|bot|ph:planet|tabler:flame" set="builtin|ph|tabler|solar|heroicons" size="16" stroke="1.75" src="..." icon-class="..." glow spin>`
-- `<oz-button variant="glow|primary|glass|ghost|danger|success" size="sm|md|lg" icon="..." icon-right="..." pill loading>`
+- `<oz-button variant="glow|primary|glass|ghost|danger|success" type="button|submit|reset" name="..." value="..." form="..." size="sm|md|lg" icon="..." icon-right="..." pill loading>` *(native `<form>` submit forwarding supported)*
 - `<oz-card glass tilt glow="cyan|violet|emerald|amber|rose" title="..." subtitle="..." badge="..." exportable oz-morph-id="...">`
 - `<oz-badge variant="cyan|violet|emerald|amber|rose|neutral" icon="..." pulse>`
 - `<oz-input label="..." placeholder="..." type="text|password" mask="secret" icon="...">`
@@ -56,10 +56,10 @@ All `<oz-*>` tags accept natural aliases automatically:
 - `<oz-marquee speed="28s">...items...</oz-marquee>`
 
 ### 4. Marketplaces & Social Networks
-- `<oz-product-card title="..." price="$79" old-price="$129" rating="4.9" reviews="342" badge="Hot" category="AI" seller="Aether" gradient="cyan">`
+- `<oz-product-card title="..." price="$79" old-price="$129" unit="700g" rating="4.9" reviews="342" badge="Hot" category="AI" seller="Aether" by-label="by" gradient="cyan" image="..." aspect="16/9" no-tilt cta-label="Order" cta-href="..." secondary-label="Viber" secondary-href="..." sold-out sold-out-label="Notify Me" stock-percent="35" stock-label="3 left" wishlisted no-toast>`
 - `<oz-rating value="4.8" max="5" interactive>`
-- `<oz-post author="Elena Vance" handle="@elena" verified status="online" time="2m" likes="124" comments="18" shares="9" tags="OzoneUI,AI" content="...">`
-- `<oz-composer placeholder="Share an update..." target="#feed">`
+- `<oz-post author="Elena Vance" handle="@elena" avatar="..." verified status="online" badge="Creator" badge-variant="violet" time="2m" image="..." aspect="16/9" likes="124" comments="18" shares="9" tags="OzoneUI,AI" content="..." liked bookmarked save-label="Save" saved-label="Saved" no-toast>`
+- `<oz-composer placeholder="Share an update..." target="#feed" publish-label="Publish Post" no-toast>`
 
 ### 5. AI-Native & Spatial OS Layer
 - `<oz-renderer schema='{"type":"oz-bento","props":{"cols":2},"children":[{"type":"oz-stat","props":{"title":"Users","value":"12,480","trend":"up","delta":"+18%"}}]}'>`
@@ -76,7 +76,7 @@ All `<oz-*>` tags accept natural aliases automatically:
 - `<oz-timeline items='[{"time":"2m","title":"Deployed","desc":"Edge nodes","status":"emerald"}]'>`
 ### App shell & sidebar
 - `<oz-app-shell heading="Overview" subtitle="...">` children: one `<oz-sidebar>`, any content, and `slot="actions"` buttons for the topbar. Add `fill` for a fixed-height app.
-- `<oz-sidebar brand="Acme" icon="cpu" searchable user-name="Alex" user-email="a@x.io" active="Overview" persist-key="app" items='[{"title":"Main","items":[{"label":"Overview","icon":"layout"},{"label":"Customers","icon":"user","badge":"3","children":[{"label":"All"},{"label":"Segments"}]}]}]'>` Optional: `side="right"`, `variant="glass|solid|floating"`, `collapsed`, `width="280px"`. Collapses to an icon rail, becomes a drawer under 900px. Events: `oz-navigate`, `oz-collapse`. Put `data-oz-sidebar-toggle` on any button to toggle it.
+- `<oz-sidebar brand="Acme" icon="cpu" searchable user-name="Alex" user-email="a@x.io" active="Overview" persist-key="app" items='[{"title":"Main","items":[{"label":"Overview","href":"?view=overview","icon":"layout"},{"label":"Customers","icon":"user","badge":"3","children":[{"label":"All","href":"?view=all"}]}]}]'>` Optional: `side="right"`, `variant="glass|solid|floating"`, `collapsed`, `width="280px"`. Real `href` items navigate natively for PHP/SSR apps (ctrl/middle-click supported); events: `oz-navigate` (cancelable), `oz-collapse`. Put `data-oz-sidebar-toggle` on any button to toggle it.
 
 ### Form controls (all accept label, hint, error, disabled; all emit `oz-change`)
 - `<oz-select label="Role" placeholder="Choose" options='[{"value":"a","label":"Admin","group":"Team"}]'>` (options may also be csv: `options="A,B,C"`)
@@ -113,7 +113,8 @@ Or pin `https://ozoneui.nstudios.eu/dist/ozone.css` + `ozone.js`. All form contr
 
 ### 12-Col Grid, Mobile App Primitives, AI Chat & Dev UI (Pack H — 65 total components)
 - `<oz-grid cols="12" gap="24px">` / `<oz-col span="8" span-md="6" span-sm="12">` Responsive 12-column grid (or `<oz-grid min="260px">`, plus `.oz-grid-12` + `.oz-col-1..12` utility classes).
-- `<oz-bottom-nav items='[{"id":"home","label":"Home","icon":"layout"},{"id":"alerts","label":"Alerts","icon":"activity","badge":"3"}]' variant="floating|docked" position="inline|fixed">` Mobile app / PWA bottom tab bar with safe-area padding.
+- `<oz-bottom-nav items='[{"id":"home","label":"Home","icon":"layout","href":"?view=feed"},{"id":"alerts","label":"Alerts","icon":"activity","badge":"3","href":"?view=alerts"}]' variant="floating|docked" position="inline|fixed">` Mobile app / PWA bottom tab bar (renders native `<a>` when `href` is set for PHP SSR).
+- CSS Utilities: `.oz-aspect-16-9`, `.oz-h-scroll` (`.oz-h-scroll--snap`), `@media print` `.oz-no-print` / `.oz-print-only`.
 - `<oz-fab icon="plus" label="Create" position="inline|bottom-right|bottom-left" items='[{"id":"ai","label":"Ask AI","icon":"sparkles"}]'>` Mobile Floating Action Button + speed-dial.
 - `<oz-ai-chat heading="Assistant" model="Gemini 2.5 Pro" suggestions="Build layout,Audit contrast">` AI prompt + streaming chat widget emitting `oz-send`.
 - `<oz-code-block title="app.html" lang="html" line-numbers code="...">` Syntax viewer with 1-click Copy button.
@@ -126,6 +127,7 @@ Or pin `https://ozoneui.nstudios.eu/dist/ozone.css` + `ozone.js`. All form contr
 
 ## Runtime JS API (`window.Ozone`)
 - `Ozone.toast({ title, message, variant })`
+- `Ozone.i18n.setLocale('bg'|'en', overrides?)` / `Ozone.i18n.extend(dict)` / `Ozone.i18n.t(key, vars?)` / `Ozone.i18n.getLocale()`
 - `Ozone.icons.setDefaultSet('builtin'|'ph'|'tabler'|'solar'|'heroicons')` / `Ozone.icons.register(name, svg)` / `Ozone.icons.setResolver(fn)`
 - `Ozone.dna.presets` / `Ozone.dna.applyPreset('emerald')` / `Ozone.dna.fromHex('#6366f1', 'complementary')` / `Ozone.dna.fromLogoFile(file)`
 - `Ozone.dna.setDensity('compact'|'default'|'spacious')` / `Ozone.dna.setBrandName('Solaris AI')`

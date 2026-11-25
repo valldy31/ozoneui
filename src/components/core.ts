@@ -10,7 +10,11 @@ import { morph } from '../core/registry.ts';
 // 1. <oz-button>
 export class OzButton extends OzoneElement {
   static get observedAttributes() {
-    return ['variant', 'type', 'color', 'theme', 'kind', 'size', 'loading', 'disabled', 'label', 'text', 'pill', 'toast', 'icon', 'icon-right'];
+    return [
+      'variant', 'type', 'color', 'theme', 'kind', 'size', 'loading', 'disabled',
+      'label', 'text', 'pill', 'toast', 'icon', 'icon-right',
+      'name', 'value', 'form', 'formaction', 'formmethod', 'formnovalidate'
+    ];
   }
 
   private btnEl: HTMLButtonElement | null = null;
@@ -27,11 +31,14 @@ export class OzButton extends OzoneElement {
     const explicitLabel = this.prop('label', ['text']);
     const iconLeft = this.prop('icon');
     const iconRight = this.prop('icon-right');
+    const rawType = (this.getAttribute('type') || '').trim().toLowerCase();
+    const nativeType: 'submit' | 'reset' | 'button' =
+      rawType === 'submit' || rawType === 'reset' || rawType === 'button' ? rawType : 'button';
 
     if (!this._mounted) {
       this._mounted = true;
       const btn = document.createElement('button');
-      btn.type = 'button';
+      btn.type = nativeType;
       if (explicitLabel && nodes.every((n) => n.nodeType === 3 && !n.textContent?.trim())) {
         btn.textContent = explicitLabel;
       } else {
@@ -42,6 +49,7 @@ export class OzButton extends OzoneElement {
       }
       btn.addEventListener('click', (e) => {
         if (this.boolProp('disabled') || this.boolProp('loading')) {
+          e.preventDefault();
           e.stopImmediatePropagation();
           return;
         }
@@ -58,8 +66,17 @@ export class OzButton extends OzoneElement {
 
     if (this.btnEl) {
       const iconPx = size === 'sm' ? '14' : size === 'lg' ? '18' : '16';
+      this.btnEl.type = nativeType;
       this.btnEl.className = `oz-btn oz-btn--${variant} oz-btn--${size}${isPill ? ' oz-btn--pill' : ''}`;
       this.btnEl.disabled = isDisabled;
+
+      for (const attr of ['name', 'value', 'form', 'formaction', 'formmethod'] as const) {
+        const val = this.getAttribute(attr);
+        if (val !== null) this.btnEl.setAttribute(attr, val);
+        else this.btnEl.removeAttribute(attr);
+      }
+      if (this.hasAttribute('formnovalidate')) this.btnEl.setAttribute('formnovalidate', '');
+      else this.btnEl.removeAttribute('formnovalidate');
 
       if (iconLeft && !isLoading) {
         if (!this.iconLeftEl) {
@@ -97,8 +114,14 @@ export class OzButton extends OzoneElement {
   }
 
   private resolveVariant(): string {
-    const v = this.prop('variant', ['type', 'color', 'theme', 'kind'], '');
-    if (v) return v;
+    const rawVariant = this.getAttribute('variant')?.trim();
+    if (rawVariant) return rawVariant;
+    const other = this.prop('color', ['theme', 'kind'], '');
+    if (other) return other;
+    const rawType = (this.getAttribute('type') || '').trim();
+    if (rawType && !['submit', 'reset', 'button'].includes(rawType.toLowerCase())) {
+      return rawType;
+    }
     for (const shorthand of ['glow', 'primary', 'glass', 'ghost', 'danger', 'success']) {
       if (this.hasAttribute(shorthand)) return shorthand;
     }
@@ -192,7 +215,7 @@ export class OzBadge extends OzoneElement {
 // 4. <oz-input>
 export class OzInput extends OzoneElement {
   static get observedAttributes() {
-    return ['label', 'placeholder', 'value', 'type', 'mask', 'icon'];
+    return ['label', 'placeholder', 'value', 'type', 'mask', 'icon', 'error', 'hint', 'name', 'required', 'disabled'];
   }
 
   private revealed = false;
@@ -215,6 +238,9 @@ export class OzInput extends OzoneElement {
     const baseType = this.prop('type', [], 'text');
     const isSecret = this.prop('mask') === 'secret' || baseType === 'password';
     const icon = this.prop('icon');
+    const name = this.prop('name');
+    const required = this.boolProp('required');
+    const disabled = this.boolProp('disabled');
     const actualType = isSecret && !this.revealed ? 'password' : (baseType === 'password' ? 'text' : baseType);
 
     this.innerHTML = `
@@ -222,7 +248,7 @@ export class OzInput extends OzoneElement {
         ${label ? `<label class="oz-input-label">${escapeHTML(label)}</label>` : ''}
         <div class="oz-input-box">
           ${icon ? `<oz-icon name="${escapeHTML(icon)}" size="15" class="oz-muted"></oz-icon>` : ''}
-          <input class="oz-input-field" type="${escapeHTML(actualType)}" placeholder="${escapeHTML(placeholder)}" value="${escapeHTML(value)}" />
+          <input class="oz-input-field"${name ? ` name="${escapeHTML(name)}"` : ''} type="${escapeHTML(actualType)}" placeholder="${escapeHTML(placeholder)}" value="${escapeHTML(value)}"${required ? ' required' : ''}${disabled ? ' disabled' : ''} />
           ${isSecret ? `<button type="button" class="oz-input-action" data-toggle-secret title="Toggle visibility"><oz-icon name="${this.revealed ? 'eye-off' : 'eye'}" size="15"></oz-icon></button>` : ''}
         </div>
       </div>
