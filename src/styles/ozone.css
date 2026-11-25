@@ -280,6 +280,179 @@
       --oz-duration: 50ms;
     }
   }
+
+  /* === 10 Design Language Flavours (data-oz-flavour="...") === */
+  /* 1. Minimal 0px (Swiss Architectural) */
+  [data-oz-flavour="minimal"] {
+    --oz-radius: 0px; --oz-radius-sm: 0px; --oz-radius-md: 0px; --oz-radius-lg: 0px; --oz-radius-xl: 0px; --oz-radius-pill: 0px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-surface: var(--oz-surface-solid);
+    --oz-shadow-sm: none; --oz-shadow-md: none; --oz-shadow-lg: none;
+    --oz-border: oklch(var(--oz-l-border, 0.95) 0 0 / 0.18);
+    --oz-border-strong: oklch(var(--oz-l-border, 0.95) 0 0 / 0.34);
+  }
+  /* 2. Material 3 (Google Material You) */
+  [data-oz-flavour="material3"] {
+    --oz-radius: 24px; --oz-radius-sm: 14px; --oz-radius-md: 24px; --oz-radius-lg: 28px; --oz-radius-xl: 32px; --oz-radius-pill: 9999px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-bg: oklch(0.13 0.022 var(--oz-hue));
+    --oz-bg-elevated: oklch(0.22 0.034 var(--oz-hue));
+    --oz-surface: oklch(0.19 0.03 var(--oz-hue));
+    --oz-surface-solid: oklch(0.19 0.03 var(--oz-hue));
+    --oz-border: oklch(0.92 0.025 var(--oz-hue) / 0.12);
+    --oz-shadow-sm: 0 1px 3px oklch(0 0 0 / 0.25), 0 1px 2px oklch(0 0 0 / 0.18);
+    --oz-shadow-md: 0 4px 12px oklch(0 0 0 / 0.26), 0 1px 3px oklch(0 0 0 / 0.18);
+    --oz-shadow-lg: 0 10px 28px oklch(0 0 0 / 0.34);
+  }
+  [data-oz-theme="light"][data-oz-flavour="material3"],
+  [data-oz-theme="light"] [data-oz-flavour="material3"] {
+    --oz-bg: oklch(0.985 0.008 var(--oz-hue));
+    --oz-bg-elevated: oklch(0.945 0.024 var(--oz-hue));
+    --oz-surface: oklch(0.96 0.018 var(--oz-hue));
+    --oz-surface-solid: oklch(0.96 0.018 var(--oz-hue));
+    --oz-border: oklch(0.25 0.03 var(--oz-hue) / 0.12);
+    --oz-shadow-sm: 0 1px 3px oklch(0.2 0.03 var(--oz-hue) / 0.1);
+    --oz-shadow-md: 0 3px 10px oklch(0.2 0.03 var(--oz-hue) / 0.12);
+    --oz-shadow-lg: 0 10px 24px oklch(0.2 0.03 var(--oz-hue) / 0.16);
+  }
+  /* 3. React / Shadcn / Vercel */
+  [data-oz-flavour="shadcn"] {
+    --oz-radius: 8px; --oz-radius-sm: 6px; --oz-radius-md: 8px; --oz-radius-lg: 10px; --oz-radius-xl: 12px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-bg: oklch(0.135 0 0);
+    --oz-bg-elevated: oklch(0.165 0 0);
+    --oz-surface: oklch(0.165 0 0);
+    --oz-surface-solid: oklch(0.165 0 0);
+    --oz-surface-hover: oklch(0.22 0 0);
+    --oz-surface-inset: oklch(0.115 0 0);
+    --oz-border: oklch(1 0 0 / 0.12);
+    --oz-border-strong: oklch(1 0 0 / 0.22);
+    --oz-text: oklch(0.97 0 0);
+    --oz-text-muted: oklch(0.68 0 0);
+    --oz-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.22);
+    --oz-shadow-md: 0 2px 6px oklch(0 0 0 / 0.25);
+    --oz-shadow-lg: 0 10px 24px -6px oklch(0 0 0 / 0.45);
+  }
+  [data-oz-theme="light"][data-oz-flavour="shadcn"],
+  [data-oz-theme="light"] [data-oz-flavour="shadcn"] {
+    --oz-bg: oklch(0.995 0 0);
+    --oz-bg-elevated: oklch(1 0 0);
+    --oz-surface: oklch(1 0 0);
+    --oz-surface-solid: oklch(1 0 0);
+    --oz-surface-hover: oklch(0.96 0 0);
+    --oz-surface-inset: oklch(0.965 0 0);
+    --oz-border: oklch(0.2 0 0 / 0.12);
+    --oz-border-strong: oklch(0.2 0 0 / 0.22);
+    --oz-text: oklch(0.14 0 0);
+    --oz-text-muted: oklch(0.45 0 0);
+    --oz-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
+    --oz-shadow-md: 0 2px 6px oklch(0 0 0 / 0.07);
+    --oz-shadow-lg: 0 10px 24px -6px oklch(0 0 0 / 0.12);
+  }
+  /* 4. Neo-Brutalist (Gumroad / Pop) */
+  [data-oz-flavour="brutalist"] {
+    --oz-radius: 2px; --oz-radius-sm: 2px; --oz-radius-md: 2px; --oz-radius-lg: 3px; --oz-radius-xl: 4px; --oz-radius-pill: 2px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-surface: var(--oz-surface-solid);
+    --oz-border: var(--oz-text);
+    --oz-border-strong: var(--oz-text);
+    --oz-shadow-sm: 3px 3px 0 var(--oz-text);
+    --oz-shadow-md: 5px 5px 0 var(--oz-text);
+    --oz-shadow-lg: 7px 7px 0 var(--oz-text);
+  }
+  /* 5. Apple iOS / Liquid Glass */
+  [data-oz-flavour="ios"] {
+    --oz-radius: 20px; --oz-radius-sm: 12px; --oz-radius-md: 20px; --oz-radius-lg: 26px; --oz-radius-xl: 32px;
+    --oz-blur: 28px;
+    --oz-backdrop: blur(28px) saturate(210%);
+    --oz-shadow-md: 0 10px 30px -10px oklch(0 0 0 / 0.35), inset 0 1px 0 oklch(1 0 0 / 0.18);
+    --oz-shadow-lg: 0 20px 48px -12px oklch(0 0 0 / 0.45), inset 0 1px 0 oklch(1 0 0 / 0.24);
+  }
+  /* 6. Enterprise / Carbon Precision */
+  [data-oz-flavour="enterprise"] {
+    --oz-radius: 4px; --oz-radius-sm: 3px; --oz-radius-md: 4px; --oz-radius-lg: 6px; --oz-radius-xl: 8px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-surface: var(--oz-surface-solid);
+    --oz-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.14);
+    --oz-shadow-md: 0 2px 6px oklch(0 0 0 / 0.18);
+    --oz-shadow-lg: 0 8px 20px oklch(0 0 0 / 0.24);
+  }
+  /* 7. Soft Clay / Neumorphic 3D */
+  [data-oz-flavour="clay"] {
+    --oz-radius: 24px; --oz-radius-sm: 16px; --oz-radius-md: 24px; --oz-radius-lg: 28px; --oz-radius-xl: 34px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-bg: oklch(0.18 0.022 var(--oz-hue));
+    --oz-bg-elevated: oklch(0.22 0.026 var(--oz-hue));
+    --oz-surface: oklch(0.21 0.025 var(--oz-hue));
+    --oz-surface-solid: oklch(0.21 0.025 var(--oz-hue));
+    --oz-border: oklch(1 0 0 / 0.07);
+    --oz-border-strong: oklch(1 0 0 / 0.12);
+    --oz-shadow-sm: 6px 6px 14px oklch(0.06 0.02 var(--oz-hue) / 0.6), -4px -4px 12px oklch(0.32 0.03 var(--oz-hue) / 0.22), inset 1px 1px 3px oklch(1 0 0 / 0.1);
+    --oz-shadow-md: 10px 10px 24px oklch(0.06 0.02 var(--oz-hue) / 0.65), -6px -6px 16px oklch(0.32 0.03 var(--oz-hue) / 0.24), inset 2px 2px 5px oklch(1 0 0 / 0.12), inset -3px -3px 8px oklch(0 0 0 / 0.28);
+    --oz-shadow-lg: 14px 14px 32px oklch(0.05 0.02 var(--oz-hue) / 0.72), -8px -8px 20px oklch(0.34 0.03 var(--oz-hue) / 0.26), inset 2px 2px 6px oklch(1 0 0 / 0.14);
+  }
+  [data-oz-theme="light"][data-oz-flavour="clay"],
+  [data-oz-theme="light"] [data-oz-flavour="clay"] {
+    --oz-bg: oklch(0.935 0.015 var(--oz-hue));
+    --oz-bg-elevated: oklch(0.96 0.014 var(--oz-hue));
+    --oz-surface: oklch(0.95 0.015 var(--oz-hue));
+    --oz-surface-solid: oklch(0.95 0.015 var(--oz-hue));
+    --oz-border: oklch(1 0 0 / 0.6);
+    --oz-border-strong: oklch(1 0 0 / 0.85);
+    --oz-shadow-sm: 5px 5px 12px oklch(0.74 0.03 var(--oz-hue) / 0.32), -4px -4px 10px oklch(1 0 0 / 0.9), inset 1px 1px 3px oklch(1 0 0 / 0.8);
+    --oz-shadow-md: 10px 10px 22px oklch(0.74 0.03 var(--oz-hue) / 0.36), -8px -8px 18px oklch(1 0 0 / 0.92), inset 2px 2px 5px oklch(1 0 0 / 0.85), inset -3px -3px 8px oklch(0.74 0.03 var(--oz-hue) / 0.18);
+    --oz-shadow-lg: 14px 14px 30px oklch(0.72 0.03 var(--oz-hue) / 0.42), -10px -10px 24px oklch(1 0 0 / 0.95), inset 2px 2px 6px oklch(1 0 0 / 0.9);
+  }
+  /* 8. Retro Terminal / Cyber CRT */
+  [data-oz-flavour="terminal"] {
+    --oz-font-sans: var(--oz-font-mono);
+    --oz-radius: 0px; --oz-radius-sm: 0px; --oz-radius-md: 0px; --oz-radius-lg: 0px; --oz-radius-xl: 0px; --oz-radius-pill: 0px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-bg: oklch(0.085 0.015 var(--oz-hue));
+    --oz-bg-elevated: oklch(0.115 0.02 var(--oz-hue));
+    --oz-surface: oklch(0.11 0.018 var(--oz-hue));
+    --oz-surface-solid: oklch(0.11 0.018 var(--oz-hue));
+    --oz-border: oklch(0.72 0.19 var(--oz-hue) / 0.38);
+    --oz-border-strong: oklch(0.72 0.19 var(--oz-hue) / 0.72);
+    --oz-shadow-sm: 0 0 8px oklch(0.72 0.19 var(--oz-hue) / 0.16);
+    --oz-shadow-md: 0 0 16px oklch(0.72 0.19 var(--oz-hue) / 0.18);
+    --oz-shadow-lg: 0 0 24px oklch(0.72 0.19 var(--oz-hue) / 0.24);
+  }
+  [data-oz-theme="light"][data-oz-flavour="terminal"],
+  [data-oz-theme="light"] [data-oz-flavour="terminal"] {
+    --oz-bg: oklch(0.96 0.018 110);
+    --oz-bg-elevated: oklch(0.985 0.012 110);
+    --oz-surface: oklch(0.98 0.012 110);
+    --oz-surface-solid: oklch(0.98 0.012 110);
+    --oz-border: oklch(0.28 0.06 var(--oz-hue) / 0.4);
+    --oz-border-strong: oklch(0.28 0.08 var(--oz-hue) / 0.75);
+    --oz-shadow-sm: none; --oz-shadow-md: none; --oz-shadow-lg: none;
+  }
+  /* 9. Editorial / Print / Magazine */
+  [data-oz-flavour="editorial"] {
+    --oz-radius: 2px; --oz-radius-sm: 2px; --oz-radius-md: 2px; --oz-radius-lg: 3px; --oz-radius-xl: 4px;
+    --oz-blur: 0px; --oz-backdrop: none;
+    --oz-bg: oklch(0.135 0.008 75);
+    --oz-bg-elevated: oklch(0.165 0.009 75);
+    --oz-surface: oklch(0.165 0.009 75);
+    --oz-surface-solid: oklch(0.165 0.009 75);
+    --oz-border: oklch(0.92 0.015 85 / 0.16);
+    --oz-border-strong: oklch(0.92 0.015 85 / 0.3);
+    --oz-shadow-sm: none; --oz-shadow-md: 0 2px 10px oklch(0 0 0 / 0.2); --oz-shadow-lg: 0 12px 28px oklch(0 0 0 / 0.3);
+  }
+  [data-oz-theme="light"][data-oz-flavour="editorial"],
+  [data-oz-theme="light"] [data-oz-flavour="editorial"] {
+    --oz-bg: oklch(0.972 0.012 85);
+    --oz-bg-elevated: oklch(0.992 0.008 85);
+    --oz-surface: oklch(0.992 0.008 85);
+    --oz-surface-solid: oklch(0.992 0.008 85);
+    --oz-surface-inset: oklch(0.94 0.014 85);
+    --oz-text: oklch(0.16 0.012 85);
+    --oz-text-muted: oklch(0.42 0.015 85);
+    --oz-border: oklch(0.2 0.015 85 / 0.16);
+    --oz-border-strong: oklch(0.2 0.015 85 / 0.32);
+    --oz-shadow-sm: none; --oz-shadow-md: 0 2px 10px oklch(0.2 0.01 85 / 0.06); --oz-shadow-lg: 0 12px 28px oklch(0.2 0.01 85 / 0.1);
+  }
 }
 
 /* ----------------------------------------------------------------------------
@@ -3415,6 +3588,120 @@
   .oz-cc__prefs[hidden] { display: none; }
   .oz-cc__actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .oz-cc__actions button { flex: 1 1 auto; justify-content: center; }
+
+  /* === Design Language Flavour Component Overrides === */
+  :is([data-oz-flavour="minimal"], [data-oz-flavour="shadcn"], [data-oz-flavour="brutalist"], [data-oz-flavour="enterprise"], [data-oz-flavour="terminal"], [data-oz-flavour="editorial"]) body::before,
+  :is([data-oz-flavour="minimal"], [data-oz-flavour="shadcn"], [data-oz-flavour="brutalist"], [data-oz-flavour="enterprise"], [data-oz-flavour="terminal"], [data-oz-flavour="editorial"]) :is(oz-card, oz-stat, oz-chart, oz-pricing, oz-product-card, oz-post)::after {
+    display: none !important;
+  }
+  :is([data-oz-flavour="minimal"], [data-oz-flavour="shadcn"], [data-oz-flavour="brutalist"], [data-oz-flavour="enterprise"], [data-oz-flavour="terminal"], [data-oz-flavour="editorial"]) [tilt]:hover {
+    transform: none !important;
+  }
+
+  /* Minimal & Terminal: strict 0px corners everywhere */
+  :is([data-oz-flavour="minimal"], [data-oz-flavour="terminal"]) :is(.oz-btn, .oz-btn--pill, .oz-badge, .oz-input-box, .oz-control, .oz-bnav, .oz-bnav__btn, .oz-fab__btn, .oz-site-topbar, .oz-st__nav, .oz-st__logo, .oz-st__pop, oz-card, oz-product-card, oz-post, oz-stat, oz-chart, oz-table, oz-hero, oz-pricing, .oz-post__media, .oz-cc-banner) {
+    border-radius: 0px !important;
+  }
+  [data-oz-flavour="minimal"] .oz-btn--glow,
+  [data-oz-flavour="minimal"] .oz-btn--primary {
+    box-shadow: none;
+  }
+
+  /* Material 3: pill buttons + soft tonal cards */
+  [data-oz-flavour="material3"] .oz-btn {
+    border-radius: 9999px;
+    padding-inline: 18px;
+  }
+  [data-oz-flavour="material3"] .oz-btn--sm { padding-inline: 14px; }
+
+  /* React / Shadcn: high-contrast neutral primary buttons & crisp 1px cards */
+  [data-oz-flavour="shadcn"] .oz-btn--primary,
+  [data-oz-flavour="shadcn"] .oz-btn--glow {
+    background: var(--oz-text);
+    color: var(--oz-bg);
+    border-color: var(--oz-text);
+    box-shadow: none;
+  }
+  [data-oz-flavour="shadcn"] .oz-btn--primary:hover,
+  [data-oz-flavour="shadcn"] .oz-btn--glow:hover {
+    opacity: 0.88;
+    box-shadow: none;
+  }
+  [data-oz-flavour="shadcn"] .oz-hero__title {
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    color: var(--oz-text);
+  }
+
+  /* Neo-Brutalist: 2px solid borders + hard offset shadow + tactile hover lift */
+  [data-oz-flavour="brutalist"] :is(oz-card, oz-stat, oz-chart, oz-pricing, oz-product-card, oz-post, oz-hero, .oz-site-topbar, .oz-st__pop, .oz-cc-banner) {
+    border: 2px solid var(--oz-text);
+    box-shadow: 5px 5px 0 var(--oz-text);
+  }
+  [data-oz-flavour="brutalist"] .oz-btn {
+    border: 2px solid var(--oz-text);
+    box-shadow: 3px 3px 0 var(--oz-text);
+    font-weight: 700;
+  }
+  [data-oz-flavour="brutalist"] .oz-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--oz-text);
+  }
+  [data-oz-flavour="brutalist"] .oz-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 var(--oz-text);
+  }
+  [data-oz-flavour="brutalist"] .oz-badge {
+    border: 1.5px solid var(--oz-text);
+    font-weight: 700;
+  }
+
+  /* Soft Clay / Neumorphic: tactile 3D pillowy cards & buttons */
+  [data-oz-flavour="clay"] :is(oz-card, oz-stat, oz-chart, oz-pricing, oz-product-card, oz-post, oz-hero, .oz-site-topbar, .oz-st__pop, .oz-cc-banner) {
+    border-color: transparent;
+    box-shadow: var(--oz-shadow-md);
+  }
+  [data-oz-flavour="clay"] .oz-btn {
+    border-radius: 16px;
+    border-color: transparent;
+    box-shadow: var(--oz-shadow-sm);
+  }
+  [data-oz-flavour="clay"] .oz-btn:active {
+    box-shadow: inset 3px 3px 6px oklch(0 0 0 / 0.25), inset -2px -2px 5px oklch(1 0 0 / 0.2);
+  }
+
+  /* Retro Terminal / Cyber CRT */
+  [data-oz-flavour="terminal"] .oz-btn,
+  [data-oz-flavour="terminal"] .oz-badge {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  [data-oz-flavour="terminal"] .oz-hero__title {
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 18px var(--oz-primary-glow);
+  }
+  [data-oz-flavour="terminal"] body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.045;
+    background: repeating-linear-gradient(0deg, currentColor 0px, currentColor 1px, transparent 1px, transparent 3px);
+  }
+
+  /* Editorial / Print / Magazine */
+  [data-oz-flavour="editorial"] :is(h1, h2, h3, .oz-hero__title, .oz-card__title) {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    letter-spacing: -0.015em;
+  }
+  [data-oz-flavour="editorial"] .oz-hero__title {
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    color: var(--oz-text);
+  }
 
 }
 

@@ -103,6 +103,22 @@
       <button type="button" class="chip" data-theme="light">Light</button>
     </div>
     <div class="divider"></div>
+    <div class="group" id="flavours">
+      <span class="group-label">Flavour</span>
+      <select id="flavour-select" class="chip" aria-label="Design Flavour" style="background:var(--oz-surface-inset);color:var(--oz-text);padding-right:10px;">
+        <option value="ozone">Ozone Glass</option>
+        <option value="minimal">Minimal (0px)</option>
+        <option value="material3">Material 3</option>
+        <option value="shadcn">React / Shadcn</option>
+        <option value="brutalist">Neo-Brutalist</option>
+        <option value="ios">Apple iOS</option>
+        <option value="enterprise">Enterprise</option>
+        <option value="clay">Soft Clay (3D)</option>
+        <option value="terminal">Retro Terminal</option>
+        <option value="editorial">Editorial Print</option>
+      </select>
+    </div>
+    <div class="divider"></div>
     <div class="group" id="colors"><span class="group-label">Brand</span></div>
     <div class="spacer"></div>
     <button type="button" class="chip" id="copy-html" title="Copy standalone template HTML with CDN links &amp; selected theme">Copy HTML</button>
@@ -117,7 +133,7 @@
 
   <script type="module">
     import Ozone from './dist/ozone.js';
-    import { initSiteShell } from './dist/site-shell.js';
+    import { initSiteShell } from './dist/site-shell.js?v=1.1';
     initSiteShell({ page: 'demo', footer: false });
 
     const TEMPLATES = {
@@ -138,7 +154,8 @@
       { id: 'amber', label: 'Solar', hue: 75, accent: 38, swatch: '#f59e0b' },
       { id: 'ocean', label: 'Ocean', hue: 235, accent: 198, swatch: '#3b82f6' }
     ];
-    const DEFAULTS = { template: 'landing', view: 'desktop', theme: 'dark', color: 'ozone' };
+    const FLAVOUR_IDS = ['ozone', 'minimal', 'material3', 'shadcn', 'brutalist', 'ios', 'enterprise', 'clay', 'terminal', 'editorial'];
+    const DEFAULTS = { template: 'landing', view: 'desktop', theme: 'dark', color: 'ozone', flavour: 'ozone' };
     const saved = (() => { try { return JSON.parse(localStorage.getItem('oz-demo') || '{}'); } catch { return {}; } })();
     const hash = Object.fromEntries(new URLSearchParams(location.hash.slice(1)));
     const state = { ...DEFAULTS, ...saved, ...hash };
@@ -146,9 +163,11 @@
     if (!['desktop', 'tablet', 'mobile'].includes(state.view)) state.view = DEFAULTS.view;
     if (!['dark', 'light'].includes(state.theme)) state.theme = DEFAULTS.theme;
     if (!COLORS.find((c) => c.id === state.color)) state.color = DEFAULTS.color;
+    if (!FLAVOUR_IDS.includes(state.flavour)) state.flavour = DEFAULTS.flavour;
 
     const frame = document.getElementById('preview');
     const stage = document.getElementById('stage');
+    const flavourSel = document.getElementById('flavour-select');
     const colorsEl = document.getElementById('colors');
     COLORS.forEach((c) => {
       const b = document.createElement('button');
@@ -161,6 +180,14 @@
       const root = doc.documentElement, c = COLORS.find((x) => x.id === state.color);
       root.dataset.ozTheme = state.theme;
       root.dataset.ozPreset = c.id;
+      if (state.flavour && state.flavour !== 'ozone') {
+        root.dataset.ozFlavour = state.flavour;
+        root.style.removeProperty('--oz-radius');
+        root.style.removeProperty('--oz-blur');
+        root.style.removeProperty('--oz-backdrop');
+      } else {
+        delete root.dataset.ozFlavour;
+      }
       root.style.setProperty('--oz-hue', String(c.hue));
       root.style.setProperty('--oz-accent-hue', String(c.accent));
     }
@@ -168,11 +195,12 @@
     function applyShell() {
       styleDoc(document);
       stage.dataset.view = state.view;
+      if (flavourSel) flavourSel.value = state.flavour;
       document.querySelectorAll('[data-template]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.template === state.template));
       document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.view === state.view));
       document.querySelectorAll('[data-theme]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.theme === state.theme));
       document.querySelectorAll('[data-color]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.color === state.color));
-      document.getElementById('open-tab').href = TEMPLATES[state.template] + `#theme=${state.theme}&color=${state.color}`;
+      document.getElementById('open-tab').href = TEMPLATES[state.template] + `#theme=${state.theme}&color=${state.color}&flavour=${state.flavour}`;
       try { localStorage.setItem('oz-demo', JSON.stringify(state)); } catch {}
       history.replaceState(null, '', '#' + new URLSearchParams(state).toString());
     }
@@ -198,11 +226,16 @@
       else if (t.dataset.color) set({ color: t.dataset.color });
     });
 
-    // Keep demo theme/color synced when user switches via Universal Controls Modal
+    flavourSel?.addEventListener('change', () => set({ flavour: flavourSel.value }));
+
+    // Keep demo theme/color/flavour synced when user switches via Universal Controls Modal
     window.addEventListener('oz-dna-change', () => {
       const d = Ozone.dna.read();
       state.theme = d.theme;
       if (COLORS.find((x) => x.id === d.preset)) state.color = d.preset;
+      const f = document.documentElement.dataset.ozFlavour || 'ozone';
+      if (FLAVOUR_IDS.includes(f)) state.flavour = f;
+      if (flavourSel) flavourSel.value = state.flavour;
       try { styleDoc(frame.contentDocument); } catch {}
     });
 
@@ -210,7 +243,8 @@
       const btn = e.currentTarget;
       try {
         let raw = await (await fetch(TEMPLATES[state.template])).text();
-        raw = raw.replace(/data-oz-theme="(?:dark|light)"/, `data-oz-theme="${state.theme}" data-oz-preset="${state.color}"`)
+        const flvAttr = state.flavour && state.flavour !== 'ozone' ? ` data-oz-flavour="${state.flavour}"` : '';
+        raw = raw.replace(/data-oz-theme="(?:dark|light)"/, `data-oz-theme="${state.theme}" data-oz-preset="${state.color}"${flvAttr}`)
                  .replace(/\.\.\/\.\.\/dist\//g, 'https://cdn.jsdelivr.net/gh/valldy31/ozoneui@main/dist/');
         await navigator.clipboard?.writeText(raw);
         btn.textContent = 'Copied!';

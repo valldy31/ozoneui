@@ -89,7 +89,7 @@
   <script type="module">import '../../dist/ozone.js';</script>
   <script>
     (function(){var p=new URLSearchParams(location.hash.slice(1)),H={ozone:[205,280],emerald:[155,195],amethyst:[285,330],crimson:[12,42],amber:[75,38],ocean:[235,198]},r=document.documentElement;
-    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
+    if(p.get('theme'))r.dataset.ozTheme=p.get('theme');if(p.get('flavour')&&p.get('flavour')!=='ozone')r.dataset.ozFlavour=p.get('flavour');var h=H[p.get('color')];if(h){r.style.setProperty('--oz-hue',h[0]);r.style.setProperty('--oz-accent-hue',h[1]);}})();
   </script>
 </body>
 </html>

@@ -3,6 +3,8 @@ export interface OzoneAPI {
   version: string;
   setMode(mode: 'atmospheric' | 'precision'): void;
   setTheme(theme: 'dark' | 'light'): void;
+  setFlavour(flavour: 'ozone' | 'minimal' | 'material3' | 'shadcn' | 'brutalist' | 'ios' | 'enterprise' | 'clay' | 'terminal' | 'editorial' | string): void;
+  flavours: ReadonlyArray<{ id: string; label: string; tag: string }>;
   setPrivacyMode(enabled: boolean): void;
   setSound(enabled: boolean): void;
   inspectUI(): Array<{ index: number; tag: string; id: string | null; label: string; visible: boolean }>;

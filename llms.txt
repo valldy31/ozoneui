@@ -15,6 +15,7 @@
 - `data-oz-density="compact | default | spacious"` (UI density & corner geometry)
 - `data-oz-brand-name="Client Name"` (global white-label company identity)
 - URL auto-branding: `?preset=fintech&brand=10b981&name=PayFlow` (shareable client demo links)
+- `data-oz-flavour="ozone | minimal | material3 | shadcn | brutalist | ios | enterprise | clay | terminal | editorial"` (10 switchable design languages: 0px Swiss Minimal, Google Material 3, React/Shadcn Zinc, Neo-Brutalist, Apple iOS Liquid, Enterprise Carbon, Soft Clay 3D, Retro Terminal CRT, Editorial Serif — global or section-scoped)
 - `data-oz-mode="atmospheric | precision"` (glass refraction vs crisp 1px enterprise)
 - `data-oz-theme="dark | light"`
 - `data-oz-privacy="true | false"` (blurs any `[mask]` PII/financial values)
@@ -127,6 +128,7 @@ Or pin `https://ozoneui.nstudios.eu/dist/ozone.css` + `ozone.js`. All form contr
 
 ## Runtime JS API (`window.Ozone`)
 - `Ozone.toast({ title, message, variant })`
+- `Ozone.setFlavour('minimal'|'material3'|'shadcn'|'brutalist'|'ios'|'enterprise'|'clay'|'terminal'|'editorial'|'ozone')` / `Ozone.flavours`
 - `Ozone.i18n.setLocale('bg'|'en', overrides?)` / `Ozone.i18n.extend(dict)` / `Ozone.i18n.t(key, vars?)` / `Ozone.i18n.getLocale()`
 - `Ozone.icons.setDefaultSet('builtin'|'ph'|'tabler'|'solar'|'heroicons')` / `Ozone.icons.register(name, svg)` / `Ozone.icons.setResolver(fn)`
 - `Ozone.dna.presets` / `Ozone.dna.applyPreset('emerald')` / `Ozone.dna.fromHex('#6366f1', 'complementary')` / `Ozone.dna.fromLogoFile(file)`

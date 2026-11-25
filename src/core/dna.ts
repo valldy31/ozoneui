@@ -131,8 +131,13 @@ export const dna = {
     root.style.setProperty('--oz-hue', String(preset.hue));
     root.style.setProperty('--oz-accent-hue', String(preset.accentHue));
     root.style.removeProperty('--oz-backdrop');
-    root.style.setProperty('--oz-blur', `${preset.blur}px`);
-    root.style.setProperty('--oz-radius', `${preset.radius}px`);
+    if (!root.dataset.ozFlavour || root.dataset.ozFlavour === 'ozone') {
+      root.style.setProperty('--oz-blur', `${preset.blur}px`);
+      root.style.setProperty('--oz-radius', `${preset.radius}px`);
+    } else {
+      root.style.removeProperty('--oz-blur');
+      root.style.removeProperty('--oz-radius');
+    }
     this.emitChange();
     return preset;
   },
@@ -341,6 +346,13 @@ export const dna = {
       this.setBrandName(urlName);
     } else if (root.dataset.ozBrandName) {
       this.setBrandName(root.dataset.ozBrandName);
+    }
+    const urlFlavour = params.get('flavour') || params.get('flavor');
+    if (urlFlavour) {
+      root.dataset.ozFlavour = urlFlavour;
+      root.style.removeProperty('--oz-radius');
+      root.style.removeProperty('--oz-blur');
+      root.style.removeProperty('--oz-backdrop');
     }
   },
 

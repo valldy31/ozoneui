@@ -143,17 +143,19 @@ export function initAtmosphere() {
     activeEl.style.setProperty('--oz-mouse-x', `${x.toFixed(1)}px`);
     activeEl.style.setProperty('--oz-mouse-y', `${y.toFixed(1)}px`);
 
+    const flatFlavour = ['minimal', 'shadcn', 'brutalist', 'enterprise', 'terminal', 'editorial'].includes(document.documentElement.dataset.ozFlavour || '');
     if (
       activeEl.hasAttribute('tilt') &&
       !activeEl.hasAttribute('no-tilt') &&
       document.documentElement.dataset.ozMode !== 'precision' &&
+      !flatFlavour &&
       !window.matchMedia?.('(hover: none)')?.matches
     ) {
       const nx = (x / rect.width) - 0.5;
       const ny = (y / rect.height) - 0.5;
       activeEl.style.setProperty('--oz-tilt-x', `${(-ny * 5.5).toFixed(2)}deg`);
       activeEl.style.setProperty('--oz-tilt-y', `${(nx * 5.5).toFixed(2)}deg`);
-    } else if (activeEl.hasAttribute('no-tilt') || document.documentElement.dataset.ozMode === 'precision') {
+    } else if (activeEl.hasAttribute('no-tilt') || document.documentElement.dataset.ozMode === 'precision' || flatFlavour) {
       activeEl.style.setProperty('--oz-tilt-x', '0deg');
       activeEl.style.setProperty('--oz-tilt-y', '0deg');
     }
@@ -281,8 +283,13 @@ export const dna = {
     root.style.setProperty('--oz-hue', String(preset.hue));
     root.style.setProperty('--oz-accent-hue', String(preset.accentHue));
     root.style.removeProperty('--oz-backdrop');
-    root.style.setProperty('--oz-blur', `${preset.blur}px`);
-    root.style.setProperty('--oz-radius', `${preset.radius}px`);
+    if (!root.dataset.ozFlavour || root.dataset.ozFlavour === 'ozone') {
+      root.style.setProperty('--oz-blur', `${preset.blur}px`);
+      root.style.setProperty('--oz-radius', `${preset.radius}px`);
+    } else {
+      root.style.removeProperty('--oz-blur');
+      root.style.removeProperty('--oz-radius');
+    }
     this.emitChange();
     return preset;
   },
@@ -426,6 +433,13 @@ export const dna = {
     else if (root.dataset.ozDensity && ['compact', 'spacious'].includes(root.dataset.ozDensity)) this.setDensity(root.dataset.ozDensity);
     if (urlName) this.setBrandName(urlName);
     else if (root.dataset.ozBrandName) this.setBrandName(root.dataset.ozBrandName);
+    const urlFlavour = params.get('flavour') || params.get('flavor');
+    if (urlFlavour) {
+      root.dataset.ozFlavour = urlFlavour;
+      root.style.removeProperty('--oz-radius');
+      root.style.removeProperty('--oz-blur');
+      root.style.removeProperty('--oz-backdrop');
+    }
   },
   apply(code) {
     const cleaned = String(code || '').trim().replace(/^oz:\/\//, '');
@@ -754,6 +768,32 @@ export function morph(updateFn) {
   } else {
     updateFn();
   }
+}
+
+export const FLAVOURS = [
+  { id: 'ozone',      label: 'Ozone Glass',    tag: 'Default' },
+  { id: 'minimal',    label: 'Minimal 0px',    tag: 'Swiss' },
+  { id: 'material3',  label: 'Material 3',     tag: 'Google' },
+  { id: 'shadcn',     label: 'React / Shadcn', tag: 'Zinc' },
+  { id: 'brutalist',  label: 'Neo-Brutalist',  tag: 'Pop' },
+  { id: 'ios',        label: 'Apple iOS',      tag: 'Liquid' },
+  { id: 'enterprise', label: 'Enterprise',     tag: 'Carbon' },
+  { id: 'clay',       label: 'Soft Clay',      tag: '3D Neo' },
+  { id: 'terminal',   label: 'Retro Terminal', tag: 'CRT' },
+  { id: 'editorial',  label: 'Editorial',      tag: 'Print' }
+];
+
+export function setFlavour(flavour) {
+  const id = String(flavour || 'ozone').trim().toLowerCase() || 'ozone';
+  morph(() => {
+    const root = document.documentElement;
+    if (id === 'ozone') delete root.dataset.ozFlavour;
+    else root.dataset.ozFlavour = id;
+    root.style.removeProperty('--oz-radius');
+    root.style.removeProperty('--oz-blur');
+    root.style.removeProperty('--oz-backdrop');
+    window.dispatchEvent(new CustomEvent('oz-dna-change', { detail: { ...dna.read(), flavour: id } }));
+  });
 }
 
 export function setMode(mode) {
@@ -4903,6 +4943,8 @@ export function bootOzoneUI() {
   Ozone.fillForm = fillForm;
   Ozone.gdpr = gdpr;
   Ozone.i18n = i18n;
+  Ozone.flavours = FLAVOURS;
+  Ozone.setFlavour = setFlavour;
   window.Ozone = Ozone;
 }
 

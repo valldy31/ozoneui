@@ -79,6 +79,7 @@ All root pages are connected via a shared navigation header (`dist/site-shell.js
 
 ---
 
+- **10 Design Language Flavours (`data-oz-flavour`)**: Switch all 66 components instantaneously between **Ozone Glass**, **Minimal 0px (Swiss)**, **Material 3**, **React / Shadcn**, **Neo-Brutalist**, **Apple iOS**, **Enterprise Carbon**, **Soft Clay (3D Neumorphic)**, **Retro Terminal (CRT)**, and **Editorial Print** — globally on `<html>` or per-section (`Ozone.setFlavour('shadcn')`, `?flavour=clay`).
 - **`Ozone.i18n` Multilingual Engine & Custom CTAs**: Switch locales (`Ozone.i18n.setLocale('bg')` or `.extend({...})`) across calendars, product cards, social posts, and sidebars; customize `<oz-product-card>` with `aspect="16/9"`, `no-tilt`, `unit`, `stock-percent`, `cta-label`, `secondary-href`, and `sold-out`.
 - **PHP & Server-Side Rendering (SSR) Ready**: `<oz-button type="submit" name="..." value="...">` forwards native form submissions, `<oz-sidebar>` / `<oz-bottom-nav>` items with `href` render native `<a>` links, and utilities like `.oz-h-scroll`, `.oz-aspect-16-9`, and `.oz-no-print` (`@media print`) work everywhere.
 

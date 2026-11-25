@@ -100,6 +100,33 @@ export function morph(updateFn: () => void) {
   }
 }
 
+export const FLAVOURS = [
+  { id: 'ozone',      label: 'Ozone Glass',    tag: 'Default' },
+  { id: 'minimal',    label: 'Minimal 0px',    tag: 'Swiss' },
+  { id: 'material3',  label: 'Material 3',     tag: 'Google' },
+  { id: 'shadcn',     label: 'React / Shadcn', tag: 'Zinc' },
+  { id: 'brutalist',  label: 'Neo-Brutalist',  tag: 'Pop' },
+  { id: 'ios',        label: 'Apple iOS',      tag: 'Liquid' },
+  { id: 'enterprise', label: 'Enterprise',     tag: 'Carbon' },
+  { id: 'clay',       label: 'Soft Clay',      tag: '3D Neo' },
+  { id: 'terminal',   label: 'Retro Terminal', tag: 'CRT' },
+  { id: 'editorial',  label: 'Editorial',      tag: 'Print' }
+] as const;
+
+export function setFlavour(flavour: string) {
+  const id = String(flavour || 'ozone').trim().toLowerCase() || 'ozone';
+  const apply = () => {
+    const root = document.documentElement;
+    if (id === 'ozone') delete root.dataset.ozFlavour;
+    else root.dataset.ozFlavour = id;
+    root.style.removeProperty('--oz-radius');
+    root.style.removeProperty('--oz-blur');
+    root.style.removeProperty('--oz-backdrop');
+    window.dispatchEvent(new CustomEvent('oz-dna-change', { detail: { ...dna.read(), flavour: id } }));
+  };
+  morph(apply);
+}
+
 export function setMode(mode: 'atmospheric' | 'precision') {
   morph(() => {
     document.documentElement.dataset.ozMode = mode;
@@ -181,7 +208,9 @@ export const Ozone = {
   agent,
   icons,
   i18n,
+  flavours: FLAVOURS,
   morph,
+  setFlavour,
   setMode,
   setTheme,
   setPrivacyMode,

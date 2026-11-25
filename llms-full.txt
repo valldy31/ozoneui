@@ -54,6 +54,7 @@ All OzoneUI inputs accept `name`, `label`, `hint`, `error`, `disabled`, emit `oz
 ```
 
 ## 4. Multilingual (`Ozone.i18n`), PHP SSR Navigation & Print Utilities
+- **10 Design Language Flavours (`data-oz-flavour`)**: Switch all 66 components between `ozone` (Atmospheric Glass), `minimal` (0px Swiss), `material3` (Google M3 pills & tonal surfaces), `shadcn` (React/Vercel neutral zinc), `brutalist` (2px border + offset shadow), `ios` (Apple Liquid Glass), `enterprise` (Carbon 4px), `clay` (Soft 3D Neumorphic), `terminal` (Retro CRT monospace), and `editorial` (Serif print) via `<html data-oz-flavour="shadcn">`, `?flavour=clay`, or `Ozone.setFlavour('material3')`.
 - **i18n Dictionary**: Call `Ozone.i18n.setLocale('bg')` (built-in English & Bulgarian presets) or `Ozone.i18n.extend({ add: 'Order', inspect: 'Details', save: 'Save' })` to localize all product cards, social posts, composers, sidebars, and calendars automatically.
 - **PHP / SSR Native Controls**:
   - `<oz-button variant="primary" type="submit" name="interaction_type" value="favorite">Favorite</oz-button>` submits its parent `<form>` natively (`FormData` + `SubmitEvent.submitter`).

@@ -29,15 +29,16 @@ const SHELL_CSS = `
   }
   .oz-st__brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: inherit; font-weight: 700; font-size: 1.02rem; letter-spacing: -0.02em; white-space: nowrap; }
   .oz-st__logo { width: 32px; height: 32px; border-radius: 9px; background: linear-gradient(135deg, var(--oz-primary), var(--oz-accent)); display: grid; place-items: center; color: #fff; box-shadow: 0 0 18px var(--oz-primary-glow); flex: none; }
-  .oz-st__nav { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 3px; border-radius: var(--oz-radius-sm); background: var(--oz-surface-inset); border: 1px solid var(--oz-border); }
+  .oz-st__nav { display: flex; flex-wrap: nowrap; align-items: center; gap: 3px; padding: 3px; border-radius: var(--oz-radius-sm); background: var(--oz-surface-inset); border: 1px solid var(--oz-border); }
+  .oz-st__nav .oz-btn { padding: 5px 9px; font-size: 0.78rem; white-space: nowrap; }
   .oz-st__nav-head, .oz-st__nav-foot, .oz-st__burger, .oz-st__backdrop { display: none; }
   .oz-st__actions { display: flex; align-items: center; gap: 8px; flex: none; position: relative; }
   .oz-st__cc-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--oz-emerald); box-shadow: 0 0 8px var(--oz-emerald); flex: none; }
   .oz-st__cc-dot[data-veil="true"] { background: var(--oz-amber); box-shadow: 0 0 8px var(--oz-amber); }
 
   .oz-st__pop {
-    position: absolute; top: calc(100% + 10px); right: 0; z-index: 980;
-    width: min(350px, calc(100vw - 24px)); padding: 16px;
+    position: fixed; top: 76px; right: 16px; z-index: 980;
+    width: min(360px, calc(100vw - 24px)); max-height: calc(100vh - 96px); overflow-y: auto; padding: 16px;
     border-radius: var(--oz-radius-md); background: var(--oz-bg-elevated);
     border: 1px solid var(--oz-border-strong); box-shadow: var(--oz-shadow-lg);
     display: none; flex-direction: column; gap: 14px;
@@ -49,6 +50,14 @@ const SHELL_CSS = `
   .oz-st__pop-btn span { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
   .oz-st__pop-btn strong { font-size: 0.78rem; font-weight: 600; }
   .oz-st__pop-btn small { font-size: 0.67rem; font-weight: 400; color: var(--oz-text-muted); }
+  .oz-flavour-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+  .oz-flavour-chip {
+    appearance: none; cursor: pointer; padding: 4px 8px; border-radius: var(--oz-radius-sm);
+    border: 1px solid var(--oz-border); background: var(--oz-surface-inset); color: var(--oz-text-muted);
+    font: inherit; font-size: 0.7rem; font-weight: 600; transition: all 140ms ease;
+  }
+  .oz-flavour-chip:hover { color: var(--oz-text); border-color: var(--oz-border-strong); }
+  .oz-flavour-chip[data-active="true"] { background: var(--oz-primary-soft); color: var(--oz-text); border-color: var(--oz-primary); }
 
   .oz-site-foot-wrap { margin-top: 72px; }
   @media (max-width: 980px) {
@@ -93,6 +102,12 @@ export function initSiteShell(opts = {}) {
       if (!location.search.includes('preset=') && !location.search.includes('brand=') && prefs.preset) Ozone.dna.applyPreset(prefs.preset);
       if (prefs.theme) document.documentElement.dataset.ozTheme = prefs.theme;
       if (prefs.mode) document.documentElement.dataset.ozMode = prefs.mode;
+      if (!location.search.includes('flavour=') && !location.search.includes('flavor=') && prefs.flavour && prefs.flavour !== 'ozone') {
+        document.documentElement.dataset.ozFlavour = prefs.flavour;
+        document.documentElement.style.removeProperty('--oz-radius');
+        document.documentElement.style.removeProperty('--oz-blur');
+        document.documentElement.style.removeProperty('--oz-backdrop');
+      }
       if (typeof prefs.privacy === 'boolean') Ozone.setPrivacyMode(prefs.privacy);
       if (typeof prefs.sound === 'boolean') Ozone.setSound(prefs.sound);
     }
@@ -102,7 +117,7 @@ export function initSiteShell(opts = {}) {
     try {
       const cur = JSON.parse(localStorage.getItem('oz-site-prefs') || '{}');
       const d = Ozone.dna.read();
-      Object.assign(cur, { theme: d.theme, mode: d.mode, preset: d.preset, privacy: document.documentElement.dataset.ozPrivacy === 'true', sound: d.sound }, patch);
+      Object.assign(cur, { theme: d.theme, mode: d.mode, preset: d.preset, flavour: document.documentElement.dataset.ozFlavour || 'ozone', privacy: document.documentElement.dataset.ozPrivacy === 'true', sound: d.sound }, patch);
       localStorage.setItem('oz-site-prefs', JSON.stringify(cur));
     } catch {}
   };
@@ -205,6 +220,15 @@ export function initSiteShell(opts = {}) {
             <input type="color" class="oz-color-input" id="cc-hex-picker" value="#00b4d8" title="Pick custom brand color" />
           </div>
         </div>
+        <div style="padding-top:10px;border-top:1px solid var(--oz-border);">
+          <div class="oz-between" style="margin-bottom:8px;">
+            <span class="oz-text-xs oz-muted">Design Flavour (10)</span>
+            <span class="oz-text-xs oz-subtle" id="cc-flavour-label">Ozone Glass</span>
+          </div>
+          <div class="oz-flavour-grid">
+            ${(Ozone.flavours || []).map((f) => `<button type="button" class="oz-flavour-chip" data-cc-flavour="${f.id}">${f.label}</button>`).join('')}
+          </div>
+        </div>
         <div class="oz-between" style="padding-top:8px;border-top:1px solid var(--oz-border);">
           <button type="button" class="oz-btn oz-btn--sm oz-btn--ghost" data-sh-act="gdpr"><oz-icon name="shield" size="13"></oz-icon> Cookie &amp; GDPR</button>
           <a href="wiki.html" class="oz-btn oz-btn--sm oz-btn--ghost" style="text-decoration:none;"><oz-icon name="info" size="13"></oz-icon> Wiki Help</a>
@@ -287,6 +311,10 @@ export function initSiteShell(opts = {}) {
     const dot = document.getElementById('cc-active-dot'); if (dot) dot.dataset.veil = String(isVeil);
     const pLbl = document.getElementById('cc-preset-label'); if (pLbl) pLbl.textContent = Ozone.dna.presets[d.preset]?.label || d.preset;
     document.querySelectorAll('[data-cc-preset]').forEach((b) => { b.dataset.active = String(b.dataset.ccPreset === d.preset); });
+    const curFlavour = document.documentElement.dataset.ozFlavour || 'ozone';
+    const fObj = (Ozone.flavours || []).find((f) => f.id === curFlavour);
+    const fLbl = document.getElementById('cc-flavour-label'); if (fLbl) fLbl.textContent = fObj ? fObj.label : curFlavour;
+    document.querySelectorAll('[data-cc-flavour]').forEach((b) => { b.dataset.active = String(b.dataset.ccFlavour === curFlavour); });
   };
 
   hdr.addEventListener('click', (e) => {
@@ -306,6 +334,12 @@ export function initSiteShell(opts = {}) {
   document.querySelectorAll('[data-cc-preset]').forEach((btn) => btn.addEventListener('click', () => {
     Ozone.dna.applyPreset(btn.dataset.ccPreset);
     savePrefs({ preset: btn.dataset.ccPreset });
+    syncLabels();
+  }));
+  document.querySelectorAll('[data-cc-flavour]').forEach((btn) => btn.addEventListener('click', () => {
+    Ozone.sound.click();
+    Ozone.setFlavour(btn.dataset.ccFlavour);
+    savePrefs({ flavour: btn.dataset.ccFlavour });
     syncLabels();
   }));
   document.getElementById('cc-hex-picker')?.addEventListener('input', (e) => {

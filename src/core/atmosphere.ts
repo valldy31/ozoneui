@@ -32,10 +32,12 @@ export function initAtmosphere() {
     activeEl.style.setProperty('--oz-mouse-x', `${x.toFixed(1)}px`);
     activeEl.style.setProperty('--oz-mouse-y', `${y.toFixed(1)}px`);
 
+    const flatFlavour = ['minimal', 'shadcn', 'brutalist', 'enterprise', 'terminal', 'editorial'].includes(document.documentElement.dataset.ozFlavour || '');
     if (
       activeEl.hasAttribute('tilt') &&
       !activeEl.hasAttribute('no-tilt') &&
       document.documentElement.dataset.ozMode !== 'precision' &&
+      !flatFlavour &&
       !window.matchMedia?.('(hover: none)')?.matches
     ) {
       const nx = (x / rect.width) - 0.5;
@@ -43,7 +45,7 @@ export function initAtmosphere() {
       const maxTilt = 5.5;
       activeEl.style.setProperty('--oz-tilt-x', `${(-ny * maxTilt).toFixed(2)}deg`);
       activeEl.style.setProperty('--oz-tilt-y', `${(nx * maxTilt).toFixed(2)}deg`);
-    } else if (activeEl.hasAttribute('no-tilt') || document.documentElement.dataset.ozMode === 'precision') {
+    } else if (activeEl.hasAttribute('no-tilt') || document.documentElement.dataset.ozMode === 'precision' || flatFlavour) {
       activeEl.style.setProperty('--oz-tilt-x', '0deg');
       activeEl.style.setProperty('--oz-tilt-y', '0deg');
     }
